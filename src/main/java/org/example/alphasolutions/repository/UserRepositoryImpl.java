@@ -33,13 +33,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users (user_name, user_password, user_role, is_active) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (user_name, user_password, user_role) " +
+                "VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 user.getUserName(),
                 user.getUserPassword(),
-                user.getUserRole(),
-                user.isActive());
+                user.getUserRole());
     }
 
     @Override
@@ -50,7 +49,6 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUserName(),
                 user.getUserPassword(),
                 user.getUserRole(),
-                user.isActive(),
                 user.getUserID());
     }
 
@@ -67,8 +65,7 @@ public class UserRepositoryImpl implements UserRepository {
                     rs.getInt("user_id"),
                     rs.getString("user_name"),
                     rs.getString("user_password"),
-                    rs.getString("user_role"),
-                    rs.getBoolean("is_active")
+                    rs.getString("user_role")
             );
         }
     }
