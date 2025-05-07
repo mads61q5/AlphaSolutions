@@ -1,4 +1,4 @@
-package service;
+package org.example.alphasolutions.service;
 import org.example.alphasolutions.Interfaces.ProjectRepository;
 import org.example.alphasolutions.model.Project;
 import org.springframework.stereotype.Service;
