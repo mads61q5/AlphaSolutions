@@ -10,30 +10,28 @@ public class Project {
     private LocalDate projectStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectDeadline;
-    private int projectTimeEstimate; // in hours
-    private int projectDedicatedHours; // hours spent so far
+    private int projectTimeEstimate;
+    private int projectTimeSpent;
     private String projectStatus;
-    private int projectManagerID;
-    private String projectManagerName;
+    private String projectPriority;
 
 
     public Project() {
     }
 //----------------Constructor----------------
-    public Project(int projectID, String projectName, String projectDescription,
-                   LocalDate projectStartDate, LocalDate projectDeadline,
-                   int projectTimeEstimate, int projectDedicatedHours,
-                   String projectStatus, int projectManagerID, String projectManagerName) {
-        this.projectID = projectID;
-        this.projectName = projectName;
-        this.projectDescription = projectDescription;
-        this.projectStartDate = projectStartDate;
-        this.projectDeadline = projectDeadline;
-        this.projectTimeEstimate = projectTimeEstimate;
-        this.projectDedicatedHours = projectDedicatedHours;
-        this.projectStatus = projectStatus;
-        this.projectManagerID = projectManagerID;
-        this.projectManagerName = projectManagerName;
+public Project(int projectID, String projectName, String projectDescription,
+               LocalDate projectStartDate, LocalDate projectDeadline,
+               int projectTimeEstimate, int projectTimeSpent,
+               String projectStatus, String projectPriority) {
+    this.projectID = projectID;
+    this.projectName = projectName;
+    this.projectDescription = projectDescription;
+    this.projectStartDate = projectStartDate;
+    this.projectDeadline = projectDeadline;
+    this.projectTimeEstimate = projectTimeEstimate;
+    this.projectTimeSpent = projectTimeSpent;
+    this.projectStatus = projectStatus;
+    this.projectPriority = projectPriority;
     }
     //------Setters & getters----------
 //----------------Project ID----------------
@@ -85,13 +83,13 @@ public class Project {
     public void setProjectTimeEstimate(int projectTimeEstimate) {
         this.projectTimeEstimate = projectTimeEstimate;
     }
-//----------------Project dedicated hours----------------
-    public int getProjectDedicatedHours() {
-        return projectDedicatedHours;
-    }
+//----------------Project time spent----------------
+public int getProjectTimeSpent() {
+    return projectTimeSpent;
+}
 
-    public void setProjectDedicatedHours(int projectDedicatedHours) {
-        this.projectDedicatedHours = projectDedicatedHours;
+    public void setProjectTimeSpent(int projectTimeSpent) {
+        this.projectTimeSpent = projectTimeSpent;
     }
 //----------------Project status----------------
     public String getProjectStatus() {
@@ -101,21 +99,11 @@ public class Project {
     public void setProjectStatus(String projectStatus) {
         this.projectStatus = projectStatus;
     }
-//----------------Project manager ID----------------
-    public int getProjectManagerID() {
-        return projectManagerID;
-    }
-
-    public void setProjectManagerID(int projectManagerID) {
-        this.projectManagerID = projectManagerID;
-    }
-//----------------Project manager name----------------
-    public String getProjectManagerName() {
-        return projectManagerName;
-    }
-
-    public void setProjectManagerName(String projectManagerName) {
-        this.projectManagerName = projectManagerName;
-
+//----------------Project priority---------------
+public String getProjectPriority() {
+    return projectPriority;
+}
+    public void setProjectPriority(String projectPriority) {
+        this.projectPriority = projectPriority;
     }
 }
