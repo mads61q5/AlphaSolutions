@@ -5,18 +5,17 @@ public class User {
     private String userName;
     private String userPassword;
     private String userRole;
-    private boolean isActive;
+
 
     public User() {
     }
 
-    public User(int userID, String userName,
-                String userPassword, String userRole, boolean isActive) {
+    public User(int userID, String userName, String userPassword, String userRole) {
         this.userID = userID;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userRole = userRole;
-        this.isActive = isActive;
+
     }
 
     // Getters and Setters
@@ -52,11 +51,4 @@ public class User {
         this.userRole = userRole;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 }
