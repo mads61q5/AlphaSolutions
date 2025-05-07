@@ -1,5 +1,6 @@
 package org.example.alphasolutions.repository;
 import org.example.alphasolutions.Interfaces.TaskRepository;
+import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -46,6 +47,11 @@ public class TaskRepositoryImpl implements TaskRepository {
     public List<Task> findByStatus(String status) {
         String sql = "SELECT * FROM tasks WHERE task_status = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), status);
+    }
+    @Override
+    public List<Task> findByPriority(String priority) {
+        String sql = "SELECT * FROM subprojects WHERE tasks_priority = ?";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), priority);
     }
 
     @Override

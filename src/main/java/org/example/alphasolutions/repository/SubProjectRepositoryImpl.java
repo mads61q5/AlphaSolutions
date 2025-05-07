@@ -41,7 +41,11 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
         String sql = "SELECT * FROM subprojects WHERE subproject_status = ?";
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), status);
     }
-
+    @Override
+    public List<SubProject> findByPriority(String priority) {
+        String sql = "SELECT * FROM subprojects WHERE subproject_priority = ?";
+        return jdbcTemplate.query(sql, new SubProjectRowMapper(), priority);
+    }
     @Override
     public void save(SubProject subProject) {
         String sql = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_start_date, " +
