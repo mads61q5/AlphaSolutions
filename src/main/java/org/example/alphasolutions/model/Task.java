@@ -11,28 +11,30 @@ public class Task {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate taskDeadline;
     private int taskTimeEstimate;
-    private int taskDedicatedHours;
+    private int taskTimeSpent;
     private String taskStatus;
-    private int assignedTaskUserID;
-    private String assignedTaskUserName;
+    private String taskPriority;
+    private int projectID;
+
 
     public Task() {
     }
 
     public Task(int taskID, String taskName, String taskDescription,
                 LocalDate taskStartDate, LocalDate taskDeadline,
-                int taskTimeEstimate, int taskDedicatedHours,
-                String taskStatus,  int assignedTaskUserID, String assignedTaskUserName) {
+                int taskTimeEstimate, int taskTimeSpent,
+                String taskStatus, String taskPriority,
+                int projectID) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStartDate = taskStartDate;
         this.taskDeadline = taskDeadline;
         this.taskTimeEstimate = taskTimeEstimate;
-        this.taskDedicatedHours = taskDedicatedHours;
+        this.taskTimeSpent = taskTimeSpent;
         this.taskStatus = taskStatus;
-        this.assignedTaskUserID= assignedTaskUserID;
-        this.assignedTaskUserName = assignedTaskUserName;
+        this.taskPriority = taskPriority;
+        this.projectID = projectID;
     }
 
     //---------Getters and Setters
@@ -84,13 +86,13 @@ public class Task {
     public void setTaskTimeEstimate(int taskTimeEstimate) {
         this.taskTimeEstimate = taskTimeEstimate;
     }
-//----------------Task Dedicated Hours----------------
-    public int getTaskDedicatedHours() {
-        return taskDedicatedHours;
-    }
+//----------------Task time spent----------------
+public int getTaskTimeSpent() {
+    return taskTimeSpent;
+}
 
-    public void setTaskDedicatedHours(int taskDedicatedHours) {
-        this.taskDedicatedHours = taskDedicatedHours;
+    public void setTaskTimeSpent(int taskTimeSpent) {
+        this.taskTimeSpent = taskTimeSpent;
     }
 //----------------Task Status----------------
     public String getTaskStatus() {
@@ -100,20 +102,20 @@ public class Task {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
-//----------------Assigned User ID For task----------------
-    public int getAssignedTaskUserID() {
-        return assignedTaskUserID;
+//----------------Task priority----------------
+public String getTaskPriority() {
+    return taskPriority;
+}
+
+    public void setTaskPriority(String taskPriority) {
+        this.taskPriority = taskPriority;
+    }
+//----------------Project ID----------------
+    public int getProjectID() {
+        return projectID;
     }
 
-    public void setAssignedUserID(int assignedUserID) {
-        this.assignedTaskUserID= assignedUserID;
-    }
-//----------------Assigned User Name For task----------------
-    public String getAssignedTaskUserName() {
-        return assignedTaskUserName;
-    }
-
-    public void setAssignedTaskUserName(String assignedTaskUserName) {
-        this.assignedTaskUserName = assignedTaskUserName;
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 }
