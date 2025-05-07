@@ -44,7 +44,7 @@ public class SubProject {
     public void setSubProjectID(int subProjectID) {
         this.subProjectID = subProjectID;
     }
-
+// --------Sub Project name----------
     public String getSubProjectName() {
         return subProjectName;
     }
@@ -52,7 +52,7 @@ public class SubProject {
     public void setSubProjectName(String subProjectName) {
         this.subProjectName = subProjectName;
     }
-
+//----------Project description----------
     public String getSubProjectDescription() {
         return subProjectDescription;
     }
@@ -60,7 +60,7 @@ public class SubProject {
     public void setSubProjectDescription(String subProjectDescription) {
         this.subProjectDescription = subProjectDescription;
     }
-
+//----------Project start date----------
     public LocalDate getSubProjectStartDate() {
         return subProjectStartDate;
     }
@@ -68,7 +68,7 @@ public class SubProject {
     public void setSubProjectStartDate(LocalDate subProjectStartDate) {
         this.subProjectStartDate = subProjectStartDate;
     }
-
+//----------Project deadline----------
     public LocalDate getSubProjectDeadline() {
         return subProjectDeadline;
     }
@@ -76,7 +76,7 @@ public class SubProject {
     public void setSubProjectDeadline(LocalDate subProjectDeadline) {
         this.subProjectDeadline = subProjectDeadline;
     }
-
+//----------Project time estimate----------
     public int getSubProjectTimeEstimate() {
         return subProjectTimeEstimate;
     }
@@ -84,7 +84,7 @@ public class SubProject {
     public void setSubProjectTimeEstimate(int subProjectTimeEstimate) {
         this.subProjectTimeEstimate = subProjectTimeEstimate;
     }
-
+//----------Project time spent----------
     public int getSubProjectTimeSpent() {
         return subProjectTimeSpent;
     }
@@ -92,7 +92,7 @@ public class SubProject {
     public void setSubProjectTimeSpent(int subProjectTimeSpent) {
         this.subProjectTimeSpent = subProjectTimeSpent;
     }
-
+//----------Project status----------
     public String getSubProjectStatus() {
         return subProjectStatus;
     }
@@ -100,7 +100,7 @@ public class SubProject {
     public void setSubProjectStatus(String subProjectStatus) {
         this.subProjectStatus = subProjectStatus;
     }
-
+//----------Project priority----------
     public String getSubProjectPriority() {
         return subProjectPriority;
     }
@@ -108,7 +108,7 @@ public class SubProject {
     public void setSubProjectPriority(String subProjectPriority) {
         this.subProjectPriority = subProjectPriority;
     }
-
+//----------ProjectID----------
     public int getProjectID() {
         return projectID;
     }
