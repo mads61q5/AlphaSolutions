@@ -19,9 +19,6 @@ public class ProjectService {
         return projectRepository.findById(projectID);
     }
     public void createProject(Project project) {
-        project.setProjectStatus("NOT_STARTED");
-        project.setProjectPriority("LOW_PRIORITY");
-        project.setProjectTimeSpent(0);
         projectRepository.save(project);
     }
 
@@ -33,7 +30,5 @@ public class ProjectService {
         projectRepository.delete(projectID);
     }
 
-   // public List<Project> getProjectsByStatus(String status) {
-     //   return projectRepository.findByStatus(status);
     }
 
