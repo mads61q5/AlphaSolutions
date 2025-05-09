@@ -22,27 +22,28 @@ public class TaskService {
         task.setTaskPriority("LOW_PRIORITY");
         taskRepository.save(task);
     }
-//----------get all tasks----------
+
+//--------Get All Tasks-----------
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
-//----------get task by id----------
+//--------Get Task By Id-----------
     public Task getTaskById(int taskID) {
         return taskRepository.findById(taskID);
     }
-    //----------get tasks by project id----------
+    //--------Get Tasks By Project Id-----------
     public List<Task> getTasksByProject(int projectID) {
         return taskRepository.findByProjectId(projectID);
     }
-    //----------get tasks by sub project id----------
+    //--------Get Tasks By Sub Project Id-----------
     public List<Task> getTasksBySubProjectId(int subProjectID) {
         return taskRepository.findBySubProjectId(subProjectID);
     }
-    //----------update task----------
-    public void updateTask(Task task, int taskID) {
-        taskRepository.update(task, taskID);
+    //--------Update Task-----------
+    public void updateTask(Task task) {
+        taskRepository.update(task);
     }
-    //----------delete task----------
+    //--------Delete Task-----------
     public void deleteTask(int taskID) {
         taskRepository.delete(taskID);
     }

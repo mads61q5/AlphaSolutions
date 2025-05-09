@@ -38,7 +38,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
     @Override
     public List<Task> findBySubProjectId(int subProjectID) {
-        String sql = "SELECT * FROM tasks WHERE subProject_id = ?";
+        String sql = "SELECT * FROM tasks WHERE subproject_id = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID);
     }
 
@@ -64,26 +64,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void save(Task task) {
         String sql = "INSERT INTO tasks (task_name, task_description, task_start_date, " +
                 "task_deadline, task_time_estimate, task_time_spent, task_status, " +
-                "task_priority, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        jdbcTemplate.update(sql,
-                task.getTaskName(),
-                task.getTaskDescription(),
-                task.getTaskStartDate(),
-                task.getTaskDeadline(),
-                task.getTaskTimeEstimate(),
-                task.getTaskTimeSpent(),
-                task.getTaskStatus(),
-                task.getTaskPriority(),
-                task.getProjectID());
-    }
-
-    @Override
-    public void update(Task task, int taskID) {
-        String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
-                "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
-                "task_time_spent = ?, task_status = ?, task_priority = ?, " +
-                "project_id = ? WHERE task_id = ?";
+                "task_priority, project_id,subproject_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         jdbcTemplate.update(sql,
                 task.getTaskName(),
@@ -95,6 +76,28 @@ public class TaskRepositoryImpl implements TaskRepository {
                 task.getTaskStatus(),
                 task.getTaskPriority(),
                 task.getProjectID(),
+                task.getSubProjectID());
+
+    }
+
+    @Override
+    public void update(Task task, int taskID) {
+        String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
+                "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
+                "task_time_spent = ?, task_status = ?, task_priority = ?, " +
+                "project_id = ?, subproject_id = ? WHERE task_id = ?";
+
+        jdbcTemplate.update(sql,
+                task.getTaskName(),
+                task.getTaskDescription(),
+                task.getTaskStartDate(),
+                task.getTaskDeadline(),
+                task.getTaskTimeEstimate(),
+                task.getTaskTimeSpent(),
+                task.getTaskStatus(),
+                task.getTaskPriority(),
+                task.getProjectID(),
+                task.getSubProjectID(),
                 task.getTaskID());
     }
 
@@ -117,7 +120,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                     rs.getInt("task_time_spent"),
                     rs.getString("task_status"),
                     rs.getString("task_priority"),
-                    rs.getInt("project_id")
+                    rs.getInt("project_id"),
+                    rs.getInt("subproject_id")
             );
         }
     }
