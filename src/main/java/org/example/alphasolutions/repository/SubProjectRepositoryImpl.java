@@ -1,6 +1,5 @@
 package org.example.alphasolutions.repository;
 import org.example.alphasolutions.Interfaces.SubProjectRepository;
-import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -68,7 +67,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     }
 //---------update---------
     @Override
-    public void update(SubProject subProject) {
+    public void update(SubProject subProject, int subProjectID) {
         String sql = "UPDATE subprojects SET subproject_name = ?, subproject_description = ?, " +
                 "subproject_start_date = ?, subproject_deadline = ?, subproject_time_estimate = ?, " +
                 "subproject_time_spent = ?, subproject_status = ?, subproject_priority = ?, " +
