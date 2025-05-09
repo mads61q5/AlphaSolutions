@@ -1,5 +1,7 @@
 package org.example.alphasolutions.model;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Task {
@@ -18,7 +20,8 @@ public class Task {
     private int subProjectID;
 
 
-    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline, int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority, int projectId) {
+    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
+                int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority, int projectId) {
     }
 
     public Task(int taskID, String taskName, String taskDescription,
@@ -48,7 +51,8 @@ public class Task {
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
-//----------------Task Name----------------
+
+    //----------------Task Name----------------
     public String getTaskName() {
         return taskName;
     }
@@ -56,7 +60,8 @@ public class Task {
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
-//----------------Task Description----------------
+
+    //----------------Task Description----------------
     public String getTaskDescription() {
         return taskDescription;
     }
@@ -64,7 +69,8 @@ public class Task {
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
-//----------------Task Start Date----------------
+
+    //----------------Task Start Date----------------
     public LocalDate getTaskStartDate() {
         return taskStartDate;
     }
@@ -72,7 +78,8 @@ public class Task {
     public void setTaskStartDate(LocalDate taskStartDate) {
         this.taskStartDate = taskStartDate;
     }
-//----------------Task Deadline----------------
+
+    //----------------Task Deadline----------------
     public LocalDate getTaskDeadline() {
         return taskDeadline;
     }
@@ -80,7 +87,8 @@ public class Task {
     public void setTaskDeadline(LocalDate taskDeadline) {
         this.taskDeadline = taskDeadline;
     }
-//----------------Task Time Estimate----------------
+
+    //----------------Task Time Estimate----------------
     public int getTaskTimeEstimate() {
         return taskTimeEstimate;
     }
@@ -88,15 +96,17 @@ public class Task {
     public void setTaskTimeEstimate(int taskTimeEstimate) {
         this.taskTimeEstimate = taskTimeEstimate;
     }
-//----------------Task time spent----------------
-public int getTaskTimeSpent() {
-    return taskTimeSpent;
-}
+
+    //----------------Task time spent----------------
+    public int getTaskTimeSpent() {
+        return taskTimeSpent;
+    }
 
     public void setTaskTimeSpent(int taskTimeSpent) {
         this.taskTimeSpent = taskTimeSpent;
     }
-//----------------Task Status----------------
+
+    //----------------Task Status----------------
     public String getTaskStatus() {
         return taskStatus;
     }
@@ -104,15 +114,17 @@ public int getTaskTimeSpent() {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
-//----------------Task priority----------------
-public String getTaskPriority() {
-    return taskPriority;
-}
+
+    //----------------Task priority----------------
+    public String getTaskPriority() {
+        return taskPriority;
+    }
 
     public void setTaskPriority(String taskPriority) {
         this.taskPriority = taskPriority;
     }
-//----------------Project ID----------------
+
+    //----------------Project ID----------------
     public int getProjectID() {
         return projectID;
     }
@@ -120,7 +132,8 @@ public String getTaskPriority() {
     public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
-//----------------Sub Project ID----------------
+
+    //----------------Sub Project ID----------------
     public int getSubProjectID() {
         return subProjectID;
     }

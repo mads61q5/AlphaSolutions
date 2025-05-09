@@ -22,7 +22,6 @@ public class TaskService {
         task.setTaskPriority("LOW_PRIORITY");
         taskRepository.save(task);
     }
-
 //--------Get All Tasks-----------
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -40,8 +39,8 @@ public class TaskService {
         return taskRepository.findBySubProjectId(subProjectID);
     }
     //--------Update Task-----------
-    public void updateTask(Task task) {
-        taskRepository.update(task);
+    public void updateTask(Task task, int taskID) {
+        taskRepository.update(task,taskID);
     }
     //--------Delete Task-----------
     public void deleteTask(int taskID) {
