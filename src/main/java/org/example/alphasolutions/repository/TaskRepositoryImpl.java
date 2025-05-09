@@ -36,6 +36,12 @@ public class TaskRepositoryImpl implements TaskRepository {
         String sql = "SELECT * FROM tasks WHERE project_id = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), projectID);
     }
+    @Override
+    public List<Task> findBySubProjectId(int subProjectID) {
+        String sql = "SELECT * FROM tasks WHERE subProject_id = ?";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID);
+    }
+
 
     @Override
     public List<Task> findByProjectIdAndStatus(int projectID, String status) {

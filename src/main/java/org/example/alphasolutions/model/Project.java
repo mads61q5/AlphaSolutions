@@ -19,10 +19,8 @@ public class Project {
     public Project() {
     }
 //----------------Constructor----------------
-public Project(int projectID, String projectName, String projectDescription,
-               LocalDate projectStartDate, LocalDate projectDeadline,
-               int projectTimeEstimate, int projectTimeSpent,
-               String projectStatus, String projectPriority) {
+public Project(int projectID, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectDeadline,
+               int projectTimeEstimate, int projectTimeSpent, String projectStatus, String projectPriority) {
     this.projectID = projectID;
     this.projectName = projectName;
     this.projectDescription = projectDescription;

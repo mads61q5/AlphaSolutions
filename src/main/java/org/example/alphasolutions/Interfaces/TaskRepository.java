@@ -11,6 +11,7 @@ public interface TaskRepository {
     void update(Task task);
     void delete(int taskID);
     List<Task> findByProjectId(int projectID);
+    List<Task> findBySubProjectId(int projectID);
     List<Task> findByProjectIdAndStatus(int projectID, String status);
     List<Task> findByStatus(String status);
     List<Task> findByPriority(String Priority);

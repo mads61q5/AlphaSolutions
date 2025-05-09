@@ -15,6 +15,7 @@ public class Task {
     private String taskStatus;
     private String taskPriority;
     private int projectID;
+    private int subProjectID;
 
 
     public Task() {
@@ -24,7 +25,7 @@ public class Task {
                 LocalDate taskStartDate, LocalDate taskDeadline,
                 int taskTimeEstimate, int taskTimeSpent,
                 String taskStatus, String taskPriority,
-                int projectID) {
+                int projectID, int subProjectID) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -35,6 +36,7 @@ public class Task {
         this.taskStatus = taskStatus;
         this.taskPriority = taskPriority;
         this.projectID = projectID;
+        this.subProjectID = subProjectID;
     }
 
     //---------Getters and Setters
@@ -117,5 +119,13 @@ public String getTaskPriority() {
 
     public void setProjectID(int projectID) {
         this.projectID = projectID;
+    }
+
+    public int getSubProjectID() {
+        return subProjectID;
+    }
+
+    public void setSubProjectID(int subProjectID) {
+        this.subProjectID = subProjectID;
     }
 }

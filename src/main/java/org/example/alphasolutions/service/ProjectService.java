@@ -7,25 +7,18 @@ import java.util.List;
 
 @Service
 public class ProjectService {
-
     private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
-
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
-
     public Project getProjectById(int projectID) {
         return projectRepository.findById(projectID);
     }
-
     public void createProject(Project project) {
-        project.setProjectStatus("NOT_STARTED");
-        project.setProjectPriority("LOW_PRIORITY");
-        project.setProjectTimeSpent(0);
         projectRepository.save(project);
     }
 
@@ -37,7 +30,5 @@ public class ProjectService {
         projectRepository.delete(projectID);
     }
 
-    public List<Project> getProjectsByStatus(String status) {
-        return projectRepository.findByStatus(status);
     }
-}
+

@@ -17,35 +17,38 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     public SubProjectRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+//---------find all---------
     @Override
     public List<SubProject> findAll() {
         String sql = "SELECT * FROM subprojects";
         return jdbcTemplate.query(sql, new SubProjectRowMapper());
     }
-
+//---------find by id---------
     @Override
     public SubProject findById(int subProjectID) {
         String sql = "SELECT * FROM subprojects WHERE subproject_id = ?";
         return jdbcTemplate.queryForObject(sql, new SubProjectRowMapper(), subProjectID);
     }
-
+//---------find by project id---------
     @Override
     public List<SubProject> findByProjectId(int projectID) {
         String sql = "SELECT * FROM subprojects WHERE project_id = ?";
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), projectID);
     }
-
+//---------find by status---------
     @Override
     public List<SubProject> findByStatus(String status) {
         String sql = "SELECT * FROM subprojects WHERE subproject_status = ?";
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), status);
     }
+    //---------find by priority---------
     @Override
     public List<SubProject> findByPriority(String priority) {
         String sql = "SELECT * FROM subprojects WHERE subproject_priority = ?";
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), priority);
     }
+    //------------CRUD OPS----------
+    //---------save---------
     @Override
     public void save(SubProject subProject) {
         String sql = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_start_date, " +
@@ -63,7 +66,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                 subProject.getSubProjectPriority(),
                 subProject.getProjectID());
     }
-
+//---------update---------
     @Override
     public void update(SubProject subProject) {
         String sql = "UPDATE subprojects SET subproject_name = ?, subproject_description = ?, " +
@@ -83,13 +86,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                 subProject.getProjectID(),
                 subProject.getSubProjectID());
     }
-
+//---------delete---------
     @Override
     public void delete(int subProjectID) {
         String sql = "DELETE FROM subprojects WHERE subproject_id = ?";
         jdbcTemplate.update(sql, subProjectID);
     }
-
+//---------RowMapper (result set)---------
     private static class SubProjectRowMapper implements RowMapper<SubProject> {
         @Override
         public SubProject mapRow(ResultSet rs, int rowNum) throws SQLException {
