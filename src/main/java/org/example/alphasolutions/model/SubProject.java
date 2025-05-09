@@ -40,7 +40,6 @@ public class SubProject {
     public int getSubProjectID() {
         return subProjectID;
     }
-
     public void setSubProjectID(int subProjectID) {
         this.subProjectID = subProjectID;
     }
@@ -48,7 +47,6 @@ public class SubProject {
     public String getSubProjectName() {
         return subProjectName;
     }
-
     public void setSubProjectName(String subProjectName) {
         this.subProjectName = subProjectName;
     }
@@ -56,7 +54,6 @@ public class SubProject {
     public String getSubProjectDescription() {
         return subProjectDescription;
     }
-
     public void setSubProjectDescription(String subProjectDescription) {
         this.subProjectDescription = subProjectDescription;
     }
@@ -64,7 +61,6 @@ public class SubProject {
     public LocalDate getSubProjectStartDate() {
         return subProjectStartDate;
     }
-
     public void setSubProjectStartDate(LocalDate subProjectStartDate) {
         this.subProjectStartDate = subProjectStartDate;
     }
@@ -72,7 +68,6 @@ public class SubProject {
     public LocalDate getSubProjectDeadline() {
         return subProjectDeadline;
     }
-
     public void setSubProjectDeadline(LocalDate subProjectDeadline) {
         this.subProjectDeadline = subProjectDeadline;
     }
@@ -96,7 +91,6 @@ public class SubProject {
     public String getSubProjectStatus() {
         return subProjectStatus;
     }
-
     public void setSubProjectStatus(String subProjectStatus) {
         this.subProjectStatus = subProjectStatus;
     }
@@ -104,7 +98,6 @@ public class SubProject {
     public String getSubProjectPriority() {
         return subProjectPriority;
     }
-
     public void setSubProjectPriority(String subProjectPriority) {
         this.subProjectPriority = subProjectPriority;
     }
@@ -112,7 +105,6 @@ public class SubProject {
     public int getProjectID() {
         return projectID;
     }
-
     public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
