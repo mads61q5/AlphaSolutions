@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class TaskService {
+
     private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
@@ -21,22 +22,31 @@ public class TaskService {
         taskRepository.save(task);
     }
     public List<Task> getAllTasks(){
+
+    public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
-    public Task getTaskById(int taskID){
+
+    public Task getTaskById(int taskID) {
         return taskRepository.findById(taskID);
     }
     public List<Task> getTasksByProjectId(int projectID){
+
+    public List<Task> getTasksByProject(int projectID) {
         return taskRepository.findByProjectId(projectID);
     }
     public List<Task> getTasksBySubProjectId(int subProjectID){
         return taskRepository.findBySubProjectId(subProjectID);
+
+    public void createTask(Task task) {
+        taskRepository.save(task);
     }
 
-    public void updateTask(Task task){
+    public void updateTask(Task task) {
         taskRepository.update(task);
     }
-    public void deleteTask(int taskID){
+
+    public void deleteTask(int taskID) {
         taskRepository.delete(taskID);
     }
     public void saveTask(Task task){
