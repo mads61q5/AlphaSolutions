@@ -79,7 +79,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void update(Task task) {
+    public void update(Task task, int taskID) {
         String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
                 "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
                 "task_time_spent = ?, task_status = ?, task_priority = ?, " +

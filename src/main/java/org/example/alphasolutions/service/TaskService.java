@@ -35,8 +35,8 @@ public class TaskService {
     public List<Task> getTasksBySubProjectId(int subProjectID) {
         return taskRepository.findBySubProjectId(subProjectID);
     }
-    public void updateTask(Task task) {
-        taskRepository.update(task);
+    public void updateTask(Task task, int taskID) {
+        taskRepository.update(task, taskID);
     }
 
     public void deleteTask(int taskID) {
