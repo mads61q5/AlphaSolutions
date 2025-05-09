@@ -15,12 +15,14 @@ public class TaskService {
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
+    //----------create task----------
     public void createTask(Task task) {
         task.setTaskStatus("NOT_STARTED");
         task.setTaskTimeSpent(0);
         task.setTaskPriority("LOW_PRIORITY");
         taskRepository.save(task);
     }
+
 //--------Get All Tasks-----------
     public List<Task> getAllTasks() {
         return taskRepository.findAll();

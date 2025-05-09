@@ -8,7 +8,7 @@ public interface TaskRepository {
     List<Task> findAll();
     Task findById(int taskID);
     void save(Task task);
-    void update(Task task);
+    void update(Task task, int taskID);
     void delete(int taskID);
     List<Task> findByProjectId(int projectID);
     List<Task> findBySubProjectId(int projectID);

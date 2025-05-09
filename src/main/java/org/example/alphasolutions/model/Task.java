@@ -18,7 +18,7 @@ public class Task {
     private int subProjectID;
 
 
-    public Task() {
+    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline, int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority, int projectId) {
     }
 
     public Task(int taskID, String taskName, String taskDescription,
