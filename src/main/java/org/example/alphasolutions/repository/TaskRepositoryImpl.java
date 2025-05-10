@@ -1,6 +1,5 @@
 package org.example.alphasolutions.repository;
 import org.example.alphasolutions.Interfaces.TaskRepository;
-import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -120,8 +119,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                     rs.getInt("task_time_spent"),
                     rs.getString("task_status"),
                     rs.getString("task_priority"),
-                    rs.getInt("project_id"),
-                    rs.getInt("subproject_id")
+                    rs.getInt("project_id")
             );
         }
     }

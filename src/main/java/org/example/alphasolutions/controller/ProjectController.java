@@ -2,21 +2,32 @@ package org.example.alphasolutions.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.alphasolutions.model.Project;
+import org.example.alphasolutions.model.SubProject;
+import org.example.alphasolutions.model.Task;
+import org.example.alphasolutions.model.TimeSummary;
 import org.example.alphasolutions.service.ProjectService;
+import org.example.alphasolutions.service.SubProjectService;
+import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.TimeCalculationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
     private final TimeCalculationService timeCalculationService;
+    private final TaskService taskService;
+    private final SubProjectService subProjectService;
 
-    public ProjectController(ProjectService projectService, TimeCalculationService timeCalculationService) {
+    public ProjectController(ProjectService projectService, TimeCalculationService timeCalculationService,TaskService taskService, SubProjectService subProjectService) {
         this.projectService = projectService;
         this.timeCalculationService = timeCalculationService;
+        this.taskService = taskService;
+        this.subProjectService = subProjectService;
     }
 
     private boolean isLoggedIn(HttpSession session) {
@@ -32,12 +43,19 @@ public class ProjectController {
         return "projects/list";
     }
 
-    @GetMapping("/{projectId}")
-    public String getProjectById(@PathVariable int projectId, Model model, HttpSession session) {
+    @GetMapping("/{projectID}")
+    public String getProjectById(@PathVariable int projectID, Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        Project project = projectService.getProjectById(projectId);
+        Project project = projectService.getProjectById(projectID);
+        List<Task> tasks = taskService.getTasksByProject(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+
+        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(projectID, tasks, subProjects);
+        model.addAttribute("project", project);
+        model.addAttribute("timeSummary",timeSummary);
+
         model.addAttribute("project", project);
         return "projects/view";
     }
@@ -60,12 +78,12 @@ public class ProjectController {
         return "redirect:/projects/" + project.getProjectID();
     }
 
-    @GetMapping("/edit/{projectId}")
-    public String showEditForm(@PathVariable int projectId, Model model, HttpSession session) {
+    @GetMapping("/edit/{projectID}")
+    public String showEditForm(@PathVariable int projectID, Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        model.addAttribute("project", projectService.getProjectById(projectId));
+        model.addAttribute("project", projectService.getProjectById(projectID));
         return "projects/edit";
     }
 
@@ -78,12 +96,12 @@ public class ProjectController {
         return "redirect:/projects/" + project.getProjectID();
     }
 
-    @GetMapping("/delete/{projectId}")
-    public String deleteProject(@PathVariable int projectId, HttpSession session) {
+    @GetMapping("/delete/{projectID}")
+    public String deleteProject(@PathVariable int projectID, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        projectService.deleteProject(projectId);
+        projectService.deleteProject(projectID);
         return "redirect:/projects";
     }
 }

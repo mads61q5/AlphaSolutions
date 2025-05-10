@@ -19,16 +19,31 @@ public class Task {
     private int projectID;
     private int subProjectID;
 
+    public Task() {}
 
-    public Task(int taskId, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
-                int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority, int projectId) {
+    //-------constructor for project tasks
+    public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
+                int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority,
+                int projectID){
+
+        this.taskID = taskID;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskStartDate = taskStartDate;
+        this.taskDeadline = taskDeadline;
+        this.taskTimeEstimate = taskTimeEstimate;
+        this.taskTimeSpent = taskTimeSpent;
+        this.taskStatus = taskStatus;
+        this.taskPriority = taskPriority;
+        this.projectID = projectID;
+        this.subProjectID = 0;
     }
 
-    public Task(int taskID, String taskName, String taskDescription,
-                LocalDate taskStartDate, LocalDate taskDeadline,
-                int taskTimeEstimate, int taskTimeSpent,
-                String taskStatus, String taskPriority,
-                int projectID, int subProjectID) {
+    //-------------constructor for subproject tasks
+    public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
+                int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority,
+                int projectID, int subProjectID){
+
         this.taskID = taskID;
         this.taskName = taskName;
         this.taskDescription = taskDescription;

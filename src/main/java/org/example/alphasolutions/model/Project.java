@@ -1,6 +1,9 @@
 package org.example.alphasolutions.model;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 //------Attributes----------
 public class Project {
     private int projectID;
@@ -14,6 +17,8 @@ public class Project {
     private int projectTimeSpent;
     private String projectStatus;
     private String projectPriority;
+    private List<Task> Tasks = new ArrayList<>();
+    private List<SubProject>subProjects = new ArrayList<>();
 
 
     public Project() {
@@ -32,6 +37,13 @@ public Project(int projectID, String projectName, String projectDescription, Loc
     this.projectPriority = projectPriority;
     }
     //------Setters & getters----------
+    public List<Task> getTasks() {
+        return Tasks;
+
+    }
+    public List<SubProject> getSubProjects() {
+        return subProjects;
+    }
 //----------------Project ID----------------
     // Getters and Setters
     public int getProjectID() {
@@ -84,7 +96,7 @@ public Project(int projectID, String projectName, String projectDescription, Loc
 //----------------Project time spent----------------
 public int getProjectTimeSpent() {
     return projectTimeSpent;
-}
+    }
 
     public void setProjectTimeSpent(int projectTimeSpent) {
         this.projectTimeSpent = projectTimeSpent;
