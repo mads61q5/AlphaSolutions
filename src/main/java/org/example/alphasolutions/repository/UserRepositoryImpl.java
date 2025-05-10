@@ -24,6 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "SELECT * FROM users";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
+    @Override
+    public User findByUserName(String userName) {
+        String sql = "SELECT * FROM users WHERE user_name = ?";
+        return jdbcTemplate.queryForObject(sql, new UserRowMapper(), userName);
+    }
 
     @Override
     public User findById(int userID) {
