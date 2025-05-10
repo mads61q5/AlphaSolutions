@@ -36,7 +36,7 @@ public class TimeCalculationService {
         }
         int totalTimeSpent = taskTimeSpent + subProjectTimeSpent;
 
-        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, subProjectTimeEstimate, true);
+        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, taskTimeSpent, subProjectTimeEstimate, subProjectTimeSpent,  true);
     }
 
     //---------------calculating task time summary-----------
@@ -51,7 +51,7 @@ public class TimeCalculationService {
 
         boolean onTrack = basicCalculateOnTrackStatus(project, taskTimeSpent);
 
-        return new TimeSummary(taskTimeEstimate, taskTimeSpent, taskTimeEstimate, 0, onTrack);
+        return new TimeSummary(taskTimeEstimate,taskTimeSpent,taskTimeEstimate,taskTimeSpent,0,0,onTrack);
     }
 
     //---------------calculating sub project time summary-----------
@@ -66,7 +66,7 @@ public class TimeCalculationService {
 
         boolean onTrack = basicCalculateOnTrackStatus(project, subProjectTimeSpent);
 
-        return new TimeSummary(subProjectTimeEstimate, subProjectTimeSpent, 0, subProjectTimeEstimate, onTrack);
+        return new TimeSummary(subProjectTimeEstimate, subProjectTimeSpent, 0, 0,subProjectTimeEstimate, subProjectTimeSpent,onTrack);
     }
 
     //---------------basic calculate on track status-----------
