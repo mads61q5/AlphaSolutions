@@ -20,7 +20,6 @@ public class Task {
     public Task() {
     }
 
-    // Updated constructor for subproject tasks only
     public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate,
                 LocalDate taskDeadline, int taskTimeEstimate, int taskTimeSpent,
                 String taskStatus, String taskPriority, int subProjectID) {

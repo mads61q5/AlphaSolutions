@@ -1,42 +1,41 @@
 package org.example.alphasolutions.service;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
-import org.springframework.stereotype.Service;
 import org.example.alphasolutions.model.TimeSummary;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class TimeCalculationService {
+
     //---------------calculating entire project time summary-----------
-    //------task time estimate
-    public TimeSummary calculateProjectTimeSummary(int projectID, List<Task> tasks, List<SubProject> subProjects) {
+    public TimeSummary calculateProjectTimeSummary(int projectID, List<SubProject> subProjects) {
         int taskTimeEstimate = 0;
-        for (Task task : tasks) {
-            taskTimeEstimate += task.getTaskTimeEstimate();
-        }
-//------------ sub project time estimate
+        int taskTimeSpent = 0;
         int subProjectTimeEstimate = 0;
+        int subProjectTimeSpent = 0;
+
+        // Calculate time from all tasks in all subprojects
         for (SubProject subProject : subProjects) {
+            List<Task> tasks = subProject.getTasks();
+            for (Task task : tasks) {
+                taskTimeEstimate += task.getTaskTimeEstimate();
+                taskTimeSpent += task.getTaskTimeSpent();
+            }
+
             subProjectTimeEstimate += subProject.getSubProjectTimeEstimate();
+            subProjectTimeSpent += subProject.getSubProjectTimeSpent();
         }
 
         int totalTimeEstimate = taskTimeEstimate + subProjectTimeEstimate;
-//------------ task time spent
-        int taskTimeSpent = 0;
-        for (Task task : tasks) {
-            taskTimeSpent += task.getTaskTimeSpent();
-        }
-//------------ sub project time spent
-        int subProjectTimeSpent = 0;
-        for (SubProject subProject : subProjects) {
-            subProjectTimeSpent += subProject.getSubProjectTimeSpent();
-        }
         int totalTimeSpent = taskTimeSpent + subProjectTimeSpent;
 
-        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, taskTimeSpent, subProjectTimeEstimate, subProjectTimeSpent,  true);
+        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, taskTimeSpent,
+                               subProjectTimeEstimate, subProjectTimeSpent, true);
     }
 
     //---------------calculating task time summary-----------
@@ -51,7 +50,7 @@ public class TimeCalculationService {
 
         boolean onTrack = basicCalculateOnTrackStatus(project, taskTimeSpent);
 
-        return new TimeSummary(taskTimeEstimate,taskTimeSpent,taskTimeEstimate,taskTimeSpent,0,0,onTrack);
+        return new TimeSummary(taskTimeEstimate, taskTimeSpent, taskTimeEstimate, taskTimeSpent, 0, 0, onTrack);
     }
 
     //---------------calculating sub project time summary-----------
@@ -66,7 +65,8 @@ public class TimeCalculationService {
 
         boolean onTrack = basicCalculateOnTrackStatus(project, subProjectTimeSpent);
 
-        return new TimeSummary(subProjectTimeEstimate, subProjectTimeSpent, 0, 0,subProjectTimeEstimate, subProjectTimeSpent,onTrack);
+        return new TimeSummary(subProjectTimeEstimate, subProjectTimeSpent, 0, 0,
+                               subProjectTimeEstimate, subProjectTimeSpent, onTrack);
     }
 
     //---------------basic calculate on track status-----------
@@ -89,10 +89,6 @@ public class TimeCalculationService {
         double expectedProgress = (double) daysPassed / (double) totalDays;
         double actualProgress = (double) timeSpent / (double) project.getProjectTimeEstimate();
 
-        if (actualProgress >= expectedProgress) {
-            return true;
-        } else {
-            return false;
-        }
+        return actualProgress >= expectedProgress;
     }
 }
