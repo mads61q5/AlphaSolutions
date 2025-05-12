@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main>
+    <div class="form-container">
+        <h1>Edit Project</h1>
+
+        <form th:action="@{/projects/update}" th:object="${project}" method="post">
+            <!-- Hidden field for Project ID -->
+            <input type="hidden" th:field="*{projectID}" />
+
+            <div class="form-group">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" th:field="*{projectName}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="projectDescription">Description:</label>
+                <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="projectStartDate">Start Date:</label>
+                <input type="date" id="projectStartDate" th:field="*{projectStartDate}">
+            </div>
+
+            <div class="form-group">
+                <label for="projectDeadline">Deadline:</label>
+                <input type="date" id="projectDeadline" th:field="*{projectDeadline}">
+            </div>
+
+            <div class="form-group">
+                <label for="projectTimeEstimate">Estimated Time (hours):</label>
+                <input type="number" id="projectTimeEstimate" th:field="*{projectTimeEstimate}" min="0">
+             </div>
+
+             <!-- Note: projectTimeSpent is likely calculated, not edited directly.
+                  If it needs to be editable, add a field similar to projectTimeEstimate.
+             <div class="form-group">
+                <label for="projectTimeSpent">Time Spent (hours):</label>
+                <input type="number" id="projectTimeSpent" th:field="*{projectTimeSpent}" min="0">
+             </div>
+             -->
+
+            <div class="form-group">
+                <label for="projectStatus">Status:</label>
+                <select id="projectStatus" th:field="*{projectStatus}">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <!-- Add more statuses as needed -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="projectPriority">Priority:</label>
+                <select id="projectPriority" th:field="*{projectPriority}">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+                     <!-- Add more priorities as needed -->
+               </select>
+            </div>
+
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Update Project</button>
+                <a th:href="@{/projects/{id}(id=${project.projectID})}" class="btn btn-secondary">Cancel</a>
+                 <!-- Alternative Cancel: <a th:href="@{/projects}" class="btn btn-secondary">Cancel</a> -->
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html> 

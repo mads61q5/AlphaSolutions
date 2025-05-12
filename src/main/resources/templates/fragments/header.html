@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header class="app-header" th:fragment="header">
+    <h1>Project Management</h1>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/projects}">Projects</a>
+        <!-- Add other common navigation links here -->
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 1rem;">
+            <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+        </form>
+    </nav>
+</header>
+
+</body>
+</html> 
