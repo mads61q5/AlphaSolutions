@@ -1,6 +1,7 @@
 package org.example.alphasolutions.controller;
 
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
@@ -11,9 +12,13 @@ import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.TimeCalculationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/projects")
@@ -43,6 +48,15 @@ public class ProjectController {
         return "projects/list";
     }
 
+    @GetMapping("/create")
+    public String showCreateForm(Model model, HttpSession session) {
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+        model.addAttribute("project", new Project());
+        return "projects/create";
+    }
+
     @GetMapping("/{projectID}")
     public String getProjectById(@PathVariable int projectID, Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
@@ -52,21 +66,11 @@ public class ProjectController {
         List<Task> tasks = taskService.getTasksByProject(projectID);
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
 
-        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(projectID, tasks, subProjects);
+        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(project, tasks, subProjects);
         model.addAttribute("project", project);
         model.addAttribute("timeSummary",timeSummary);
 
-        model.addAttribute("project", project);
         return "projects/view";
-    }
-
-    @GetMapping("/new")
-    public String showCreateForm(Model model, HttpSession session) {
-        if (!isLoggedIn(session)) {
-            return "redirect:/login";
-        }
-        model.addAttribute("project", new Project());
-        return "projects/create";
     }
 
     @PostMapping
@@ -74,8 +78,8 @@ public class ProjectController {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        projectService.createProject(project);
-        return "redirect:/projects/" + project.getProjectID();
+        Project createdProject = projectService.createProject(project);
+        return "redirect:/projects/" + createdProject.getProjectID();
     }
 
     @GetMapping("/edit/{projectID}")

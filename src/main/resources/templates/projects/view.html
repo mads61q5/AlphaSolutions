@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${project.projectName} + ' - Project Overview - Project Manager'"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Optional Header -->
+<header class="app-header">
+    <h1 th:text="${project.projectName}">Project Name</h1>
+    <nav>
+        <a th:href="@{/dashboard}" class="btn btn-secondary btn-small">Dashboard</a>
+        <a th:href="@{/projects}" class="btn btn-secondary btn-small">Projects List</a>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 1rem;">
+            <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <div class="view-container">
+        <div class="project-details">
+            <h2>Project Details</h2>
+            <p><strong>ID:</strong> <span th:text="${project.projectID}"></span></p>
+            <p><strong>Description:</strong> <span th:text="${project.projectDescription != null && !project.projectDescription.isEmpty() ? project.projectDescription : '-'}"></span></p>
+            <p><strong>Start Date:</strong> <span th:text="${project.projectStartDate != null ? #temporals.format(project.projectStartDate, 'yyyy-MM-dd') : 'N/A'}"></span></p>
+            <p><strong>Deadline:</strong> <span th:text="${project.projectDeadline != null ? #temporals.format(project.projectDeadline, 'yyyy-MM-dd') : 'N/A'}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${project.projectStatus != null ? project.projectStatus : 'N/A'}"></span></p>
+            <p><strong>Priority:</strong> <span th:text="${project.projectPriority != null ? project.projectPriority : 'N/A'}"></span></p>
+        </div>
+
+        <div class="time-summary">
+            <h2>Time Summary</h2>
+            <p><strong>Estimated Hours:</strong> <span th:text="${project.projectTimeEstimate != null ? #numbers.formatDecimal(project.projectTimeEstimate, 1, 1) + 'h' : 'N/A'}">0.0h</span></p>
+            <p><strong>Time Spent:</strong> <span th:text="${project.projectTimeSpent != null ? #numbers.formatDecimal(project.projectTimeSpent, 1, 1) + 'h' : '0.0h'}">0.0h</span></p>
+            <p th:if="${project.projectTimeEstimate != null and project.projectTimeSpent != null}">
+                <strong>Remaining Hours:</strong>
+                <span th:text="${#numbers.formatDecimal(project.projectTimeEstimate - project.projectTimeSpent, 1, 1) + 'h'}">0.0h</span>
+            </p>
+            <p th:unless="${project.projectTimeEstimate != null and project.projectTimeSpent != null}">
+                <strong>Remaining Hours:</strong> N/A
+            </p>
+        </div>
+
+        <div class="button-group">
+            <a th:href="@{/projects/edit/{id}(id=${project.projectID})}" class="btn btn-edit">Edit Project</a>
+            <a th:href="@{/projects/delete/{id}(id=${project.projectID})}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this project?');">Delete Project</a>
+            <a th:href="@{/projects}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</main>
+
+<!-- Optional Footer -->
+<footer class="app-footer">
+    <p>&copy; 2024 Project Manager</p>
+</footer>
+
+</body>
+</html> 

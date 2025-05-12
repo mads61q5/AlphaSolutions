@@ -1,9 +1,9 @@
 package org.example.alphasolutions.service;
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.ProjectRepository;
 import org.example.alphasolutions.model.Project;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProjectService {
@@ -18,8 +18,9 @@ public class ProjectService {
     public Project getProjectById(int projectID) {
         return projectRepository.findById(projectID);
     }
-    public void createProject(Project project) {
+    public Project createProject(Project project) {
         projectRepository.save(project);
+        return project;
     }
 
     public void updateProject(Project project) {

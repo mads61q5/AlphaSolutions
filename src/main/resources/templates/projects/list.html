@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects List - Project Manager</title>
+    <!-- Add bootstrap or other CSS links if needed -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Optional Header -->
+<header class="app-header">
+    <h1>Project Manager</h1>
+    <nav>
+        <a th:href="@{/dashboard}" class="btn btn-secondary btn-small">Dashboard</a>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 1rem;">
+            <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <div class="list-container">
+        <div class="list-header">
+            <h1>All Projects</h1>
+            <!-- Updated button class -->
+            <a th:href="@{/projects/create}" class="btn btn-primary">Create New Project</a>
+        </div>
+
+        <!-- Updated table class -->
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Added message for empty list -->
+            <tr th:if="${#lists.isEmpty(projects)}">
+                 <td colspan="7" class="text-center">No projects available. Create one?</td>
+            </tr>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.projectID}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.projectDescription}"></td>
+                <!-- Added date formatting -->
+                <td th:text="${project.projectStartDate != null ? #temporals.format(project.projectStartDate, 'yyyy-MM-dd') : 'N/A'}"></td>
+                <td th:text="${project.projectDeadline != null ? #temporals.format(project.projectDeadline, 'yyyy-MM-dd') : 'N/A'}"></td>
+                <td th:text="${project.projectStatus}"></td>
+                <!-- Added action-buttons class and updated button styles -->
+                <td class="action-buttons">
+                    <a th:href="@{/projects/{id}(id=${project.projectID})}" class="btn btn-view btn-small">View</a>
+                    <a th:href="@{/projects/edit/{id}(id=${project.projectID})}" class="btn btn-edit btn-small">Edit</a>
+                    <a th:href="@{/projects/delete/{id}(id=${project.projectID})}" class="btn btn-delete btn-small"
+                       onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+         <!-- Removed old footer div, Back button added to header nav -->
+    </div>
+</main>
+
+<!-- Optional Footer -->
+<footer class="app-footer">
+    <p>&copy; 2024 Project Manager</p>
+</footer>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+</body>
+</html> 

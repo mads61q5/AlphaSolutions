@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Project - Project Manager</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Optional Header -->
+<header class="app-header">
+    <h1>Project Manager</h1>
+    <nav>
+        <a th:href="@{/dashboard}" class="btn btn-secondary btn-small">Dashboard</a>
+        <a th:href="@{/projects}" class="btn btn-secondary btn-small">Projects List</a>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 1rem;">
+            <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <!-- Added form-container class -->
+    <div class="form-container">
+        <h1>Create New Project</h1>
+
+        <!-- Using form-group for structure -->
+        <form th:action="@{/projects}" th:object="${project}" method="post">
+            <div class="form-group">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" th:field="*{projectName}" required>
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Description:</label>
+                <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea> <!-- Removed cols -->
+            </div>
+            <div class="form-group">
+                <label for="projectStartDate">Start Date:</label>
+                <input type="date" id="projectStartDate" th:field="*{projectStartDate}" required>
+            </div>
+            <div class="form-group">
+                <label for="projectDeadline">Deadline:</label>
+                <input type="date" id="projectDeadline" th:field="*{projectDeadline}" required>
+            </div>
+            <div class="form-group">
+                <label for="projectTimeEstimate">Estimated Time (hours):</label>
+                <!-- Changed input type to text pattern for better decimal handling, added step -->
+                <input type="number" step="0.1" id="projectTimeEstimate" th:field="*{projectTimeEstimate}" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="projectStatus">Status:</label>
+                <select id="projectStatus" th:field="*{projectStatus}">
+                    <option value="NOT_STARTED">Not Started</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                    <!-- Add other relevant status options if needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectPriority">Priority:</label>
+                <select id="projectPriority" th:field="*{projectPriority}">
+                    <option value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HIGH">High</option>
+                     <!-- Add other relevant priority options if needed -->
+                </select>
+            </div>
+
+            <!-- Updated button group -->
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Create Project</button>
+                <a href="/projects" class="btn btn-secondary">Cancel</a> <!-- Updated link style -->
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- Optional Footer -->
+<footer class="app-footer">
+    <p>&copy; 2024 Project Manager</p>
+</footer>
+
+</body>
+</html> 

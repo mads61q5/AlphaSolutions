@@ -3,55 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Project Manager</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<h1>Project Dashboard</h1>
+<!-- Optional Header -->
+<header class="app-header">
+    <h1>Project Manager</h1>
+    <nav>
+        <!-- Add navigation links if needed, e.g., Logout -->
+         <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-secondary btn-small">Logout</button>
+        </form>
+    </nav>
+</header>
 
-<div class="summary">
-    <h2>Summary</h2>
-    <p>Total Projects: <span th:text="${totalProjects}">0</span></p>
-    <p>Total Estimated Time (hours): <span th:text="${totalTimeEstimate}">0</span></p>
-    <p>Total Time Spent (hours): <span th:text="${totalTimeSpent}">0</span></p>
-</div>
+<main>
+    <h1>Dashboard</h1>
 
-<div class="project-list">
-    <h2>Projects</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Deadline</th>
-                <th>Est. Time (hrs)</th>
-                <th>Spent Time (hrs)</th>
-                <th>Priority</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="project : ${projects}">
-                <td th:text="${project.projectName}">Project Name</td>
-                <td th:text="${project.projectStatus}">Status</td>
-                <td th:text="${project.projectDeadline}">YYYY-MM-DD</td> <!-- Consider date formatting if needed -->
-                <td th:text="${project.projectTimeEstimate}">0</td>
-                <td th:text="${project.projectTimeSpent}">0</td>
-                <td th:text="${project.projectPriority}">Normal</td>
-                <td>
-                    <a th:href="@{/projects/{id}(id=${project.projectID})}">View</a>
-                    <!-- Add links for Edit/Delete later if needed -->
-                </td>
-            </tr>
-            <!-- Add a message if the list is empty -->
-            <tr th:if="${#lists.isEmpty(projects)}">
-                <td colspan="7">No projects found.</td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="/projects/create">Create New Project</a> <!-- Link to create project form -->
-</div>
+    <!-- Updated Summary Section -->
+    <div class="dashboard-summary">
+        <div class="summary-card">
+            <h3>Total Projects</h3>
+            <p class="value" th:text="${totalProjects}">0</p>
+        </div>
+        <div class="summary-card">
+            <h3>Total Est. Time</h3>
+            <p class="value" th:text="${totalTimeEstimate != null ? #numbers.formatDecimal(totalTimeEstimate, 1, 1) + 'h' : '0h'}">0h</p>
+        </div>
+        <div class="summary-card">
+            <h3>Total Time Spent</h3>
+            <p class="value" th:text="${totalTimeSpent != null ? #numbers.formatDecimal(totalTimeSpent, 1, 1) + 'h' : '0h'}">0h</p>
+        </div>
+        <!-- Add more summary cards if needed -->
+    </div>
+
+    <!-- Updated Project List Section -->
+    <div class="list-container">
+        <div class="list-header">
+             <h2>Recent Projects</h2>
+             <a th:href="@{/projects/create}" class="btn btn-primary">Create New Project</a>
+        </div>
+
+        <!-- Use data-table class -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Deadline</th>
+                    <th>Est. Time (hrs)</th>
+                    <th>Spent Time (hrs)</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.projectName}">Project Name</td>
+                    <td th:text="${project.projectStatus}">Status</td>
+                    <!-- Formatting date -->
+                    <td th:text="${project.projectDeadline != null ? #temporals.format(project.projectDeadline, 'yyyy-MM-dd') : 'N/A'}">YYYY-MM-DD</td>
+                    <td th:text="${project.projectTimeEstimate}">0</td>
+                    <td th:text="${project.projectTimeSpent != null ? project.projectTimeSpent : 0}">0</td> <!-- Assuming projectTimeSpent exists -->
+                    <td th:text="${project.projectPriority}">Normal</td>
+                    <!-- Added action-buttons class for potential future styling -->
+                    <td class="action-buttons">
+                        <!-- Updated button style -->
+                        <a th:href="@{/projects/{id}(id=${project.projectID})}" class="btn btn-view btn-small">View</a>
+                        <!-- Add links for Edit/Delete later if needed -->
+                    </td>
+                </tr>
+                <!-- Add a message if the list is empty -->
+                <tr th:if="${#lists.isEmpty(projects)}">
+                    <td colspan="7" class="text-center">No projects found.</td> <!-- Added text-center -->
+                </tr>
+            </tbody>
+        </table>
+        <!-- Optional: Link to full project list if dashboard shows only recent ones -->
+        <div class="list-footer" style="text-align: right; margin-top: 1rem;"> <!-- Added footer for consistency -->
+            <a href="/projects" class="btn btn-secondary">View All Projects</a>
+        </div>
+    </div>
+
+</main>
+
+<!-- Optional Footer -->
+<footer class="app-footer">
+    <p>&copy; 2024 Project Manager</p>
+</footer>
 
 </body>
 </html>

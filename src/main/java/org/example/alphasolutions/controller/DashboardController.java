@@ -1,14 +1,15 @@
 package org.example.alphasolutions.controller;
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
-import org.example.alphasolutions.service.TimeCalculationService;
-import org.springframework.ui.Model;
 import org.example.alphasolutions.service.ProjectService;
+import org.example.alphasolutions.service.TimeCalculationService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping ("/dashboard")
@@ -38,7 +39,7 @@ public class DashboardController {
             totalTimeEstimate += project.getProjectTimeEstimate();
             totalTimeSpent += project.getProjectTimeSpent();
         }
-        model.addAttribute("project",projects);
+        model.addAttribute("projects",projects);
         model.addAttribute("totalProjects", totalProjects);
         model.addAttribute("totalTimeEstimate", totalTimeEstimate);
         model.addAttribute("totalTimeSpent", totalTimeSpent);

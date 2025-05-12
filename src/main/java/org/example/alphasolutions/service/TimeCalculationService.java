@@ -1,42 +1,52 @@
 package org.example.alphasolutions.service;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
-import org.springframework.stereotype.Service;
 import org.example.alphasolutions.model.TimeSummary;
-
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TimeCalculationService {
     //---------------calculating entire project time summary-----------
     //------task time estimate
-    public TimeSummary calculateProjectTimeSummary(int projectID, List<Task> tasks, List<SubProject> subProjects) {
+    public TimeSummary calculateProjectTimeSummary(Project project, List<Task> tasks, List<SubProject> subProjects) {
         int taskTimeEstimate = 0;
-        for (Task task : tasks) {
-            taskTimeEstimate += task.getTaskTimeEstimate();
+        if (tasks != null) {
+            for (Task task : tasks) {
+                taskTimeEstimate += task.getTaskTimeEstimate();
+            }
         }
 //------------ sub project time estimate
         int subProjectTimeEstimate = 0;
-        for (SubProject subProject : subProjects) {
-            subProjectTimeEstimate += subProject.getSubProjectTimeEstimate();
+        if (subProjects != null) {
+            for (SubProject subProject : subProjects) {
+                subProjectTimeEstimate += subProject.getSubProjectTimeEstimate();
+            }
         }
 
         int totalTimeEstimate = taskTimeEstimate + subProjectTimeEstimate;
 //------------ task time spent
         int taskTimeSpent = 0;
-        for (Task task : tasks) {
-            taskTimeSpent += task.getTaskTimeSpent();
+        if (tasks != null) {
+            for (Task task : tasks) {
+                taskTimeSpent += task.getTaskTimeSpent();
+            }
         }
 //------------ sub project time spent
         int subProjectTimeSpent = 0;
-        for (SubProject subProject : subProjects) {
-            subProjectTimeSpent += subProject.getSubProjectTimeSpent();
+        if (subProjects != null) {
+            for (SubProject subProject : subProjects) {
+                subProjectTimeSpent += subProject.getSubProjectTimeSpent();
+            }
         }
         int totalTimeSpent = taskTimeSpent + subProjectTimeSpent;
 
-        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, taskTimeSpent, subProjectTimeEstimate, subProjectTimeSpent,  true);
+        boolean onTrack = basicCalculateOnTrackStatus(project, totalTimeSpent);
+
+        return new TimeSummary(totalTimeEstimate, totalTimeSpent, taskTimeEstimate, taskTimeSpent, subProjectTimeEstimate, subProjectTimeSpent, onTrack);
     }
 
     //---------------calculating task time summary-----------

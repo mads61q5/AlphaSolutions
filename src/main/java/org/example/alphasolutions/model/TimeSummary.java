@@ -8,6 +8,7 @@ public class TimeSummary {
     private final int taskTimeSpent;
     private final int subProjectTimeSpent;
     private final boolean onTrack;
+    private final int remainingTime;
 
     public TimeSummary(int totalTimeEstimate, int totalTimeSpent, int taskTimeEstimate, int taskTimeSpent, int subProjectTimeEstimate,
                        int subProjectTimeSpent, boolean onTrack) {
@@ -19,6 +20,7 @@ public class TimeSummary {
         this.subProjectTimeEstimate = subProjectTimeEstimate;
         this.subProjectTimeSpent = subProjectTimeSpent;
         this.onTrack = onTrack;
+        this.remainingTime = totalTimeEstimate - totalTimeSpent;
     }
 
     //---total project time estimate
@@ -48,5 +50,9 @@ public class TimeSummary {
     //------------- status--------
     public boolean isOnTrack() {
         return onTrack;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
     }
 }

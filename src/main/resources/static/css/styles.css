@@ -1,0 +1,358 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack header, main, footer vertically */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+}
+
+/* Header/Navigation (Optional - can be added to templates) */
+.app-header {
+    background-color: #005f73; /* Dark teal */
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.app-header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+.app-header nav a:hover {
+    background-color: #0a9396; /* Lighter teal */
+}
+
+
+/* Main Content Area */
+main {
+    flex-grow: 1; /* Allow main content to fill available space */
+    padding: 2rem;
+    max-width: 1200px; /* Limit content width for better readability */
+    margin: 0 auto; /* Center the main content */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* Containers */
+.container, .login-container, .list-container, .form-container, .view-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem; /* Add space between containers */
+}
+
+/* Login Specific Container */
+.login-page-wrapper { /* Centering wrapper for login */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Take up remaining space */
+}
+
+.login-container {
+    max-width: 400px; /* Limit login form width */
+    width: 100%;
+    margin: 0; /* Remove margin when centered by wrapper */
+    padding: 2.5rem;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #003f5c; /* Dark blue */
+    margin-top: 0; /* Remove default top margin */
+    margin-bottom: 1.5rem; /* Consistent spacing below headings */
+}
+
+h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    color: #005f73; /* Dark teal for subheadings */
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in width */
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+
+/* Buttons */
+.button-group {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem; /* Space between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+button, .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none; /* Remove underline from link-styled buttons */
+    text-align: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    display: inline-block; /* Ensure link buttons behave like buttons */
+    font-weight: 500;
+}
+
+button:hover, .btn:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Primary Button (Create, Login, Submit) */
+.btn-primary, button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+.btn-primary:hover, button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Secondary/Cancel Button */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* View Button */
+.btn-view {
+    background-color: #17a2b8; /* Info color */
+    color: white;
+}
+.btn-view:hover {
+    background-color: #117a8b;
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: #ffc107; /* Warning color */
+    color: #212529;
+}
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: #dc3545; /* Danger color */
+    color: white;
+}
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Small Button Variant */
+.btn-small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+}
+
+
+/* Tables */
+.data-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #333;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0; /* Add outer border */
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.9rem 1rem; /* Increased padding */
+    vertical-align: top;
+    text-align: left; /* Ensure consistent alignment */
+    border-bottom: 1px solid #e0e0e0; /* Horizontal lines */
+}
+
+.data-table thead th {
+    vertical-align: bottom;
+    border-bottom-width: 2px; /* Thicker line below header */
+    background-color: #f8f9fa; /* Light background for header */
+    font-weight: 600;
+    color: #495057;
+}
+
+.data-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.03); /* Subtle striping */
+}
+.data-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.06); /* Hover effect */
+}
+
+.data-table td:last-child { /* Style action buttons cell */
+    white-space: nowrap; /* Prevent buttons from wrapping */
+}
+.data-table .action-buttons a,
+.data-table .action-buttons button {
+    margin-right: 0.5rem; /* Spacing between action buttons */
+}
+.data-table .action-buttons a:last-child,
+.data-table .action-buttons button:last-child {
+    margin-right: 0;
+}
+
+/* Project List Specific */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem; /* More space below header */
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.list-header h1 {
+    margin-bottom: 0;
+    border-bottom: none; /* Remove double border */
+    padding-bottom: 0;
+}
+
+
+/* Project View Specific */
+.project-details,
+.time-summary {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #fdfdfd; /* Slightly off-white */
+}
+
+.project-details p,
+.time-summary p {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.project-details strong,
+.time-summary strong {
+    display: inline-block;
+    width: 180px; /* Adjust width for alignment */
+    font-weight: 600;
+    color: #555;
+}
+
+
+/* Dashboard Specific */
+.dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background-color: #e7f5ff; /* Light blue background */
+    padding: 1.5rem;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #bde0fe; /* Light blue border */
+}
+
+.summary-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #005f73; /* Dark teal */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-card .value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #003f5c; /* Dark blue */
+}
+
+
+/* Error Messages */
+.error-message {
+    color: #dc3545; /* Danger color */
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Red border */
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer (Optional - can be added to templates) */
+.app-footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
