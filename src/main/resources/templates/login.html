@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="login-container">
+  <img src="/images" alt="Logo" class="logo">
+
+  <form action="/login" method="post" class="login-form">
+    <h2>Log ind</h2>
+
+    <label for="username">Brugernavn</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Adgangskode</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Log ind</button>
+
+    <p class="error">
+      <span th:if="${wrongCredentials}">Forkert brugernavn eller adgangskode.</span>
+    </p>
+  </form>
+</div>
+</body>
+</html>
