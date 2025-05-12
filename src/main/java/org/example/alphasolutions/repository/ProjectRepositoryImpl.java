@@ -24,7 +24,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public Project findById(int projectID) {
+    public Project findByID(int projectID) {
         String sql = "SELECT * FROM projects WHERE project_id = ?";
         return jdbcTemplate.queryForObject(sql, new ProjectRowMapper(), projectID);
     }

@@ -16,6 +16,7 @@ public class DashboardController {
     private final ProjectService projectService;
     private final TimeCalculationService timeCalculationService;
 
+
     public DashboardController(ProjectService projectService, TimeCalculationService timeCalculationService) {
         this.projectService = projectService;
         this.timeCalculationService = timeCalculationService;

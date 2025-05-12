@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ProjectRepository {
     List<Project> findAll();
-    Project findById(int projectID);
+    Project findByID(int projectID);
     void save(Project project);
     void update(Project project);
     void delete(int projectID);

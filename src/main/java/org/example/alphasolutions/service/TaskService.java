@@ -27,16 +27,17 @@ public class TaskService {
         return taskRepository.findAll();
     }
 //--------Get Task By Id-----------
-    public Task getTaskById(int taskID) {
-        return taskRepository.findById(taskID);
+    public Task getTaskByID(int taskID) {
+        return taskRepository.findByID(taskID);
     }
     //--------Get Tasks By Project Id-----------
     public List<Task> getTasksByProject(int projectID) {
-        return taskRepository.findByProjectId(projectID);
+
+        return taskRepository.findByProjectID(projectID);
     }
     //--------Get Tasks By Sub Project Id-----------
-    public List<Task> getTasksBySubProjectId(int subProjectID) {
-        return taskRepository.findBySubProjectId(subProjectID);
+    public List<Task> getTasksBySubProjectID(int subProjectID) {
+        return taskRepository.findBySubProjectID(subProjectID);
     }
     //--------Update Task-----------
     public void updateTask(Task task, int taskID) {

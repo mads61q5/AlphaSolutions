@@ -27,11 +27,11 @@ import java.util.List;
     }
     //--------get sub project by id ----------
     public SubProject getSubProjectById(int subProjectID) {
-        return subProjectRepository.findById(subProjectID);
+        return subProjectRepository.findByID(subProjectID);
     }
     //--------get sub projects by project id ----------
     public List<SubProject> getSubProjectsByProject(int projectID) {
-        return subProjectRepository.findByProjectId(projectID);
+        return subProjectRepository.findByProjectID(projectID);
     }
     //---------update sub project ----------
     public void updateSubProject(SubProject subProject, int subProjectID) {

@@ -19,12 +19,13 @@ public class Task {
     private int projectID;
     private int subProjectID;
 
-    public Task() {}
+    public Task() {
+    }
 
     //-------constructor for project tasks
     public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
                 int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority,
-                int projectID){
+                int projectID) {
 
         this.taskID = taskID;
         this.taskName = taskName;
@@ -42,7 +43,7 @@ public class Task {
     //-------------constructor for subproject tasks
     public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate, LocalDate taskDeadline,
                 int taskTimeEstimate, int taskTimeSpent, String taskStatus, String taskPriority,
-                int projectID, int subProjectID){
+                int projectID, int subProjectID) {
 
         this.taskID = taskID;
         this.taskName = taskName;
@@ -91,6 +92,7 @@ public class Task {
     }
 
     public void setTaskStartDate(LocalDate taskStartDate) {
+
         this.taskStartDate = taskStartDate;
     }
 
@@ -123,6 +125,7 @@ public class Task {
 
     //----------------Task Status----------------
     public String getTaskStatus() {
+
         return taskStatus;
     }
 

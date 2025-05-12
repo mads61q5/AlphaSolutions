@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface SubProjectRepository {
     List<SubProject> findAll();
-    SubProject findById(int subProjectID);
+    SubProject findByID(int subProjectID);
     void save(SubProject subProject);
     void update(SubProject subProject, int subProjectID);
     void delete(int subProjectID);
-    List<SubProject> findByProjectId(int projectID);
+    List<SubProject> findByProjectID(int projectID);
     List<SubProject> findByStatus(String status);
     List<SubProject> findByPriority(String Priority);
 }

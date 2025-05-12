@@ -31,9 +31,11 @@ public class ProjectController {
     }
 
     private boolean isLoggedIn(HttpSession session) {
+
         return session.getAttribute("user") != null;
     }
 
+    //----------- get all projects
     @GetMapping
     public String getAllProjects(Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
@@ -42,24 +44,23 @@ public class ProjectController {
         model.addAttribute("projects", projectService.getAllProjects());
         return "projects/list";
     }
-
+//---------- get project by ID
     @GetMapping("/{projectID}")
-    public String getProjectById(@PathVariable int projectID, Model model, HttpSession session) {
+    public String getProjectByID(@PathVariable int projectID, Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        Project project = projectService.getProjectById(projectID);
+        Project project = projectService.getProjectByID(projectID);
         List<Task> tasks = taskService.getTasksByProject(projectID);
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
 
         TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(projectID, tasks, subProjects);
         model.addAttribute("project", project);
         model.addAttribute("timeSummary",timeSummary);
-
         model.addAttribute("project", project);
         return "projects/view";
     }
-
+//------------ create new project (fill out form)
     @GetMapping("/new")
     public String showCreateForm(Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
@@ -68,6 +69,7 @@ public class ProjectController {
         model.addAttribute("project", new Project());
         return "projects/create";
     }
+    //-------------create project
 
     @PostMapping
     public String createProject(@ModelAttribute Project project, HttpSession session) {
@@ -77,16 +79,16 @@ public class ProjectController {
         projectService.createProject(project);
         return "redirect:/projects/" + project.getProjectID();
     }
-
+//----------------edit project (edit form fill out)
     @GetMapping("/edit/{projectID}")
     public String showEditForm(@PathVariable int projectID, Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        model.addAttribute("project", projectService.getProjectById(projectID));
+        model.addAttribute("project", projectService.getProjectByID(projectID));
         return "projects/edit";
     }
-
+//------------- update project (this should be a button which 'saves' the project edit)
     @PostMapping("/update")
     public String updateProject(@ModelAttribute Project project, HttpSession session) {
         if (!isLoggedIn(session)) {
@@ -96,6 +98,7 @@ public class ProjectController {
         return "redirect:/projects/" + project.getProjectID();
     }
 
+    //------------delete project by projectID
     @GetMapping("/delete/{projectID}")
     public String deleteProject(@PathVariable int projectID, HttpSession session) {
         if (!isLoggedIn(session)) {

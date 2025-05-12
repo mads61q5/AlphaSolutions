@@ -24,13 +24,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     }
 //---------find by id---------
     @Override
-    public SubProject findById(int subProjectID) {
+    public SubProject findByID(int subProjectID) {
         String sql = "SELECT * FROM subprojects WHERE subproject_id = ?";
         return jdbcTemplate.queryForObject(sql, new SubProjectRowMapper(), subProjectID);
     }
 //---------find by project id---------
     @Override
-    public List<SubProject> findByProjectId(int projectID) {
+    public List<SubProject> findByProjectID(int projectID) {
         String sql = "SELECT * FROM subprojects WHERE project_id = ?";
         return jdbcTemplate.query(sql, new SubProjectRowMapper(), projectID);
     }

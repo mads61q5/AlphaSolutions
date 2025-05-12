@@ -15,8 +15,8 @@ public class ProjectService {
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
-    public Project getProjectById(int projectID) {
-        return projectRepository.findById(projectID);
+    public Project getProjectByID(int projectID) {
+        return projectRepository.findByID(projectID);
     }
     public void createProject(Project project) {
         projectRepository.save(project);

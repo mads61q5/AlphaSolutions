@@ -9,7 +9,8 @@ public class TimeSummary {
     private final int subProjectTimeSpent;
     private final boolean onTrack;
 
-    public TimeSummary(int totalTimeEstimate, int totalTimeSpent, int taskTimeEstimate, int taskTimeSpent, int subProjectTimeEstimate,
+    public TimeSummary(int totalTimeEstimate, int totalTimeSpent, int taskTimeEstimate, int taskTimeSpent,
+                       int subProjectTimeEstimate,
                        int subProjectTimeSpent, boolean onTrack) {
 
         this.totalTimeEstimate = totalTimeEstimate;
@@ -23,24 +24,29 @@ public class TimeSummary {
 
     //---total project time estimate
     public int getTotalTimeEstimate() {
+
         return totalTimeEstimate;
     }
-//---------total project time spent
+
+    //---------total project time spent
     public int getTotalTimeSpent() {
         return totalTimeSpent;
     }
 
-//---------task itme estiame
+    //---------task itme estiame
     public int getTaskTimeEstimate() {
         return taskTimeEstimate;
     }
+
     public int getTaskTimeSpent() {
         return taskTimeSpent;
     }
-//---------subproject time estiame
+
+    //---------subproject time estiame
     public int getSubProjectTimeEstimate() {
         return subProjectTimeEstimate;
     }
+
     public int getSubProjectTimeSpent() {
         return subProjectTimeSpent;
     }

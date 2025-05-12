@@ -111,7 +111,8 @@ public int getProjectTimeSpent() {
     }
 //----------------Project priority---------------
 public String getProjectPriority() {
-    return projectPriority;
+
+        return projectPriority;
 }
     public void setProjectPriority(String projectPriority) {
         this.projectPriority = projectPriority;

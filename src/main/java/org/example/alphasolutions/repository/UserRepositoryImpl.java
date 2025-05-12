@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(int userID) {
+    public User findByID(int userID) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, new UserRowMapper(), userID);
     }
