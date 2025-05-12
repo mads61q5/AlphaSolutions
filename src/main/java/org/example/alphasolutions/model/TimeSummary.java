@@ -30,24 +30,29 @@ public class TimeSummary {
 
     //---------total project time spent
     public int getTotalTimeSpent() {
+
         return totalTimeSpent;
     }
 
     //---------task itme estiame
     public int getTaskTimeEstimate() {
+
         return taskTimeEstimate;
     }
 
     public int getTaskTimeSpent() {
+
         return taskTimeSpent;
     }
 
     //---------subproject time estiame
     public int getSubProjectTimeEstimate() {
+
         return subProjectTimeEstimate;
     }
 
     public int getSubProjectTimeSpent() {
+
         return subProjectTimeSpent;
     }
 

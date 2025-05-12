@@ -26,7 +26,7 @@ import java.util.List;
         return subProjectRepository.findAll();
     }
     //--------get sub project by id ----------
-    public SubProject getSubProjectById(int subProjectID) {
+    public SubProject getSubProjectByID(int subProjectID) {
         return subProjectRepository.findByID(subProjectID);
     }
     //--------get sub projects by project id ----------
