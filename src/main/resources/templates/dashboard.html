@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<h1>Project Dashboard</h1>
+
+<div class="summary">
+    <h2>Summary</h2>
+    <p>Total Projects: <span th:text="${totalProjects}">0</span></p>
+    <p>Total Estimated Time (hours): <span th:text="${totalTimeEstimate}">0</span></p>
+    <p>Total Time Spent (hours): <span th:text="${totalTimeSpent}">0</span></p>
+</div>
+
+<div class="project-list">
+    <h2>Projects</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Est. Time (hrs)</th>
+                <th>Spent Time (hrs)</th>
+                <th>Priority</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.projectName}">Project Name</td>
+                <td th:text="${project.projectStatus}">Status</td>
+                <td th:text="${project.projectDeadline}">YYYY-MM-DD</td> <!-- Consider date formatting if needed -->
+                <td th:text="${project.projectTimeEstimate}">0</td>
+                <td th:text="${project.projectTimeSpent}">0</td>
+                <td th:text="${project.projectPriority}">Normal</td>
+                <td>
+                    <a th:href="@{/projects/{id}(id=${project.projectID})}">View</a>
+                    <!-- Add links for Edit/Delete later if needed -->
+                </td>
+            </tr>
+            <!-- Add a message if the list is empty -->
+            <tr th:if="${#lists.isEmpty(projects)}">
+                <td colspan="7">No projects found.</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/projects/create">Create New Project</a> <!-- Link to create project form -->
+</div>
+
+</body>
+</html>
