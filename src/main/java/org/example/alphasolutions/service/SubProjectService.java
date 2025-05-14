@@ -34,8 +34,8 @@ import java.util.List;
         return subProjectRepository.findByProjectID(projectID);
     }
     //---------update sub project ----------
-    public void updateSubProject(SubProject subProject, int subProjectID) {
-        subProjectRepository.update(subProject, subProjectID);
+    public void updateSubProject(SubProject subProject) {
+        subProjectRepository.update(subProject);
     }
     //---------delete sub project ----------
     public void deleteSubProject(int subProjectID) {

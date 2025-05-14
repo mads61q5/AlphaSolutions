@@ -13,7 +13,7 @@ public interface TaskRepository {
     //List<Task> findByProjectID(int projectID);
     List<Task> findBySubProjectID(int subProjectID);
     //List<Task> findBySubProjectIDAndStatus(int subProjectID, String status);
-    List<Task> findTaskByStatus(String status);
-    List<Task> findTaskByPriority(String Priority);
+    List<Task> findTaskByStatus(int subProjectID, String status);
+    List<Task> findTaskByPriority(int subProjectID, String Priority);
 }
 
