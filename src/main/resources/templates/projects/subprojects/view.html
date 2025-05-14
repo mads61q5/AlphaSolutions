@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="'Subproject: ' + ${subProject.subProjectName}">Subproject Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <h1 th:text="${subProject.subProjectName}">Subproject Name</h1>
+    <h2 th:text="'Project: ' + ${project.projectName}">Project Name</h2>
+
+    <!-- Subproject Information Box -->
+    <section class="info-box subproject-details">
+        <h2>Subproject Information</h2>
+        <dl>
+            <div class="info-item">
+                <dt class="info-label">Description:</dt>
+                <dd class="info-value" th:text="${subProject.subProjectDescription}">N/A</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Start Date:</dt>
+                <dd class="info-value" th:text="${subProject.subProjectStartDate}">YYYY-MM-DD</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Deadline:</dt>
+                <dd class="info-value" th:text="${subProject.subProjectDeadline}">YYYY-MM-DD</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Estimated Time (hours):</dt>
+                <dd class="info-value" th:text="${subProject.subProjectTimeEstimate}">0</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Time Spent (hours):</dt>
+                <dd class="info-value" th:text="${subProject.subProjectTimeSpent}">0</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Status:</dt>
+                <dd class="info-value">
+                    <span class="status" th:text="${subProject.subProjectStatus}"
+                          th:classappend="' status-' + ${subProject.subProjectStatus}">Status</span>
+                </dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Priority:</dt>
+                <dd class="info-value" th:text="${subProject.subProjectPriority}">Priority</dd>
+            </div>
+        </dl>
+        <div class="time-summary">
+            <p>Total Task Time: 
+               <span th:text="${timeSummary.totalTimeEstimate}">0</span>h /
+               <span th:text="${timeSummary.totalTimeSpent}">0</span>h
+            </p>
+            <p>
+               <span th:if="${timeSummary.onTrack}" class="status-on-track">On Track (project)</span>
+               <span th:if="${!timeSummary.onTrack}" class="status-behind">Behind Schedule</span>
+            </p>
+        </div>
+        <p class="actions">
+            <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn">Edit Subproject</a>
+            <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn delete-link">Delete Subproject</a>
+            <a th:href="@{/projects/{pid}/subprojects(pid=${project.projectID})}" class="btn">Back to Project</a>
+        </p>
+    </section>
+
+    <!-- Tasks Section -->
+    <section class="task-list-section">
+        <h2>Tasks</h2>
+        <form th:action="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" method="get" class="filter-form">
+            <label for="statusFilter">Filter by status:</label>
+            <select name="status" id="statusFilter" onchange="this.form.submit()">
+                <option value="" th:selected="${currentStatus == null or currentStatus.isEmpty()}">All</option>
+                <option th:each="stat : ${statuses}" th:value="${stat}" th:text="${stat}"
+                        th:selected="${stat == currentStatus}"></option>
+            </select>
+            <!-- Hidden input to retain project and subproject context if needed, or handle in controller -->
+        </form>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Status</th>
+                    <th>Deadline</th>
+                    <th>Est. Time (hrs)</th>
+                    <th>Spent Time (hrs)</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task : ${tasks}">
+                    <td th:text="${task.taskName}">Name</td>
+                    <td>
+                        <span class="status" th:text="${task.taskStatus}"
+                              th:classappend="' status-' + ${task.taskStatus}">Status</span>
+                    </td>
+                    <td th:text="${task.taskDeadline}">YYYY-MM-DD</td>
+                    <td th:text="${task.taskTimeEstimate}">0</td>
+                    <td th:text="${task.taskTimeSpent}">0</td>
+                    <td th:text="${task.taskPriority}">Priority</td>
+                    <td>
+                        <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}">View</a> |
+                        <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}">Edit</a> |
+                        <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/delete/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}" class="delete-link">Delete</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(tasks)}">
+                    <td colspan="7">No tasks found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p th:if="${not #lists.isEmpty(tasks)}">Total Estimated: <span th:text="${taskTotalTimeEstimate}">0</span>h &nbsp;
+            Total Spent: <span th:text="${taskTotalTimeSpent}">0</span>h</p>
+        <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/new(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn">Add New Task</a>
+    </section>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,290 +1,461 @@
+/* styles.css - Main stylesheet for ProjectManager (Light Theme) */
+
+/* Base Styles and Typography */
 :root {
-    --primary-color: #0077cc;
-    --primary-color-dark: #005fa3;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #17a2b8;
-    --secondary-color: #6c757d;
-    --light-bg: #f4f4f4;
-    --text-color: #333;
-    --muted-text: #555;
-}
-
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--light-bg);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    color: var(--text-color);
-}
-
-/* Header / Navbar */
-.navbar {
-    background-color: var(--primary-color);
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-}
-.navbar a {
-    color: #fff;
-    text-decoration: none;
-}
-.navbar-brand a {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-right: 2rem;
-}
-.nav-links {
-    list-style: none;
+    /* Color palette (modern SaaS neutrals and accents) */
+    --primary-color: #2563EB;       /* Primary accent: blue-600 */
+    --primary-color-hover: #1D4ED8; /* Darker blue for hover */
+    --danger-color: #DC2626;        /* Danger accent: red-600 */
+    --danger-color-hover: #B91C1C;  /* Darker red for hover */
+    --success-color: #16A34A;       /* Success accent: green-600 */
+    --warning-color: #EA580C;       /* Warning accent: orange-600 */
+    --neutral-color: #6B7280;       /* Neutral text (gray-600) */
+    --light-bg: #F9FAFB;            /* Light background */
+    --border-color: #E5E7EB;        /* Light gray border */
+  }
+  
+  /* Reset basic elements for consistency */
+  * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    display: flex;
-}
-.nav-links li {
-    margin: 0 0.5rem;
-}
-.nav-links a:hover {
+  }
+  
+  /* Body and global text settings */
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #374151;                 /* Gray-700 text color */
+    background-color: var(--light-bg);
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #1F2937;                 /* Gray-800 for headings */
+    margin-bottom: 0.5rem;
+  }
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  /* Paragraphs */
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Links */
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  a:hover {
+    color: var(--primary-color-hover);
     text-decoration: underline;
-}
-.nav-user {
-    font-size: 0.9em;
-}
-.nav-user a {
-    color: #fff;
-}
-
-/* Main content container */
-main {
-    flex: 1;
-    width: 90%;
+  }
+  
+  /* Header and Navigation */
+  header {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .navbar {
     max-width: 1200px;
-    margin: 20px auto;
-}
-main h1, main h2, main h3 {
-    color: var(--text-color);
-}
-section {
-    margin-bottom: 2rem;
-}
-
-/* Info Box for Project Details */
-.info-box {
-    background-color: #fff; /* White background */
-    border: 1px solid #ddd; /* Light grey border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 1.5rem; /* Internal spacing */
-    margin-bottom: 2rem; /* Space below the box */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-}
-
-.info-box h2 {
-    margin-top: 0; /* Remove default top margin for h2 inside box */
-    border-bottom: 1px solid #eee; /* Separator line for the title */
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-/* Styles for horizontal project info items */
-.info-item {
+    margin: 0 auto;
+    padding: 1rem 2rem;
     display: flex;
-    align-items: flex-start; /* Align items to the start of the cross axis */
-    margin-bottom: 0.5rem; /* Space between info items */
-}
-
-.info-label {
-    font-weight: bold;
-    width: 200px; /* Fixed width for labels */
-    margin-right: 1rem; /* Space between label and value */
-    flex-shrink: 0; /* Prevent label from shrinking */
-}
-
-.info-value {
-    flex-grow: 1; /* Allow value to take remaining space */
-}
-
-/* Summary metrics */
-.summary {
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F2937;                 /* Dark text for brand */
+    text-decoration: none;
+  }
+  .navbar-brand a:hover {
+    color: #111827;
+  }
+  .nav-links {
+    list-style: none;
+    margin-left: 2rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-.summary p {
-    margin: 0;
+    align-items: center;
+  }
+  .nav-links li {
+    margin-right: 1.5rem;
+  }
+  .nav-links li:last-child {
+    margin-right: 0;
+  }
+  .nav-links a {
+    color: #374151;                 /* Gray-700 for nav links */
     font-weight: 500;
-}
-
-/* Tables */
-.table-container {
-    overflow-x: auto;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-}
-th, td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-th {
-    background: #eee;
-}
-tr:nth-child(even) td {
-    background: #f9f9f9;
-}
-.delete-link {
-    color: var(--danger-color);
-}
-.delete-link:hover {
-    text-decoration: none;
-}
-
-/* Forms */
-form {
-    margin: 1rem 0;
-}
-label {
-    display: block;
-    margin: 0.5rem 0 0.2rem;
-    color: var(--muted-text);
-}
-input[type=text], input[type=password],
-input[type=date], input[type=number],
-select, textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 1rem;
-    font: inherit;
-    border: 1px solid #ccc;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    box-sizing: border-box;
-}
-textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-button {
-    cursor: pointer;
-}
-.btn {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 8px 16px;
-    margin-right: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+  .nav-links a:hover {
+    background-color: #F3F4F6;      /* Gray-100 background on hover */
+    color: #111827;
+  }
+  .nav-user {
+    margin-left: auto;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  .nav-user a {
+    font-weight: 500;
+    color: #374151;
+  }
+  .nav-user a:hover {
+    color: #111827;
+    text-decoration: underline;
+  }
+  
+  /* Footer */
+  footer {
+    padding: 2rem 1rem;
     text-align: center;
+    font-size: 0.875rem;
+    color: #6B7280;
+    border-top: 1px solid var(--border-color);
+    background: #FFFFFF;
+  }
+  footer a {
+    color: var(--primary-color);
     text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Main content area */
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  /* Buttons */
+  /* Base button style (for .btn class and all <button>/<input[type=submit]> elements) */
+  .btn, button, input[type="submit"] {
+    display: inline-block;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 4px;
-    font: inherit;
-}
-.btn:hover {
-    background-color: var(--primary-color-dark);
-}
-.cancel-link {
-    background-color: #6c757d;
-}
-.cancel-link:hover {
-    background-color: #5a6268;
-}
-
-/* Status labels */
-.status {
-    padding: 2px 6px;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 600;
-}
-.status-NOT_STARTED {
-    background-color: var(--secondary-color);
-}
-.status-IN_PROGRESS {
-    background-color: var(--info-color);
-}
-.status-COMPLETE,
-.status-COMPLETED {
-    background-color: var(--success-color);
-}
-/* On-track indicators */
-.status-on-track {
-    background-color: var(--success-color);
-    color: #fff;
-    padding: 3px 6px;
-    border-radius: 4px;
-    font-weight: 600;
-}
-.status-behind {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  .btn:hover, button:hover, input[type="submit"]:hover {
+    background-color: var(--primary-color-hover);
+  }
+  .btn:active, button:active, input[type="submit"]:active {
+    background-color: var(--primary-color-hover);
+    transform: scale(0.98);
+  }
+  .btn:disabled, button:disabled, input[type="submit"]:disabled {
+    background-color: #9CA3AF;     /* Gray-400 for disabled state */
+    cursor: not-allowed;
+  }
+  
+  /* Secondary / Cancel Button */
+  .btn.cancel-link {
+    background-color: #F3F4F6;      /* Gray-100 */
+    color: #374151;
+  }
+  .btn.cancel-link:hover {
+    background-color: #E5E7EB;      /* Gray-200 */
+    color: #111827;
+  }
+  
+  /* Delete / Danger Button */
+  .btn.delete-link {
     background-color: var(--danger-color);
-    color: #fff;
-    padding: 3px 6px;
-    border-radius: 4px;
-    font-weight: 600;
-}
-
-/* Login page specific */
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.login-container {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-}
-.login-container .logo {
-    width: 100px;
-    margin-bottom: 1rem;
-}
-.login-form h2 {
-    margin-bottom: 1rem;
-}
-.login-form label {
-    text-align: left;
-}
-.login-form button {
-    width: 100%;
-    font-size: 1rem;
-}
-.login-form button:hover {
-    background-color: var(--primary-color-dark);
-}
-.error {
+    color: #FFFFFF;
+  }
+  .btn.delete-link:hover {
+    background-color: var(--danger-color-hover);
+  }
+  
+  /* Danger link (if .delete-link used without .btn) */
+  a.delete-link {
     color: var(--danger-color);
-    margin-top: 0.5rem;
-}
-
-/* Footer */
-footer {
-    background-color: #f8f8f8;
+    font-weight: 500;
+  }
+  a.delete-link:hover {
+    color: var(--danger-color-hover);
+    text-decoration: underline;
+  }
+  
+  /* Forms */
+  form {
+    margin-bottom: 1.5rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: #374151;
+  }
+  input, select, textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #374151;
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);  /* Blue focus ring */
+    outline: none;
+  }
+  textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+  
+  /* Form container sections */
+  .form-section {
+    max-width: 600px;
+  }
+  .form-section > * {
+    margin-bottom: 1rem;
+  }
+  .form-section .btn {
+    margin-right: 0.5rem;
+  }
+  
+  /* Filter form (inline filters) */
+  .filter-form {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  .filter-form label {
+    display: inline-block;
+    margin: 0 0.5rem 0 0;
+    font-weight: 500;
+  }
+  .filter-form select {
+    width: auto;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Tables */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;              /* Ensure table doesn't shrink too much */
+  }
+  th, td {
+    text-align: left;
+    padding: 0.5rem;
+    vertical-align: middle;
+  }
+  th {
+    background-color: #F3F4F6;     /* Gray-100 header background */
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+  }
+  tr:nth-child(even) td {
+    background-color: #FAFAFB;     /* Slight stripe on even rows */
+  }
+  tr:hover td {
+    background-color: #F3F4F6;
+  }
+  td {
+    border-bottom: 1px solid var(--border-color);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  /* Action links in tables */
+  .table-container a {
+    color: var(--primary-color);
+  }
+  .table-container a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Info Boxes */
+  .info-box {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  .info-box h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  .info-box dl {
+    margin-bottom: 1rem;
+  }
+  .info-item {
+    display: flex;
+    align-items: baseline;
+    margin: 0.25rem 0;
+  }
+  .info-label {
+    flex: 0 0 160px;
+    font-weight: 600;
+    color: #374151;
+    text-align: right;
+    padding-right: 1rem;
+  }
+  .info-value {
+    flex: 1;
+  }
+  .time-summary {
+    margin-top: 1rem;
+  }
+  .time-summary p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  .actions {
+    text-align: right;
+    margin-top: 1rem;
+  }
+  .actions a {
+    margin-left: 0.5rem;
+  }
+  .actions a:first-child {
+    margin-left: 0;
+  }
+  
+  /* Status Badges */
+  .status, .status-on-track, .status-behind {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    color: #FFFFFF;
+  }
+  .status-NOT_STARTED {
+    background-color: #6B7280;     /* Gray-600 */
+  }
+  .status-PLANNED {
+    background-color: #6B7280;     /* Treat PLANNED same as not started */
+  }
+  .status-IN_PROGRESS {
+    background-color: var(--primary-color);
+  }
+  .status-COMPLETED {
+    background-color: var(--success-color);
+  }
+  .status-on-track {
+    background-color: var(--success-color);
+  }
+  .status-behind {
+    background-color: var(--warning-color);
+  }
+  
+  /* Login Page */
+  .login-container {
+    max-width: 400px;
+    margin: 5rem auto;
+    padding: 2rem;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
     text-align: center;
-    padding: 1rem 0;
-    font-size: 0.9em;
-    color: var(--muted-text);
-    border-top: 1px solid #ddd;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
+  }
+  .login-container .logo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  .login-form h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .login-form label {
+    text-align: left;
+  }
+  .login-form input {
+    margin-bottom: 1rem;
+  }
+  .login-form button {
+    /* Style the login button as primary */
+    width: 100%;
+    font-weight: 600;
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .login-form button:hover {
+    background-color: var(--primary-color-hover);
+  }
+  .login-form .error {
+    color: var(--danger-color);
+    margin-top: 1rem;
+    min-height: 1.5rem;            /* Reserve space for error text */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
     }
     .nav-links {
-        flex-direction: column;
-        margin: 0.5rem 0;
+      margin-left: 0;
+      margin-top: 1rem;
     }
     .nav-links li {
-        margin: 0.3rem 0;
+      margin: 0.5rem 0;
     }
-}
+    .nav-user {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+    main {
+      margin: 1rem auto;
+      padding: 0 0.5rem;
+    }
+    .table-container {
+      padding: 0.25rem;
+    }
+    table {
+      min-width: 500px;
+    }
+  }

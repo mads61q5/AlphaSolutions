@@ -1,11 +1,8 @@
 package org.example.alphasolutions.controller;
 
-import java.util.List;
-
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
-import org.example.alphasolutions.model.TimeSummary;
 import org.example.alphasolutions.service.ProjectService;
 import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.TaskService;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -42,7 +38,8 @@ public class TaskController {
         return session.getAttribute("username") != null;
     }
 
-    //-------------get all tasks-----------
+    //-------------get all tasks----------- (This method is no longer needed as tasks are shown on subproject view)
+    /*
     @GetMapping
     public String getAllTasks(@PathVariable int projectID, @PathVariable int subProjectID,
                               @RequestParam(required = false) String status,
@@ -53,7 +50,7 @@ public class TaskController {
 
         List<Task> tasks;
         if (status != null && !status.isEmpty()) {
-            tasks = taskService.getTasksByStatus(subProjectID, status);
+            tasks = taskService.getTasksByStatusAndSubProjectID(subProjectID, status); // Corrected method name
         } else {
             tasks = taskService.getTasksBySubProjectID(subProjectID);
         }
@@ -75,10 +72,12 @@ public class TaskController {
         model.addAttribute("totalTimeSpent", totalTimeSpent);
         model.addAttribute("statuses", List.of("NOT_STARTED", "IN_PROGRESS", "COMPLETE"));
         model.addAttribute("currentStatus", status);
-        return "projects/tasks/list";
+        return "projects/tasks/list"; // This view will be deleted
     }
+    */
 
-    //------------Task time summary--------------------------
+    //------------Task time summary-------------------------- (This method might be removed if not used elsewhere)
+    /*
     @GetMapping("/time-summary")
     public String getTaskTimeSummary(@PathVariable int projectID, @PathVariable int subProjectID,
                                      Model model, HttpSession session) {
@@ -94,8 +93,9 @@ public class TaskController {
         model.addAttribute("subProject", subProject);
         model.addAttribute("timeSummary", timeSummary);
 
-        return "projects/tasks/time-summary";
+        return "projects/tasks/time-summary"; // This view might also be deleted or functionality moved
     }
+    */
 
     //--------------create new task (fill out form)-----------------
     @GetMapping("/new")

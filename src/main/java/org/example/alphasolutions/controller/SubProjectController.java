@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -58,17 +59,35 @@ public class SubProjectController {
 
     //---------- get subproject by ID (view details)
     @GetMapping("/{subProjectID}")
-    public String getSubProjectById(@PathVariable int projectID, @PathVariable int subProjectID, Model model, HttpSession session) {
+    public String getSubProjectById(@PathVariable int projectID, @PathVariable int subProjectID, 
+                                    @RequestParam(required = false) String status,
+                                    Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
         Project project = projectService.getProjectByID(projectID);
         SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
-        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+
+        List<Task> tasks;
+        if (status != null && !status.isEmpty()) {
+            tasks = taskService.getTasksByStatusAndSubProjectID(subProjectID, status);
+        } else {
+            tasks = taskService.getTasksBySubProjectID(subProjectID);
+        }
+        
         TimeSummary timeSummary = timeCalculationService.calculateTasksTimeSummary(tasks, project);
+        
+        int taskTotalTimeEstimate = tasks.stream().mapToInt(Task::getTaskTimeEstimate).sum();
+        int taskTotalTimeSpent = tasks.stream().mapToInt(Task::getTaskTimeSpent).sum();
+
         model.addAttribute("project", project);
         model.addAttribute("subProject", subProject);
+        model.addAttribute("tasks", tasks);
         model.addAttribute("timeSummary", timeSummary);
+        model.addAttribute("statuses", List.of("NOT_STARTED", "IN_PROGRESS", "COMPLETE"));
+        model.addAttribute("currentStatus", status);
+        model.addAttribute("taskTotalTimeEstimate", taskTotalTimeEstimate);
+        model.addAttribute("taskTotalTimeSpent", taskTotalTimeSpent);
         return "projects/subprojects/view";
     }
 

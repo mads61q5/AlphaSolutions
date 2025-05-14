@@ -1,9 +1,10 @@
 package org.example.alphasolutions.service;
 
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.TaskRepository;
 import org.example.alphasolutions.model.Task;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class TaskService {
@@ -40,7 +41,7 @@ public class TaskService {
         taskRepository.delete(taskID);
     }
 
-    public List<Task> getTasksByStatus(int subProjectID, String taskStatus) {
-        return taskRepository.findTaskByStatus(taskStatus);
+    public List<Task> getTasksByStatusAndSubProjectID(int subProjectID, String taskStatus) {
+        return taskRepository.findTasksBySubProjectIDAndStatus(subProjectID, taskStatus);
     }
 }

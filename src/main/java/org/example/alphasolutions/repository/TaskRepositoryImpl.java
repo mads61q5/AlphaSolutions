@@ -37,29 +37,10 @@ public class TaskRepositoryImpl implements TaskRepository {
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID);
     }
 
-    public List<Task> findBySubProjectAndStatus(int subProjectID, String status) {
+    @Override
+    public List<Task> findTasksBySubProjectIDAndStatus(int subProjectID, String status) {
         String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_status = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, status);
-    }
-
-    public List<Task> findTaskByPriority(int subProjectID, String priority) {
-        String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_priority = ?";
-        return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, priority);
-    }
-
-    public List<Task> findTaskByStatus(int subProjectID, String status) {
-        String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_status = ?";
-        return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, status);
-    }
-
-    @Override
-    public List<Task> findTaskByPriority(String Priority) {
-        return null;
-    }
-
-    @Override
-    public List<Task> findTaskByStatus(String status) {
-        return null;
     }
 
     @Override
