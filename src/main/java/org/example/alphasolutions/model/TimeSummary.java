@@ -4,7 +4,7 @@ public class TimeSummary {
     private final int totalTimeEstimate;
     private final int totalTimeSpent;
     private final int taskTimeEstimate;
-    private final int subProjectTimeEstimate;
+   private final int subProjectTimeEstimate;
     private final int taskTimeSpent;
     private final int subProjectTimeSpent;
     private final boolean onTrack;
@@ -55,6 +55,8 @@ public class TimeSummary {
 
         return subProjectTimeSpent;
     }
+    
+    
 
     //------------- status--------
     public boolean isOnTrack() {
