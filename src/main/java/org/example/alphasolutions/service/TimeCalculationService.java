@@ -26,7 +26,7 @@ public class TimeCalculationService
             totalTaskTimeSpent += subProjectSummary.getTaskTimeSpent();
         }
         
-        boolean onTrack = basicCalculateOnTrackStatus(project, totalTimeSpent);
+        boolean onTrack = basicCalculateOnTrackStatus(project, totalTaskTimeSpent);
         
         return new TimeSummary(totalTimeEstimate, totalTimeSpent, totalTaskTimeEstimate, totalTaskTimeSpent,
                                0, 0, onTrack);
