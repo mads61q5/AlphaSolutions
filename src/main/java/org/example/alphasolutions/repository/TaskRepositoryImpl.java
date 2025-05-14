@@ -1,14 +1,14 @@
 package org.example.alphasolutions.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.TaskRepository;
 import org.example.alphasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
@@ -17,6 +17,12 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     public TaskRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<Task> findAll() {
+        String sql = "SELECT * FROM tasks";
+        return jdbcTemplate.query(sql, new TaskRowMapper());
     }
 
     @Override
@@ -31,21 +37,29 @@ public class TaskRepositoryImpl implements TaskRepository {
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID);
     }
 
-    @Override
     public List<Task> findBySubProjectAndStatus(int subProjectID, String status) {
         String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_status = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, status);
     }
 
-    @Override
     public List<Task> findTaskByPriority(int subProjectID, String priority) {
         String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_priority = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, priority);
     }
-    @Override
+
     public List<Task> findTaskByStatus(int subProjectID, String status) {
         String sql = "SELECT * FROM tasks WHERE subproject_id = ? AND task_status = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), subProjectID, status);
+    }
+
+    @Override
+    public List<Task> findTaskByPriority(String Priority) {
+        return null;
+    }
+
+    @Override
+    public List<Task> findTaskByStatus(String status) {
+        return null;
     }
 
     @Override
@@ -67,7 +81,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void update(Task task) {
+    public void update(Task task, int taskID) {
         String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
                 "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
                 "task_time_spent = ?, task_status = ?, task_priority = ?, " +
@@ -83,7 +97,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 task.getTaskStatus(),
                 task.getTaskPriority(),
                 task.getSubProjectID(),
-                task.getTaskID());
+                taskID);
     }
 
     @Override

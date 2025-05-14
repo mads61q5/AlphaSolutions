@@ -1,0 +1,290 @@
+:root {
+    --primary-color: #0077cc;
+    --primary-color-dark: #005fa3;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --secondary-color: #6c757d;
+    --light-bg: #f4f4f4;
+    --text-color: #333;
+    --muted-text: #555;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--light-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* Header / Navbar */
+.navbar {
+    background-color: var(--primary-color);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
+.navbar-brand a {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-right: 2rem;
+}
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.nav-links li {
+    margin: 0 0.5rem;
+}
+.nav-links a:hover {
+    text-decoration: underline;
+}
+.nav-user {
+    font-size: 0.9em;
+}
+.nav-user a {
+    color: #fff;
+}
+
+/* Main content container */
+main {
+    flex: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+main h1, main h2, main h3 {
+    color: var(--text-color);
+}
+section {
+    margin-bottom: 2rem;
+}
+
+/* Info Box for Project Details */
+.info-box {
+    background-color: #fff; /* White background */
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 1.5rem; /* Internal spacing */
+    margin-bottom: 2rem; /* Space below the box */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+.info-box h2 {
+    margin-top: 0; /* Remove default top margin for h2 inside box */
+    border-bottom: 1px solid #eee; /* Separator line for the title */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Styles for horizontal project info items */
+.info-item {
+    display: flex;
+    align-items: flex-start; /* Align items to the start of the cross axis */
+    margin-bottom: 0.5rem; /* Space between info items */
+}
+
+.info-label {
+    font-weight: bold;
+    width: 200px; /* Fixed width for labels */
+    margin-right: 1rem; /* Space between label and value */
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.info-value {
+    flex-grow: 1; /* Allow value to take remaining space */
+}
+
+/* Summary metrics */
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.summary p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+th, td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+th {
+    background: #eee;
+}
+tr:nth-child(even) td {
+    background: #f9f9f9;
+}
+.delete-link {
+    color: var(--danger-color);
+}
+.delete-link:hover {
+    text-decoration: none;
+}
+
+/* Forms */
+form {
+    margin: 1rem 0;
+}
+label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    color: var(--muted-text);
+}
+input[type=text], input[type=password],
+input[type=date], input[type=number],
+select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 1rem;
+    font: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+button {
+    cursor: pointer;
+}
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 8px 16px;
+    margin-right: 0.5rem;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+}
+.btn:hover {
+    background-color: var(--primary-color-dark);
+}
+.cancel-link {
+    background-color: #6c757d;
+}
+.cancel-link:hover {
+    background-color: #5a6268;
+}
+
+/* Status labels */
+.status {
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+.status-NOT_STARTED {
+    background-color: var(--secondary-color);
+}
+.status-IN_PROGRESS {
+    background-color: var(--info-color);
+}
+.status-COMPLETE,
+.status-COMPLETED {
+    background-color: var(--success-color);
+}
+/* On-track indicators */
+.status-on-track {
+    background-color: var(--success-color);
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.status-behind {
+    background-color: var(--danger-color);
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Login page specific */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+.login-container .logo {
+    width: 100px;
+    margin-bottom: 1rem;
+}
+.login-form h2 {
+    margin-bottom: 1rem;
+}
+.login-form label {
+    text-align: left;
+}
+.login-form button {
+    width: 100%;
+    font-size: 1rem;
+}
+.login-form button:hover {
+    background-color: var(--primary-color-dark);
+}
+.error {
+    color: var(--danger-color);
+    margin-top: 0.5rem;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.9em;
+    color: var(--muted-text);
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav-links {
+        flex-direction: column;
+        margin: 0.5rem 0;
+    }
+    .nav-links li {
+        margin: 0.3rem 0;
+    }
+}

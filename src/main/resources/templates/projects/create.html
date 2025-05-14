@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Project</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <h1>Create New Project</h1>
+    <form th:action="@{/projects}" th:object="${project}" method="post" class="form-section">
+        <label for="projectName">Project Name:</label>
+        <input type="text" id="projectName" th:field="*{projectName}" placeholder="Enter project name" required />
+        <label for="projectDescription">Description:</label>
+        <textarea id="projectDescription" th:field="*{projectDescription}" placeholder="Enter description"></textarea>
+        <label for="projectStartDate">Start Date:</label>
+        <input type="date" id="projectStartDate" th:field="*{projectStartDate}" />
+        <label for="projectDeadline">Deadline:</label>
+        <input type="date" id="projectDeadline" th:field="*{projectDeadline}" />
+        <label for="projectTimeEstimate">Estimated Time (hours):</label>
+        <input type="number" id="projectTimeEstimate" th:field="*{projectTimeEstimate}" min="0" />
+        <label for="projectStatus">Status:</label>
+        <select id="projectStatus" th:field="*{projectStatus}">
+            <option value="">-- Select Status --</option>
+            <option value="NOT_STARTED">NOT_STARTED</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="COMPLETED">COMPLETED</option>
+        </select>
+        <label for="projectPriority">Priority:</label>
+        <select id="projectPriority" th:field="*{projectPriority}">
+            <option value="">-- Select Priority --</option>
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+        </select>
+        <button type="submit" class="btn">Create Project</button>
+        <a th:href="@{/projects}" class="btn cancel-link">Cancel</a>
+    </form>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

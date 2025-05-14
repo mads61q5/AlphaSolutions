@@ -1,11 +1,10 @@
 package org.example.alphasolutions.service;
 
-import org.example.alphasolutions.Interfaces.UserRepository;
+import java.util.List;
 
+import org.example.alphasolutions.Interfaces.UserRepository;
 import org.example.alphasolutions.model.User;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -34,7 +33,7 @@ public class UserService {
     }
 
     public User getUserByID(int userID) {
-        return userRepository.findById(userID);
+        return userRepository.findByID(userID);
     }
 
     public void updateUser (User user) {

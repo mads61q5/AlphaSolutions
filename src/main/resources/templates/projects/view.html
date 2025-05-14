@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="'Project: ' + ${project.projectName}">Project Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <h1 th:text="${project.projectName}">Project Name</h1>
+
+    <!-- Project Information Box -->
+    <section class="info-box project-details">
+        <h2>Project Information</h2>
+        <dl>
+            <div class="info-item">
+                <dt class="info-label">Description:</dt>
+                <dd class="info-value" th:text="${project.projectDescription}">N/A</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Start Date:</dt>
+                <dd class="info-value" th:text="${project.projectStartDate}">YYYY-MM-DD</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Deadline:</dt>
+                <dd class="info-value" th:text="${project.projectDeadline}">YYYY-MM-DD</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Estimated Time (hours):</dt>
+                <dd class="info-value" th:text="${project.projectTimeEstimate}">0</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Time Spent (hours):</dt>
+                <dd class="info-value" th:text="${project.projectTimeSpent}">0</dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Status:</dt>
+                <dd class="info-value">
+                    <span class="status" th:text="${project.projectStatus}"
+                          th:classappend="' status-' + ${project.projectStatus}">Status</span>
+                </dd>
+            </div>
+            <div class="info-item">
+                <dt class="info-label">Priority:</dt>
+                <dd class="info-value" th:text="${project.projectPriority}">Priority</dd>
+            </div>
+        </dl>
+        <div class="time-summary">
+            <p>Total Estimated vs Spent:
+               <span th:text="${timeSummary.totalTimeEstimate}">0</span>h /
+               <span th:text="${timeSummary.totalTimeSpent}">0</span>h
+            </p>
+            <p>
+               <span th:if="${timeSummary.onTrack}" class="status-on-track">On Track</span>
+               <span th:if="${!timeSummary.onTrack}" class="status-behind">Behind Schedule</span>
+            </p>
+        </div>
+        <p class="actions">
+            <a th:href="@{/projects/edit/{id}(id=${project.projectID})}" class="btn">Edit Project</a>
+            <a th:href="@{/projects/delete/{id}(id=${project.projectID})}" class="btn delete-link">Delete Project</a>
+            <!-- Link to subprojects list page has been removed from here, as subprojects are now listed below -->
+        </p>
+    </section>
+
+    <!-- Subprojects Section -->
+    <section class="subproject-list-section">
+        <h2>Subprojects</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subproject Name</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                        <th>Est. Time (hrs)</th>
+                        <th>Spent Time (hrs)</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sub : ${subProjects}">
+                        <td th:text="${sub.subProjectName}">Name</td>
+                        <td>
+                            <span class="status" th:text="${sub.subProjectStatus}"
+                                  th:classappend="' status-' + ${sub.subProjectStatus}">Status</span>
+                        </td>
+                        <td th:text="${sub.subProjectDeadline}">YYYY-MM-DD</td>
+                        <td th:text="${sub.subProjectTimeEstimate}">0</td>
+                        <td th:text="${sub.subProjectTimeSpent}">0</td>
+                        <td th:text="${sub.subProjectPriority}">Priority</td>
+                        <td>
+                            <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn">View</a>
+                            <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn">Edit</a>
+                            <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn delete-link">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(subProjects)}">
+                        <td colspan="7">No subprojects found for this project.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a th:href="@{/projects/{pid}/subprojects/new(pid=${project.projectID})}" class="btn">Add New Subproject</a>
+    </section>
+
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

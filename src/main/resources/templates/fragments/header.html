@@ -1,0 +1,19 @@
+<header th:fragment="header">
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a th:href="@{/dashboard}">ProjectManager</a>
+        </div>
+        <ul class="nav-links">
+            <li><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/projects}">Projects</a></li>
+        </ul>
+        <div class="nav-user">
+            <span th:if="${session.username != null}">
+    Welcome, <span th:text="${session.username}">User</span>
+</span>
+            <span th:unless="${session.username != null}">
+    <a th:href="@{/login}">Login</a>
+</span>
+        </div>
+    </nav>
+</header>

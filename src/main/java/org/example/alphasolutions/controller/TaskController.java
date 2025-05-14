@@ -1,6 +1,7 @@
 package org.example.alphasolutions.controller;
 
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
@@ -11,9 +12,14 @@ import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.TimeCalculationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/projects/{projectID}/subprojects/{subProjectID}/tasks")
@@ -33,7 +39,7 @@ public class TaskController {
     }
 
     private boolean isLoggedIn(HttpSession session) {
-        return session.getAttribute("user") != null;
+        return session.getAttribute("username") != null;
     }
 
     //-------------get all tasks-----------
@@ -83,7 +89,7 @@ public class TaskController {
         Project project = projectService.getProjectByID(projectID);
         SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
 
-        TimeSummary timeSummary = timeCalculationService.calculateTasksTimeSummary(tasks, subProject);
+        TimeSummary timeSummary = timeCalculationService.calculateTasksTimeSummary(tasks, project);
         model.addAttribute("project", project);
         model.addAttribute("subProject", subProject);
         model.addAttribute("timeSummary", timeSummary);
