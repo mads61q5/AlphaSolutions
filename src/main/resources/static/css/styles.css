@@ -459,3 +459,17 @@
       min-width: 500px;
     }
   }
+
+  .logout-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .logout-btn:hover {
+    background-color: #c82333;
+    color: white;
+  }
