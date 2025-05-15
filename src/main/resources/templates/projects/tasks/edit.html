@@ -1,0 +1,11 @@
+        <select id="taskPriority" th:field="*{taskPriority}">
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+        </select>
+        <label for="userID">Assign User:</label>
+        <select id="userID" th:field="*{userID}">
+            <option value="0">-- Select User --</option>
+            <option th:each="user : ${users}" th:value="${user.userID}" th:text="${user.userName}" th:selected="${user.userID == task.userID}"></option>
+        </select>
+        <button type="submit" class="btn">Save Changes</button> 

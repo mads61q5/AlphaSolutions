@@ -1,12 +1,17 @@
 package org.example.alphasolutions.repository;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.SubProjectRepository;
 import org.example.alphasolutions.model.SubProject;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 @Repository
 public class SubProjectRepositoryImpl implements SubProjectRepository {
@@ -49,21 +54,27 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     //------------CRUD OPS----------
     //---------save---------
     @Override
-    public void save(SubProject subProject) {
+    public int save(SubProject subProject) {
         String sql = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_start_date, " +
                 "subproject_deadline, subproject_time_estimate, subproject_time_spent, subproject_status, " +
                 "subproject_priority, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        jdbcTemplate.update(sql,
-                subProject.getSubProjectName(),
-                subProject.getSubProjectDescription(),
-                subProject.getSubProjectStartDate(),
-                subProject.getSubProjectDeadline(),
-                subProject.getSubProjectTimeEstimate(),
-                subProject.getSubProjectTimeSpent(),
-                subProject.getSubProjectStatus(),
-                subProject.getSubProjectPriority(),
-                subProject.getProjectID());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, subProject.getSubProjectName());
+            ps.setString(2, subProject.getSubProjectDescription());
+            ps.setObject(3, subProject.getSubProjectStartDate());
+            ps.setObject(4, subProject.getSubProjectDeadline());
+            ps.setInt(5, subProject.getSubProjectTimeEstimate());
+            ps.setInt(6, subProject.getSubProjectTimeSpent());
+            ps.setString(7, subProject.getSubProjectStatus());
+            ps.setString(8, subProject.getSubProjectPriority());
+            ps.setInt(9, subProject.getProjectID());
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().intValue();
     }
 //---------update---------
     @Override

@@ -1,12 +1,16 @@
 package org.example.alphasolutions.controller;
 
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
+import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.ProjectService;
 import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.TimeCalculationService;
+import org.example.alphasolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,14 +29,17 @@ public class TaskController {
     private final ProjectService projectService;
     private final SubProjectService subProjectService;
     private final TimeCalculationService timeCalculationService;
+    private final UserService userService;
 
     public TaskController(TaskService taskService, ProjectService projectService,
                           SubProjectService subProjectService,
-                          TimeCalculationService timeCalculationService) {
+                          TimeCalculationService timeCalculationService,
+                          UserService userService) {
         this.taskService = taskService;
         this.projectService = projectService;
         this.subProjectService = subProjectService;
         this.timeCalculationService = timeCalculationService;
+        this.userService = userService;
     }
 
     private boolean isLoggedIn(HttpSession session) {
@@ -106,10 +114,12 @@ public class TaskController {
         }
         Task task = new Task();
         task.setSubProjectID(subProjectID);
+        List<User> users = userService.getAllUsers();
 
         model.addAttribute("task", task);
         model.addAttribute("project", projectService.getProjectByID(projectID));
         model.addAttribute("subProject", subProjectService.getSubProjectByID(subProjectID));
+        model.addAttribute("users", users);
         return "projects/tasks/create";
     }
 
@@ -125,7 +135,7 @@ public class TaskController {
         task.setSubProjectID(subProjectID);
 
         taskService.createTask(task);
-        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks";
+        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 
     //-------------get tasks by ID-----------
@@ -154,9 +164,11 @@ public class TaskController {
             return "redirect:/login";
         }
         Task task = taskService.getTaskByID(taskID);
+        List<User> users = userService.getAllUsers();
         model.addAttribute("task", task);
         model.addAttribute("project", projectService.getProjectByID(projectID));
         model.addAttribute("subProject", subProjectService.getSubProjectByID(subProjectID));
+        model.addAttribute("users", users);
 
         return "projects/tasks/edit";
     }
@@ -183,5 +195,35 @@ public class TaskController {
         }
         taskService.deleteTask(taskID);
         return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks";
+    }
+
+    // Endpoint to add hours to a task
+    @PostMapping("/{taskID}/add-hours")
+    public String addHoursToTask(@PathVariable int projectID, 
+                                 @PathVariable int subProjectID, 
+                                 @PathVariable int taskID, 
+                                 @RequestParam("hours") int hours, 
+                                 HttpSession session) {
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+        Task task = taskService.getTaskByID(taskID);
+        if (task != null) {
+            task.setTaskTimeSpent(task.getTaskTimeSpent() + hours);
+            taskService.updateTask(task, taskID);
+
+            // Update the parent SubProject's timeSpent
+            SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+            if (subProject != null) {
+                subProject.setSubProjectTimeSpent(subProject.getSubProjectTimeSpent() + hours);
+                // Assuming subProjectService.updateSubProject takes the subProject object and its ID
+                // The existing updateSubProject method in SubProjectService is:
+                // updateSubProject(SubProject subProject, int subProjectID)
+                // The subProject object fetched above already has its ID.
+                subProjectService.updateSubProject(subProject, subProject.getSubProjectID());
+            }
+        }
+        // Redirect back to the subproject view page where the task list is displayed
+        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 }

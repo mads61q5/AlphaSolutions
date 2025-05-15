@@ -6,10 +6,12 @@ import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.Task;
 import org.example.alphasolutions.model.TimeSummary;
+import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.ProjectService;
 import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.TimeCalculationService;
+import org.example.alphasolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +30,18 @@ public class SubProjectController {
     private final SubProjectService subProjectService;
     private final TaskService taskService;
     private final TimeCalculationService timeCalculationService;
+    private final UserService userService;
 
     public SubProjectController(ProjectService projectService,
                                 SubProjectService subProjectService,
                                 TaskService taskService,
-                                TimeCalculationService timeCalculationService) {
+                                TimeCalculationService timeCalculationService,
+                                UserService userService) {
         this.projectService = projectService;
         this.subProjectService = subProjectService;
         this.taskService = taskService;
         this.timeCalculationService = timeCalculationService;
+        this.userService = userService;
     }
 
     private boolean isLoggedIn(HttpSession session) {
@@ -67,6 +72,7 @@ public class SubProjectController {
         }
         Project project = projectService.getProjectByID(projectID);
         SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+        List<User> allUsers = userService.getAllUsers();
 
         List<Task> tasks;
         if (status != null && !status.isEmpty()) {
@@ -88,6 +94,7 @@ public class SubProjectController {
         model.addAttribute("currentStatus", status);
         model.addAttribute("taskTotalTimeEstimate", taskTotalTimeEstimate);
         model.addAttribute("taskTotalTimeSpent", taskTotalTimeSpent);
+        model.addAttribute("allUsers", allUsers);
         return "projects/subprojects/view";
     }
 
@@ -111,9 +118,8 @@ public class SubProjectController {
             return "redirect:/login";
         }
         subProject.setProjectID(projectID);
-        subProjectService.createSubProject(subProject);
-        // Redirect to the newly created subproject's detail page
-        return "redirect:/projects/" + projectID + "/subprojects/" + subProject.getSubProjectID();
+        SubProject createdSubProject = subProjectService.createSubProject(subProject);
+        return "redirect:/projects/" + projectID + "/subprojects/" + createdSubProject.getSubProjectID();
     }
 
     //---------------- edit subproject (show edit form)

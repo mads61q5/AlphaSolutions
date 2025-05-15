@@ -14,12 +14,12 @@ import java.util.List;
         this.subProjectRepository = subProjectRepository;
     }
     //--------Create - CRUD OPS----------
-    public void createSubProject(SubProject subProject) {
+    public SubProject createSubProject(SubProject subProject) {
        subProject.setSubProjectStatus("NOT_STARTED");
        subProject.setSubProjectTimeSpent(0);
        subProject.setSubProjectPriority("LOW_PRIORITY");
-        subProjectRepository.save(subProject);
-
+       int newId = subProjectRepository.save(subProject);
+       return getSubProjectByID(newId);
     }
     //--------get all sub projects ----------
     public List<SubProject> getAllSubProjects() {

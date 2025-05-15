@@ -2,25 +2,25 @@
 
 /* Base Styles and Typography */
 :root {
-    /* Color palette (modern SaaS neutrals and accents) */
-    --primary-color: #2563EB;       /* Primary accent: blue-600 */
-    --primary-color-hover: #1D4ED8; /* Darker blue for hover */
+    /* Color palette (modern SaaS neutrals and accents, shadcn/vercel-inspired) */
+    --primary-color: #18181B;       /* Primary accent: zinc-900 (almost black) */
+    --primary-color-hover: #27272A; /* Slightly lighter black for hover */
     --danger-color: #DC2626;        /* Danger accent: red-600 */
     --danger-color-hover: #B91C1C;  /* Darker red for hover */
     --success-color: #16A34A;       /* Success accent: green-600 */
     --warning-color: #EA580C;       /* Warning accent: orange-600 */
     --neutral-color: #6B7280;       /* Neutral text (gray-600) */
-    --light-bg: #F9FAFB;            /* Light background */
+    --light-bg: #FFFFFF;            /* White background */
     --border-color: #E5E7EB;        /* Light gray border */
   }
-  
+
   /* Reset basic elements for consistency */
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
-  
+
   /* Body and global text settings */
   body {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -29,7 +29,7 @@
     color: #374151;                 /* Gray-700 text color */
     background-color: var(--light-bg);
   }
-  
+
   /* Headings */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
@@ -42,12 +42,12 @@
   h2 {
     font-size: 1.25rem;
   }
-  
+
   /* Paragraphs */
   p {
     margin-bottom: 1rem;
   }
-  
+
   /* Links */
   a {
     color: var(--primary-color);
@@ -58,7 +58,7 @@
     color: var(--primary-color-hover);
     text-decoration: underline;
   }
-  
+
   /* Header and Navigation */
   header {
     background: #FFFFFF;
@@ -75,11 +75,11 @@
   .navbar-brand a {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1F2937;                 /* Dark text for brand */
+    color: var(--primary-color);                 /* Dark text for brand */
     text-decoration: none;
   }
   .navbar-brand a:hover {
-    color: #111827;
+    color: var(--primary-color-hover);
   }
   .nav-links {
     list-style: none;
@@ -94,30 +94,30 @@
     margin-right: 0;
   }
   .nav-links a {
-    color: #374151;                 /* Gray-700 for nav links */
+    color: #18181B;                 /* Black for nav links */
     font-weight: 500;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
   .nav-links a:hover {
     background-color: #F3F4F6;      /* Gray-100 background on hover */
-    color: #111827;
+    color: var(--primary-color-hover);
   }
   .nav-user {
     margin-left: auto;
     font-size: 0.875rem;
-    color: #374151;
+    color: #18181B;
   }
   .nav-user a {
     font-weight: 500;
-    color: #374151;
+    color: #18181B;
   }
   .nav-user a:hover {
-    color: #111827;
+    color: var(--primary-color-hover);
     text-decoration: underline;
   }
-  
+
   /* Footer */
   footer {
     padding: 2rem 1rem;
@@ -134,14 +134,14 @@
   footer a:hover {
     text-decoration: underline;
   }
-  
+
   /* Main content area */
   main {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
   }
-  
+
   /* Buttons */
   /* Base button style (for .btn class and all <button>/<input[type=submit]> elements) */
   .btn, button, input[type="submit"] {
@@ -157,10 +157,12 @@
     color: #FFFFFF;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease, color 0.2s ease;
+    box-shadow: 0 1px 2px 0 rgba(24,24,27,0.03);
   }
   .btn:hover, button:hover, input[type="submit"]:hover {
     background-color: var(--primary-color-hover);
+    color: #FAFAFA;
   }
   .btn:active, button:active, input[type="submit"]:active {
     background-color: var(--primary-color-hover);
@@ -170,17 +172,17 @@
     background-color: #9CA3AF;     /* Gray-400 for disabled state */
     cursor: not-allowed;
   }
-  
+
   /* Secondary / Cancel Button */
   .btn.cancel-link {
     background-color: #F3F4F6;      /* Gray-100 */
-    color: #374151;
+    color: #18181B;
   }
   .btn.cancel-link:hover {
     background-color: #E5E7EB;      /* Gray-200 */
-    color: #111827;
+    color: var(--primary-color-hover);
   }
-  
+
   /* Delete / Danger Button */
   .btn.delete-link {
     background-color: var(--danger-color);
@@ -189,7 +191,7 @@
   .btn.delete-link:hover {
     background-color: var(--danger-color-hover);
   }
-  
+
   /* Danger link (if .delete-link used without .btn) */
   a.delete-link {
     color: var(--danger-color);
@@ -199,7 +201,7 @@
     color: var(--danger-color-hover);
     text-decoration: underline;
   }
-  
+
   /* Forms */
   form {
     margin-bottom: 1.5rem;
@@ -232,7 +234,7 @@
     min-height: 6rem;
     resize: vertical;
   }
-  
+
   /* Form container sections */
   .form-section {
     max-width: 600px;
@@ -243,7 +245,7 @@
   .form-section .btn {
     margin-right: 0.5rem;
   }
-  
+
   /* Filter form (inline filters) */
   .filter-form {
     display: inline-block;
@@ -259,7 +261,7 @@
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
   }
-  
+
   /* Tables */
   .table-container {
     width: 100%;
@@ -304,9 +306,10 @@
     color: var(--primary-color);
   }
   .table-container a:hover {
+    color: var(--primary-color-hover);
     text-decoration: underline;
   }
-  
+
   /* Info Boxes */
   .info-box {
     background: #FFFFFF;
@@ -355,7 +358,7 @@
   .actions a:first-child {
     margin-left: 0;
   }
-  
+
   /* Status Badges */
   .status, .status-on-track, .status-behind {
     display: inline-block;
@@ -383,7 +386,7 @@
   .status-behind {
     background-color: var(--warning-color);
   }
-  
+
   /* Login Page */
   .login-container {
     max-width: 400px;
@@ -429,7 +432,7 @@
     margin-top: 1rem;
     min-height: 1.5rem;            /* Reserve space for error text */
   }
-  
+
   /* Responsive Design */
   @media (max-width: 768px) {
     .navbar {
@@ -461,7 +464,7 @@
   }
 
   .logout-btn {
-    background-color: #dc3545;
+    background-color: var(--primary-color);
     color: white;
     padding: 8px 16px;
     border-radius: 4px;
@@ -470,6 +473,180 @@
   }
 
   .logout-btn:hover {
-    background-color: #c82333;
+    background-color: var(--primary-color-hover);
     color: white;
   }
+
+/* Accordion Styles for Task List */
+.task-accordion-container {
+    margin-bottom: 1.5rem;
+}
+
+.task-accordion-item details {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background-color: #FFFFFF;
+}
+
+.task-accordion-item summary {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-accordion-item summary:hover {
+    background-color: #F3F4F6; /* Gray-100 for hover */
+}
+
+.task-accordion-item details[open] summary {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.task-details-content {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color); /* Add a separator if summary doesn't have one when open */
+}
+
+.task-details-content p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.task-details-content p strong {
+    color: #374151; /* Gray-700 */
+}
+
+.task-details-content .actions .btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    margin-right: 0.25rem;
+}
+
+/* Style the summary marker (arrow) */
+.task-accordion-item summary::marker {
+    /* This is browser-styled, can be tricky to customize universally without more complex CSS/JS */
+}
+
+/* For Webkit browsers, you might try: */
+.task-accordion-item summary::-webkit-details-marker {
+    /* display: none; /* If you want to replace it with your own icon via ::before or ::after */
+}
+
+/* Styles for Actions Dropdown */
+.actions-cell {
+    position: relative; /* For positioning the dropdown */
+}
+
+.actions-dropdown-container {
+    display: inline-block;
+}
+
+.actions-button {
+    /* padding: 0.25rem 0.5rem; */ /* Already using btn-small which might be defined elsewhere or use this*/
+    /* font-size: 0.875rem; */
+}
+
+.actions-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+    right: 0; /* Align to the right of the cell */
+    margin-top: 2px;
+}
+
+.actions-dropdown-content.active {
+    display: block;
+}
+
+.actions-dropdown-content a,
+.actions-dropdown-content button {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    font-size: 0.875rem;
+}
+
+.actions-dropdown-content a:hover,
+.actions-dropdown-content button:hover {
+    background-color: #ddd;
+}
+.actions-dropdown-content button.delete-link:hover {
+    background-color: var(--danger-color-hover);
+    color: white;
+}
+.actions-dropdown-content .delete-link {
+    color: var(--danger-color);
+}
+
+
+/* Styles for Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px; /* Maximum width */
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.modal form div {
+    margin-bottom: 1rem;
+}
+.modal form label {
+    display: block;
+    margin-bottom: .25rem;
+}
+.modal form input[type="number"] {
+    width: 100px;
+    padding: 0.375rem .75rem;
+}

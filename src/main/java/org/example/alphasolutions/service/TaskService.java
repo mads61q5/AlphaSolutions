@@ -44,4 +44,8 @@ public class TaskService {
     public List<Task> getTasksByStatusAndSubProjectID(int subProjectID, String taskStatus) {
         return taskRepository.findTasksBySubProjectIDAndStatus(subProjectID, taskStatus);
     }
+
+    public List<Task> getTasksByUserID(int userID) {
+        return taskRepository.findByUserID(userID);
+    }
 }

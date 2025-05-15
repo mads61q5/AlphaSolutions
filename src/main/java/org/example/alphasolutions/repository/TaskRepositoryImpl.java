@@ -47,26 +47,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void save(Task task) {
         String sql = "INSERT INTO tasks (task_name, task_description, task_start_date, " +
                 "task_deadline, task_time_estimate, task_time_spent, task_status, " +
-                "task_priority, subproject_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        jdbcTemplate.update(sql,
-                task.getTaskName(),
-                task.getTaskDescription(),
-                task.getTaskStartDate(),
-                task.getTaskDeadline(),
-                task.getTaskTimeEstimate(),
-                task.getTaskTimeSpent(),
-                task.getTaskStatus(),
-                task.getTaskPriority(),
-                task.getSubProjectID());
-    }
-
-    @Override
-    public void update(Task task, int taskID) {
-        String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
-                "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
-                "task_time_spent = ?, task_status = ?, task_priority = ?, " +
-                "subproject_id = ? WHERE task_id = ?";
+                "task_priority, subproject_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 task.getTaskName(),
@@ -78,6 +59,27 @@ public class TaskRepositoryImpl implements TaskRepository {
                 task.getTaskStatus(),
                 task.getTaskPriority(),
                 task.getSubProjectID(),
+                task.getUserID() == 0 ? null : task.getUserID());
+    }
+
+    @Override
+    public void update(Task task, int taskID) {
+        String sql = "UPDATE tasks SET task_name = ?, task_description = ?, " +
+                "task_start_date = ?, task_deadline = ?, task_time_estimate = ?, " +
+                "task_time_spent = ?, task_status = ?, task_priority = ?, " +
+                "subproject_id = ?, user_id = ? WHERE task_id = ?";
+
+        jdbcTemplate.update(sql,
+                task.getTaskName(),
+                task.getTaskDescription(),
+                task.getTaskStartDate(),
+                task.getTaskDeadline(),
+                task.getTaskTimeEstimate(),
+                task.getTaskTimeSpent(),
+                task.getTaskStatus(),
+                task.getTaskPriority(),
+                task.getSubProjectID(),
+                task.getUserID() == 0 ? null : task.getUserID(),
                 taskID);
     }
 
@@ -85,6 +87,12 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void delete(int taskID) {
         String sql = "DELETE FROM tasks WHERE task_id = ?";
         jdbcTemplate.update(sql, taskID);
+    }
+
+    @Override
+    public List<Task> findByUserID(int userID) {
+        String sql = "SELECT * FROM tasks WHERE user_id = ?";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), userID);
     }
 
     private static class TaskRowMapper implements RowMapper<Task> {
@@ -100,7 +108,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                     rs.getInt("task_time_spent"),
                     rs.getString("task_status"),
                     rs.getString("task_priority"),
-                    rs.getInt("subproject_id")
+                    rs.getInt("subproject_id"),
+                    rs.getInt("user_id")
             );
         }
     }

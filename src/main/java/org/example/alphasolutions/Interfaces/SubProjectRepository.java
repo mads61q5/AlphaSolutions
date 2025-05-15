@@ -1,12 +1,12 @@
 package org.example.alphasolutions.Interfaces;
-import org.example.alphasolutions.model.SubProject;
-
 import java.util.List;
+
+import org.example.alphasolutions.model.SubProject;
 
 public interface SubProjectRepository {
     List<SubProject> findAll();
     SubProject findByID(int subProjectID);
-    void save(SubProject subProject);
+    int save(SubProject subProject);
     void update(SubProject subProject, int subProjectID);
     void delete(int subProjectID);
     List<SubProject> findByProjectID(int projectID);
