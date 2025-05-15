@@ -1,6 +1,7 @@
 package org.example.alphasolutions.controller;
 
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.TimeSummary;
@@ -12,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -31,6 +32,11 @@ public class DashboardController {
 
     @GetMapping
     public String showDashboard(Model model, HttpSession session) {
+    
+        if (session.getAttribute("username") == null) {
+            return "redirect:/login";
+        }
+        
         List<Project> projects = projectService.getAllProjects();
         int totalProjects = projects.size();
         int totalTimeEstimate = 0;
