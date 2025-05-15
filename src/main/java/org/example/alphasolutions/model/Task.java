@@ -95,24 +95,28 @@ public class Task {
     public String getTaskStatus() {
         return taskStatus;
     }
-
     public void setTaskStatus(String taskStatus) {
+        
         this.taskStatus = taskStatus;
     }
 
     public String getTaskPriority() {
+        
         return taskPriority;
     }
 
     public void setTaskPriority(String taskPriority) {
+        
         this.taskPriority = taskPriority;
     }
 
     public int getSubProjectID() {
+        
         return subProjectID;
     }
 
     public void setSubProjectID(int subProjectID) {
+        
         this.subProjectID = subProjectID;
     }
 
