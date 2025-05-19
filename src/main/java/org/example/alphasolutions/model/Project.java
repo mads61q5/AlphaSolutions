@@ -1,11 +1,10 @@
 package org.example.alphasolutions.model;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+//------Attributes----------
 public class Project {
     private int projectID;
     private String projectName;
@@ -18,52 +17,34 @@ public class Project {
     private int projectTimeSpent;
     private String projectStatus;
     private String projectPriority;
-    private final List<SubProject> subProjects = new ArrayList<>();
+    private List<Task> Tasks = new ArrayList<>();
+    private List<SubProject>subProjects = new ArrayList<>();
+
 
     public Project() {
     }
-
-    public Project(int projectID, String projectName, String projectDescription,
-                   LocalDate projectStartDate, LocalDate projectDeadline,
-                   int projectTimeEstimate, int projectTimeSpent,
-                   String projectStatus, String projectPriority) {
-        this.projectID = projectID;
-        this.projectName = projectName;
-        this.projectDescription = projectDescription;
-        this.projectStartDate = projectStartDate;
-        this.projectDeadline = projectDeadline;
-        this.projectTimeEstimate = projectTimeEstimate;
-        this.projectTimeSpent = projectTimeSpent;
-        this.projectStatus = projectStatus;
-        this.projectPriority = projectPriority;
+//----------------Constructor----------------
+public Project(int projectID, String projectName, String projectDescription, LocalDate projectStartDate, LocalDate projectDeadline,
+               int projectTimeEstimate, int projectTimeSpent, String projectStatus, String projectPriority) {
+    this.projectID = projectID;
+    this.projectName = projectName;
+    this.projectDescription = projectDescription;
+    this.projectStartDate = projectStartDate;
+    this.projectDeadline = projectDeadline;
+    this.projectTimeEstimate = projectTimeEstimate;
+    this.projectTimeSpent = projectTimeSpent;
+    this.projectStatus = projectStatus;
+    this.projectPriority = projectPriority;
     }
-    
-    
+    //------Setters & getters----------
+    public List<Task> getTasks() {
+        return Tasks;
+
+    }
     public List<SubProject> getSubProjects() {
         return subProjects;
     }
-
-    public void addSubProject(SubProject subProject) {
-        if (subProject == null) {
-            throw new IllegalArgumentException("SubProject cannot be null");
-        }
-        if (subProject.getProjectID() != this.projectID) {
-            throw new IllegalArgumentException("SubProject does not belong to this project");
-        }
-        subProjects.add(subProject);
-    }
-    public void setSubProject(List<SubProject> subProjects) {
-        if (subProjects == null) {
-            throw new IllegalArgumentException(" ");
-        }
-        this.subProjects.clear();
-        this.subProjects.addAll(subProjects);
-    }
-
-  //  public void removeSubProject(SubProject subProject) {
-    //    subProjects.remove(subProject);
-    
-
+//----------------Project ID----------------
     // Getters and Setters
     public int getProjectID() {
         return projectID;
@@ -72,7 +53,7 @@ public class Project {
     public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
-
+//----------------Project name-----------------
     public String getProjectName() {
         return projectName;
     }
@@ -80,7 +61,7 @@ public class Project {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
-
+//----------------Project description----------------
     public String getProjectDescription() {
         return projectDescription;
     }
@@ -88,7 +69,7 @@ public class Project {
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
     }
-
+//----------------Project start date----------------
     public LocalDate getProjectStartDate() {
         return projectStartDate;
     }
@@ -96,7 +77,7 @@ public class Project {
     public void setProjectStartDate(LocalDate projectStartDate) {
         this.projectStartDate = projectStartDate;
     }
-
+//----------------Project deadline----------------
     public LocalDate getProjectDeadline() {
         return projectDeadline;
     }
@@ -104,7 +85,7 @@ public class Project {
     public void setProjectDeadline(LocalDate projectDeadline) {
         this.projectDeadline = projectDeadline;
     }
-
+//----------------Project time estimate----------------
     public int getProjectTimeEstimate() {
         return projectTimeEstimate;
     }
@@ -112,15 +93,15 @@ public class Project {
     public void setProjectTimeEstimate(int projectTimeEstimate) {
         this.projectTimeEstimate = projectTimeEstimate;
     }
-
-    public int getProjectTimeSpent() {
-        return projectTimeSpent;
+//----------------Project time spent----------------
+public int getProjectTimeSpent() {
+    return projectTimeSpent;
     }
 
     public void setProjectTimeSpent(int projectTimeSpent) {
         this.projectTimeSpent = projectTimeSpent;
     }
-
+//----------------Project status----------------
     public String getProjectStatus() {
         return projectStatus;
     }
@@ -128,13 +109,12 @@ public class Project {
     public void setProjectStatus(String projectStatus) {
         this.projectStatus = projectStatus;
     }
+//----------------Project priority---------------
+public String getProjectPriority() {
 
-    public String getProjectPriority() {
         return projectPriority;
-    }
-
+}
     public void setProjectPriority(String projectPriority) {
         this.projectPriority = projectPriority;
     }
-    
 }

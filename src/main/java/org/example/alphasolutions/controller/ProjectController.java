@@ -45,19 +45,20 @@ public class ProjectController {
         return "projects/list";
     }
 //---------- get project by ID
-@GetMapping("/{projectID}")
-public String getProjectByID(@PathVariable int projectID, Model model, HttpSession session) {
-    if (!isLoggedIn(session)) {
-        return "redirect:/login";
-    }
-    Project project = projectService.getProjectByID(projectID);
-    List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
-    
-    
-    TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(project, subProjects);
-    model.addAttribute("project", project);
-    model.addAttribute("timeSummary", timeSummary);
-    return "projects/view";
+    @GetMapping("/{projectID}")
+    public String getProjectByID(@PathVariable int projectID, Model model, HttpSession session) {
+        if (!isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+        Project project = projectService.getProjectByID(projectID);
+        List<Task> tasks = taskService.getTasksByProject(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+
+        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(projectID, tasks, subProjects);
+        model.addAttribute("project", project);
+        model.addAttribute("timeSummary",timeSummary);
+        model.addAttribute("project", project);
+        return "projects/view";
     }
 //------------ create new project (fill out form)
     @GetMapping("/new")

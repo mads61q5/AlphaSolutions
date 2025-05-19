@@ -39,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void save(User user) {
         String sql = "INSERT INTO users (user_name, user_password, user_role) " +
-                "VALUES (?, ?, ?)";
+                "VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 user.getUserName(),
                 user.getUserPassword(),
@@ -48,7 +48,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE users SET user_name = ?, user_password = ?, user_role = ? WHERE user_id = ?";
+        String sql = "UPDATE users SET user_name = ?, user_password = ?, " +
+                "user_role = ?, is_active = ? WHERE user_id = ?";
         jdbcTemplate.update(sql,
                 user.getUserName(),
                 user.getUserPassword(),

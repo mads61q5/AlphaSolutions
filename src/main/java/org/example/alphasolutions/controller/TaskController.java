@@ -38,41 +38,37 @@ public class TaskController {
 
     //-------------get all tasks-----------
     @GetMapping
-    public String getAllTasks(
-            @PathVariable int projectID,
-            @PathVariable int subProjectID,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String priority,
-            Model model,
-            HttpSession session
-    ) {
+    public String getAllTasks(@PathVariable int projectID, @PathVariable int subProjectID,
+                              @RequestParam(required = false) String status,
+                              Model model, HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        
+
         List<Task> tasks;
-        if (priority != null && !priority.isEmpty()) {
-            tasks = taskService.getTasksByPriority(subProjectID, priority);
-        } else if (status != null && !status.isEmpty()) {
+        if (status != null && !status.isEmpty()) {
             tasks = taskService.getTasksByStatus(subProjectID, status);
         } else {
             tasks = taskService.getTasksBySubProjectID(subProjectID);
         }
+
         Project project = projectService.getProjectByID(projectID);
         SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
-        
-        TimeSummary timeSummary = timeCalculationService.calculateSubProjectTimeSummary(subProject);
-      
+
+        int totalTimeEstimate = 0;
+        int totalTimeSpent = 0;
+        for (Task task : tasks) {
+            totalTimeEstimate += task.getTaskTimeEstimate();
+            totalTimeSpent += task.getTaskTimeSpent();
+        }
+
         model.addAttribute("tasks", tasks);
         model.addAttribute("project", project);
         model.addAttribute("subProject", subProject);
-        model.addAttribute("totalTimeEstimate", timeSummary.getTotalTimeEstimate());
-        model.addAttribute("totalTimeSpent", timeSummary.getTotalTimeSpent());
+        model.addAttribute("totalTimeEstimate", totalTimeEstimate);
+        model.addAttribute("totalTimeSpent", totalTimeSpent);
         model.addAttribute("statuses", List.of("NOT_STARTED", "IN_PROGRESS", "COMPLETE"));
         model.addAttribute("currentStatus", status);
-       // model.addAttribute("priority",List.of("HIGH", "MID", "LOW"));
-        model.addAttribute("priority", priority);
-        
         return "projects/tasks/list";
     }
 
