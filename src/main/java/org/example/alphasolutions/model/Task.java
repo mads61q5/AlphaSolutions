@@ -1,7 +1,8 @@
 package org.example.alphasolutions.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Task {
     private int taskID;
@@ -16,13 +17,14 @@ public class Task {
     private String taskStatus;
     private String taskPriority;
     private int subProjectID;
+    private int userID;
 
     public Task() {
     }
 
     public Task(int taskID, String taskName, String taskDescription, LocalDate taskStartDate,
                 LocalDate taskDeadline, int taskTimeEstimate, int taskTimeSpent,
-                String taskStatus, String taskPriority, int subProjectID) {
+                String taskStatus, String taskPriority, int subProjectID, int userID) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -33,6 +35,7 @@ public class Task {
         this.taskStatus = taskStatus;
         this.taskPriority = taskPriority;
         this.subProjectID = subProjectID;
+        this.userID = userID;
     }
 
     // Getters and Setters
@@ -116,4 +119,11 @@ public class Task {
         this.subProjectID = subProjectID;
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 }

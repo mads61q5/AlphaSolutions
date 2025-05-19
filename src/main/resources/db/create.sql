@@ -42,5 +42,7 @@ CREATE TABLE tasks (
     task_status VARCHAR(50),
     task_priority VARCHAR(50),
     subproject_id INT NOT NULL,
-    FOREIGN KEY (subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 ); 

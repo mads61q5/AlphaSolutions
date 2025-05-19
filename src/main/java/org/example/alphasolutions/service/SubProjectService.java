@@ -1,25 +1,28 @@
 package org.example.alphasolutions.service;
 
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.SubProjectRepository;
 import org.example.alphasolutions.model.SubProject;
+import org.example.alphasolutions.model.Task;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
     public class SubProjectService {
     private final SubProjectRepository subProjectRepository;
+    private final TimeCalculationService timeCalculationService;
 
-    public SubProjectService(SubProjectRepository subProjectRepository) {
+    public SubProjectService(SubProjectRepository subProjectRepository, TimeCalculationService timeCalculationService) {
         this.subProjectRepository = subProjectRepository;
+        this.timeCalculationService = timeCalculationService;
     }
     //--------Create - CRUD OPS----------
-    public void createSubProject(SubProject subProject) {
+    public SubProject createSubProject(SubProject subProject) {
        subProject.setSubProjectStatus("NOT_STARTED");
        subProject.setSubProjectTimeSpent(0);
        subProject.setSubProjectPriority("LOW_PRIORITY");
-        subProjectRepository.save(subProject);
-
+       int newId = subProjectRepository.save(subProject);
+       return getSubProjectByID(newId);
     }
     //--------get all sub projects ----------
     public List<SubProject> getAllSubProjects() {
@@ -40,5 +43,17 @@ import java.util.List;
     //---------delete sub project ----------
     public void deleteSubProject(int subProjectID) {
         subProjectRepository.delete(subProjectID);
+    }
+    
+    //---------calculate time from tasks and update----------
+    public void calculateAndUpdateTimeEstimateFromTasks(SubProject subProject, List<Task> tasks) {
+        int timeEstimate = timeCalculationService.calculateSubProjectTimeEstimateFromTasks(tasks);
+        subProject.setSubProjectTimeEstimate(timeEstimate);
+        updateSubProject(subProject, subProject.getSubProjectID());
+    }
+    
+    //---------update subproject time when task changes----------
+    public void updateTimeWhenTaskChanges(SubProject subProject, List<Task> tasks) {
+        calculateAndUpdateTimeEstimateFromTasks(subProject, tasks);
     }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Subproject</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <h1>Edit Subproject</h1>
+    <form th:action="@{/projects/{projectID}/subprojects/update(projectID=${project.projectID})}" th:object="${subProject}" method="post" class="form-section">
+        <input type="hidden" th:field="*{subProjectID}" />
+        <label for="subProjectName">Subproject Name:</label>
+        <input type="text" id="subProjectName" th:field="*{subProjectName}" required />
+        <label for="subProjectDescription">Description:</label>
+        <textarea id="subProjectDescription" th:field="*{subProjectDescription}"></textarea>
+        <label for="subProjectStartDate">Start Date:</label>
+        <input type="date" id="subProjectStartDate" th:field="*{subProjectStartDate}" />
+        <label for="subProjectDeadline">Deadline:</label>
+        <input type="date" id="subProjectDeadline" th:field="*{subProjectDeadline}" />
+        <div class="info-box">
+            <label>Estimated Time (hours):</label>
+            <span th:text="${calculatedTimeEstimate}">0</span>
+            <p><em>Time estimate is automatically calculated from tasks.</em></p>
+            <input type="hidden" th:field="*{subProjectTimeEstimate}" />
+        </div>
+        <label for="subProjectStatus">Status:</label>
+        <select id="subProjectStatus" th:field="*{subProjectStatus}">
+            <option value="NOT_STARTED">NOT_STARTED</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="COMPLETED">COMPLETED</option>
+        </select>
+        <label for="subProjectPriority">Priority:</label>
+        <select id="subProjectPriority" th:field="*{subProjectPriority}">
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+        </select>
+        <button type="submit" class="btn">Save Changes</button>
+        <a th:href="@{/projects/{projectID}/subprojects/{subProjectID}(projectID=${project.projectID},subProjectID=${subProject.subProjectID})}" class="btn cancel-link">Cancel</a>
+    </form>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html> 

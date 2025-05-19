@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subprojects</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main>
+    <h1>Subprojects for Project: <span th:text="${project.projectName}">Project</span></h1>
+    <section>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subproject Name</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                        <th>Est. Time (hrs)</th>
+                        <th>Spent Time (hrs)</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sub : ${subProjects}">
+                        <td th:text="${sub.subProjectName}">Name</td>
+                        <td>
+                            <span class="status" th:text="${sub.subProjectStatus}"
+                                  th:classappend="' status-' + ${sub.subProjectStatus}">Status</span>
+                        </td>
+                        <td th:text="${sub.subProjectDeadline}">YYYY-MM-DD</td>
+                        <td th:text="${sub.subProjectTimeEstimate}">0</td>
+                        <td th:text="${sub.subProjectTimeSpent}">0</td>
+                        <td th:text="${sub.subProjectPriority}">Priority</td>
+                        <td>
+                            <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}">View</a> |
+                            <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}">Edit</a> |
+                            <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="delete-link">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(subProjects)}">
+                        <td colspan="7">No subprojects found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a th:href="@{/projects/{pid}/subprojects/new(pid=${project.projectID})}" class="btn">Add New Subproject</a>
+        <p><a th:href="@{/projects/{id}(id=${project.projectID})}">Back to Project</a></p>
+    </section>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

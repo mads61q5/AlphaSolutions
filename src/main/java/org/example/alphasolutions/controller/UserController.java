@@ -1,14 +1,14 @@
 package org.example.alphasolutions.controller;
 
 
-import jakarta.servlet.http.HttpSession;
-import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -23,7 +23,10 @@ public class UserController {
     }
 
     @GetMapping ("login")
-    public String showLogin() {
+    public String showLogin(HttpSession session) {
+        if (isLogggedIn(session)) {
+            return "redirect:/dashboard";
+        }
         return "login";
     }
 
@@ -37,5 +40,11 @@ public class UserController {
         }
         model.addAttribute("wrongCredentials", true);
         return "login";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }

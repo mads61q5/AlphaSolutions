@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div class="login-container">
-  <img src="/images" alt="Logo" class="logo">
 
   <form action="/login" method="post" class="login-form">
     <h2>Log ind</h2>
@@ -25,5 +25,6 @@
     </p>
   </form>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

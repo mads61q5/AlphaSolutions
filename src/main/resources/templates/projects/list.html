@@ -3,28 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Projects</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 <main>
-    <h1>Project Dashboard</h1>
-    <section class="summary-section">
-        <h2>Summary</h2>
-        <div class="summary">
-            <p>Total Projects: <span th:text="${totalProjects}">0</span></p>
-            <p>Total Estimated Time (hours): <span th:text="${totalTimeEstimate}">0</span></p>
-            <p>Total Time Spent (hours): <span th:text="${totalTimeSpent}">0</span></p>
-        </div>
-    </section>
-    <section class="project-list-section">
-        <h2>Projects</h2>
+    <h1>All Projects</h1>
+    <section>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Project Name</th>
+                        <th>Name</th>
                         <th>Status</th>
                         <th>Deadline</th>
                         <th>Est. Time (hrs)</th>
@@ -35,7 +26,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="proj : ${projects}">
-                        <td><a th:href="@{/projects/{id}(id=${proj.projectID})}" th:text="${proj.projectName}">Name</a></td>
+                        <td th:text="${proj.projectName}">Name</td>
                         <td>
                             <span class="status" th:text="${proj.projectStatus}"
                                   th:classappend="' status-' + ${proj.projectStatus}">Status</span>
@@ -46,10 +37,11 @@
                         <td th:text="${proj.projectPriority}">Priority</td>
                         <td>
                             <a th:href="@{/projects/{id}(id=${proj.projectID})}">View</a>
+                        
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(projects)}">
-                        <td colspan="7">No projects found.</td>
+                        <td colspan="7">No projects available.</td>
                     </tr>
                 </tbody>
             </table>
