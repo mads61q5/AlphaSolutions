@@ -44,7 +44,7 @@ public class DashboardController {
 
         for (Project project : projects) {
             List<SubProject> subProjects = subProjectService.getSubProjectsByProject(project.getProjectID());
-            TimeSummary projectTimeSummary = timeCalculationService.calculateProjectTimeSummary(project.getProjectID(), subProjects);
+            TimeSummary projectTimeSummary = timeCalculationService.calculateProjectTimeSummary(project, subProjects);
             totalTimeEstimate += projectTimeSummary.getTotalTimeEstimate();
             totalTimeSpent += projectTimeSummary.getTotalTimeSpent();
         }

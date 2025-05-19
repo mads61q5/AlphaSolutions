@@ -45,7 +45,6 @@ public class SubProjectController {
     }
 
     private boolean isLoggedIn(HttpSession session) {
-        // Check if a user is logged in (session attribute set at login)
         return session.getAttribute("username") != null;
     }
 
@@ -105,7 +104,8 @@ public class SubProjectController {
             return "redirect:/login";
         }
         SubProject newSubProject = new SubProject();
-        newSubProject.setProjectID(projectID);  // associate with the parent project
+        newSubProject.setProjectID(projectID);  
+        newSubProject.setSubProjectTimeEstimate(0); 
         model.addAttribute("subProject", newSubProject);
         model.addAttribute("project", projectService.getProjectByID(projectID));
         return "projects/subprojects/create";
@@ -118,7 +118,13 @@ public class SubProjectController {
             return "redirect:/login";
         }
         subProject.setProjectID(projectID);
+        subProject.setSubProjectTimeEstimate(0);
         SubProject createdSubProject = subProjectService.createSubProject(subProject);
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+        
         return "redirect:/projects/" + projectID + "/subprojects/" + createdSubProject.getSubProjectID();
     }
 
@@ -130,8 +136,14 @@ public class SubProjectController {
         }
         Project project = projectService.getProjectByID(projectID);
         SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+        
+        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        int calculatedTimeEstimate = timeCalculationService.calculateSubProjectTimeEstimateFromTasks(tasks);
+        subProject.setSubProjectTimeEstimate(calculatedTimeEstimate);
+        
         model.addAttribute("project", project);
         model.addAttribute("subProject", subProject);
+        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); // Add for display only
         return "projects/subprojects/edit";
     }
 
@@ -142,7 +154,19 @@ public class SubProjectController {
             return "redirect:/login";
         }
         subProject.setProjectID(projectID);
+        
+        SubProject currentSubProject = subProjectService.getSubProjectByID(subProject.getSubProjectID());
+        List<Task> tasks = taskService.getTasksBySubProjectID(subProject.getSubProjectID());
+        int calculatedTimeEstimate = timeCalculationService.calculateSubProjectTimeEstimateFromTasks(tasks);
+        
+        subProject.setSubProjectTimeEstimate(calculatedTimeEstimate);
+        
         subProjectService.updateSubProject(subProject, subProject.getSubProjectID());
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+        
         return "redirect:/projects/" + projectID + "/subprojects/" + subProject.getSubProjectID();
     }
 
@@ -153,7 +177,11 @@ public class SubProjectController {
             return "redirect:/login";
         }
         subProjectService.deleteSubProject(subProjectID);
-        // After deletion, redirect to the list of remaining subprojects for the project
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+        
         return "redirect:/projects/" + projectID + "/subprojects";
     }
 }

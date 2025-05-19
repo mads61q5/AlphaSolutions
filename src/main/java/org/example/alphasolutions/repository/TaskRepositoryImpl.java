@@ -98,12 +98,15 @@ public class TaskRepositoryImpl implements TaskRepository {
     private static class TaskRowMapper implements RowMapper<Task> {
         @Override
         public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
+            java.sql.Date sqlStartDate = rs.getDate("task_start_date");
+            java.sql.Date sqlDeadline = rs.getDate("task_deadline");
+
             return new Task(
                     rs.getInt("task_id"),
                     rs.getString("task_name"),
                     rs.getString("task_description"),
-                    rs.getDate("task_start_date").toLocalDate(),
-                    rs.getDate("task_deadline").toLocalDate(),
+                    sqlStartDate != null ? sqlStartDate.toLocalDate() : null,
+                    sqlDeadline != null ? sqlDeadline.toLocalDate() : null,
                     rs.getInt("task_time_estimate"),
                     rs.getInt("task_time_spent"),
                     rs.getString("task_status"),

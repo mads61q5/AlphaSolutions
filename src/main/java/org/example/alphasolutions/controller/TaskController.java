@@ -135,6 +135,15 @@ public class TaskController {
         task.setSubProjectID(subProjectID);
 
         taskService.createTask(task);
+        
+        SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+        
         return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 
@@ -165,25 +174,44 @@ public class TaskController {
         }
         Task task = taskService.getTaskByID(taskID);
         List<User> users = userService.getAllUsers();
-        model.addAttribute("task", task);
+
+        User assignedUser = null;
+        if (task.getUserID() != 0) {
+            assignedUser = userService.getUserByID(task.getUserID());
+        }
+
+        model.addAttribute("taskUpdateRequest", task);
         model.addAttribute("project", projectService.getProjectByID(projectID));
         model.addAttribute("subProject", subProjectService.getSubProjectByID(subProjectID));
         model.addAttribute("users", users);
+        model.addAttribute("assignedUser", assignedUser);
+        model.addAttribute("statuses", List.of("NOT_STARTED", "IN_PROGRESS", "COMPLETE"));
+        model.addAttribute("priorities", List.of("HIGH", "MEDIUM", "LOW"));
 
         return "projects/tasks/edit";
     }
 
     //-------------------update task---------------
-    @PostMapping("/update")
+    @PostMapping("/edit/{taskID}")
     public String updateTask(@PathVariable int projectID, @PathVariable int subProjectID,
-                             @ModelAttribute Task task, HttpSession session) {
+                             @PathVariable int taskID,
+                             @ModelAttribute("taskUpdateRequest") Task taskUpdateRequest,
+                             HttpSession session) {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        task.setSubProjectID(subProjectID);
-        taskService.updateTask(task, task.getTaskID());
+        taskUpdateRequest.setSubProjectID(subProjectID);
+        taskService.updateTask(taskUpdateRequest, taskID);
+        
+        SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
 
-        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks/" + task.getTaskID();
+        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks/" + taskID;
     }
 
     //-----------------delete task-----------------------
@@ -194,10 +222,18 @@ public class TaskController {
             return "redirect:/login";
         }
         taskService.deleteTask(taskID);
+        
+        SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
+        
+        Project project = projectService.getProjectByID(projectID);
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+        
         return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks";
     }
 
-    // Endpoint to add hours to a task
     @PostMapping("/{taskID}/add-hours")
     public String addHoursToTask(@PathVariable int projectID, 
                                  @PathVariable int subProjectID, 
@@ -212,18 +248,19 @@ public class TaskController {
             task.setTaskTimeSpent(task.getTaskTimeSpent() + hours);
             taskService.updateTask(task, taskID);
 
-            // Update the parent SubProject's timeSpent
             SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
             if (subProject != null) {
                 subProject.setSubProjectTimeSpent(subProject.getSubProjectTimeSpent() + hours);
-                // Assuming subProjectService.updateSubProject takes the subProject object and its ID
-                // The existing updateSubProject method in SubProjectService is:
-                // updateSubProject(SubProject subProject, int subProjectID)
-                // The subProject object fetched above already has its ID.
                 subProjectService.updateSubProject(subProject, subProject.getSubProjectID());
+                
+                List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+                subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
+                
+                Project project = projectService.getProjectByID(projectID);
+                List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+                projectService.updateTimeWhenSubProjectChanges(project, subProjects);
             }
         }
-        // Redirect back to the subproject view page where the task list is displayed
         return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 }

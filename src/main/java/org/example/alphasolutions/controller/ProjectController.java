@@ -55,7 +55,7 @@ public class ProjectController {
         Project project = projectService.getProjectByID(projectID);
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
 
-        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(projectID, subProjects);
+        TimeSummary timeSummary = timeCalculationService.calculateProjectTimeSummary(project, subProjects);
         model.addAttribute("project", project);
         model.addAttribute("subProjects", subProjects);
         model.addAttribute("timeSummary",timeSummary);
@@ -67,7 +67,9 @@ public class ProjectController {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        model.addAttribute("project", new Project());
+        Project project = new Project();
+        project.setProjectTimeEstimate(0); 
+        model.addAttribute("project", project);
         return "projects/create";
     }
     //-------------create project
@@ -77,6 +79,7 @@ public class ProjectController {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
+        project.setProjectTimeEstimate(0);
         projectService.createProject(project);
         return "redirect:/projects/" + project.getProjectID();
     }
@@ -86,7 +89,14 @@ public class ProjectController {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
-        model.addAttribute("project", projectService.getProjectByID(projectID));
+        Project project = projectService.getProjectByID(projectID);
+        
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+        int calculatedTimeEstimate = timeCalculationService.calculateProjectTimeEstimateFromSubProjects(subProjects);
+        project.setProjectTimeEstimate(calculatedTimeEstimate);
+        
+        model.addAttribute("project", project);
+        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); // Add for display only
         return "projects/edit";
     }
 //------------- update project (this should be a button which 'saves' the project edit)
@@ -95,6 +105,14 @@ public class ProjectController {
         if (!isLoggedIn(session)) {
             return "redirect:/login";
         }
+        
+        Project currentProject = projectService.getProjectByID(project.getProjectID());
+        
+        List<SubProject> subProjects = subProjectService.getSubProjectsByProject(project.getProjectID());
+        int calculatedTimeEstimate = timeCalculationService.calculateProjectTimeEstimateFromSubProjects(subProjects);
+        
+        project.setProjectTimeEstimate(calculatedTimeEstimate);
+        
         projectService.updateProject(project);
         return "redirect:/projects/" + project.getProjectID();
     }
