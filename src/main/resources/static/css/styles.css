@@ -749,3 +749,39 @@ tbody tr td a:hover {
   color: var(--primary-color-hover);
   text-decoration: underline;
 }
+
+/* 1. subtle page background for contrast */
+.page-bg {
+  min-height: 100vh;            /* full-height center */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center;    /* Center children horizontally */
+  justify-content: flex-start; /* Align to start, respecting padding-top */
+  padding-top: 4rem;            /* breathing room */
+}
+
+/* 2. wrapper around the form itself */
+.form-wrapper {
+  width: 100%;
+  max-width: 640px;             /* trims the width on large screens */
+  background: #ffffff;
+  border: 1px solid #e5e7eb;    /* thin neutral border */
+  border-radius: 0.75rem;       /* rounded corners */
+  box-shadow: 0 8px 20px rgba(0,0,0,.05);  /* soft shadow */
+  padding: 2.5rem 2rem;         /* generous inner padding */
+}
+
+/* 3. keep inputs full-width inside the wrapper */
+.form-wrapper input[type="text"],
+.form-wrapper input[type="date"],
+.form-wrapper textarea,
+.form-wrapper select {
+  width: 100%;
+}
+
+/* 4. space buttons nicely */
+.form-wrapper .button-row {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}

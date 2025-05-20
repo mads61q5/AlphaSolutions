@@ -8,37 +8,41 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<main>
+<main class="page-bg">
     <h1>Add Subproject to <span th:text="${project.projectName}">Project</span></h1>
-    <form th:action="@{/projects/{pid}/subprojects(pid=${project.projectID})}" th:object="${subProject}" method="post" class="form-section">
-        <label for="subProjectName">Subproject Name:</label>
-        <input type="text" id="subProjectName" th:field="*{subProjectName}" placeholder="Enter subproject name" required />
-        <label for="subProjectDescription">Description:</label>
-        <textarea id="subProjectDescription" th:field="*{subProjectDescription}" placeholder="Enter description"></textarea>
-        <label for="subProjectStartDate">Start Date:</label>
-        <input type="date" id="subProjectStartDate" th:field="*{subProjectStartDate}" />
-        <label for="subProjectDeadline">Deadline:</label>
-        <input type="date" id="subProjectDeadline" th:field="*{subProjectDeadline}" />
-        <div class="info-text">
-            <p><em>Time estimate will be automatically calculated from tasks.</em></p>
-        </div>
-        <label for="subProjectStatus">Status:</label>
-        <select id="subProjectStatus" th:field="*{subProjectStatus}">
-            <option value="">-- Select Status --</option>
-            <option value="NOT_STARTED">NOT_STARTED</option>
-            <option value="IN_PROGRESS">IN_PROGRESS</option>
-            <option value="COMPLETED">COMPLETED</option>
-        </select>
-        <label for="subProjectPriority">Priority:</label>
-        <select id="subProjectPriority" th:field="*{subProjectPriority}">
-            <option value="">-- Select Priority --</option>
-            <option value="HIGH">HIGH</option>
-            <option value="MEDIUM">MEDIUM</option>
-            <option value="LOW">LOW</option>
-        </select>
-        <button type="submit" class="btn">Create Subproject</button>
-        <a th:href="@{/projects/{id}/subprojects(id=${project.projectID})}" class="btn cancel-link">Cancel</a>
-    </form>
+    <div class="form-wrapper">
+        <form th:action="@{/projects/{pid}/subprojects(pid=${project.projectID})}" th:object="${subProject}" method="post" class="form-section">
+            <label for="subProjectName">Subproject Name:</label>
+            <input type="text" id="subProjectName" th:field="*{subProjectName}" placeholder="Enter subproject name" required />
+            <label for="subProjectDescription">Description:</label>
+            <textarea id="subProjectDescription" th:field="*{subProjectDescription}" placeholder="Enter description"></textarea>
+            <label for="subProjectStartDate">Start Date:</label>
+            <input type="date" id="subProjectStartDate" th:field="*{subProjectStartDate}" />
+            <label for="subProjectDeadline">Deadline:</label>
+            <input type="date" id="subProjectDeadline" th:field="*{subProjectDeadline}" />
+            <div class="info-text">
+                <p><em>Time estimate will be automatically calculated from tasks.</em></p>
+            </div>
+            <label for="subProjectStatus">Status:</label>
+            <select id="subProjectStatus" th:field="*{subProjectStatus}">
+                <option value="">-- Select Status --</option>
+                <option value="NOT_STARTED">NOT_STARTED</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="COMPLETED">COMPLETED</option>
+            </select>
+            <label for="subProjectPriority">Priority:</label>
+            <select id="subProjectPriority" th:field="*{subProjectPriority}">
+                <option value="">-- Select Priority --</option>
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW">LOW</option>
+            </select>
+            <div class="button-row">
+                <button type="submit" class="btn">Create Subproject</button>
+                <a th:href="@{/projects/{id}/subprojects(id=${project.projectID})}" class="btn cancel-link">Cancel</a>
+            </div>
+        </form>
+    </div>
 </main>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
