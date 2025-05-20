@@ -1,14 +1,14 @@
 package org.example.alphasolutions.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.example.alphasolutions.Interfaces.UserRepository;
 import org.example.alphasolutions.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -39,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void save(User user) {
         String sql = "INSERT INTO users (user_name, user_password, user_role) " +
-                "VALUES (?, ?, ?, ?)";
+                "VALUES (?, ?, ?)";
         jdbcTemplate.update(sql,
                 user.getUserName(),
                 user.getUserPassword(),

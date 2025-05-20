@@ -1,6 +1,7 @@
 package org.example.alphasolutions.controller;
 
 
+import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,24 @@ public class UserController {
     @GetMapping("logout")
     public String logout(HttpSession session) {
         session.invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/createUser")
+    public String showCreateUserForm(Model model) {
+        return "createUser";
+    }
+
+    @PostMapping("/createUser")
+    public String createUser(@RequestParam String username,
+                             @RequestParam String password,
+                             Model model) {
+     
+        User newUser = new User();
+        newUser.setUserName(username);
+        newUser.setUserPassword(password);
+        newUser.setUserRole("Employee"); 
+        userService.saveUser(newUser);
         return "redirect:/login";
     }
 }
