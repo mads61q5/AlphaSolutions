@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="'Subproject: ' + ${subProject.subProjectName}">Subproject Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/actions.js}" defer></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -12,58 +13,63 @@
 
     <!-- Subproject Information Box -->
     <section class="project-card">
-        <header class="project-header">
-            <h2 th:text="${subProject.subProjectName}">Subproject Name</h2>
-            <span class="status-pill"
-                  th:text="${subProject.subProjectStatus}"
-                  th:attr="data-status=${subProject.subProjectStatus.toLowerCase().replace(' ', '_')}">Status</span>
-        </header>
+        <details>
+            <summary>
+                <header class="project-header">
+                    <h2 th:text="${subProject.subProjectName}">Subproject Name</h2>
+                    <span class="status-pill"
+                          th:text="${subProject.subProjectStatus}"
+                          th:attr="data-status=${subProject.subProjectStatus.toLowerCase().replace(' ', '_')}">Status</span>
+                </header>
+            </summary>
+            <div class="card-content">
+                <div class="info-grid">
+                    <p class="label">Description:</p>
+                    <p class="value" th:text="${subProject.subProjectDescription}">N/A</p>
 
-        <div class="info-grid">
-            <p class="label">Description:</p>
-            <p class="value" th:text="${subProject.subProjectDescription}">N/A</p>
+                    <p class="label">Start Date:</p>
+                    <p class="value" th:text="${subProject.subProjectStartDate}">YYYY-MM-DD</p>
 
-            <p class="label">Start Date:</p>
-            <p class="value" th:text="${subProject.subProjectStartDate}">YYYY-MM-DD</p>
+                    <p class="label">Deadline:</p>
+                    <p class="value" th:text="${subProject.subProjectDeadline}">YYYY-MM-DD</p>
 
-            <p class="label">Deadline:</p>
-            <p class="value" th:text="${subProject.subProjectDeadline}">YYYY-MM-DD</p>
+                    <p class="label">Estimated Time (hours):</p>
+                    <p class="value" th:text="${subProject.subProjectTimeEstimate}">0</p>
 
-            <p class="label">Estimated Time (hours):</p>
-            <p class="value" th:text="${subProject.subProjectTimeEstimate}">0</p>
+                    <p class="label">Time Spent (hours):</p>
+                    <p class="value" id="subProjectInfoTimeSpentDisplay" th:text="${subProject.subProjectTimeSpent}">0</p>
 
-            <p class="label">Time Spent (hours):</p>
-            <p class="value" id="subProjectInfoTimeSpentDisplay" th:text="${subProject.subProjectTimeSpent}">0</p>
-
-            <p class="label">Priority:</p>
-            <p class="value" th:text="${subProject.subProjectPriority}">Priority</p>
-        </div>
-
-        <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
-             th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
-            <div class="progress-meta">
-                <span>Total Task Time:</span>
-                 <span>
-                    <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
-                    <strong id="timeSummaryInBoxTotalTimeSpent" th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</strong>
-                </span>
-            </div>
-            <div class="bar">
-                <div class="fill"
-                     th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
+                    <p class="label">Priority:</p>
+                    <p class="value" th:text="${subProject.subProjectPriority}">Priority</p>
                 </div>
-            </div>
-            <p style="margin-top: 0.5rem;">
-               <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track (subproject)</span>
-               <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
-            </p>
-        </div>
 
-        <footer class="card-footer">
-            <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-edit">Edit Subproject</a>
-            <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-delete delete-link">Delete Subproject</a>
-            <a th:href="@{/projects/{pid}(pid=${project.projectID})}" class="btn btn-secondary">Back to Project</a>
-        </footer>
+                <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
+                     th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
+                    <div class="progress-meta">
+                        <span>Total Task Time:</span>
+                         <span>
+                            <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
+                            <strong id="timeSummaryInBoxTotalTimeSpent" th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</strong>
+                        </span>
+                    </div>
+                    <div class="bar">
+                        <div class="fill"
+                             th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
+                        </div>
+                    </div>
+                    <p style="margin-top: 0.5rem;">
+                       <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track (subproject)</span>
+                       <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
+                    </p>
+                </div>
+
+                <footer class="card-footer">
+                    <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-edit">Edit Subproject</a>
+                    <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-delete delete-link">Delete Subproject</a>
+                    <a th:href="@{/projects/{pid}(pid=${project.projectID})}" class="btn btn-secondary">Back to Project</a>
+                </footer>
+            </div>
+        </details>
     </section>
 
     <!-- Tasks Section -->
@@ -112,10 +118,15 @@
                         <span th:if="${task.userID == 0}">Unassigned</span>
                     </td>
                     <td class="actions-cell">
-                        <form th:action="@{/projects/{pid}/subprojects/{sid}/tasks/{tid}/add-hours(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}" method="post" class="inline-add-hours-form">
-                            <input type="number" name="hours" min="0.1" step="0.1" value="1" required style="width: 60px; padding: 5px; margin-right: 5px;">
-                            <button type="submit" class="btn btn-small">Add Hrs</button>
-                        </form>
+                        <div class="dropdown">
+                            <button class="dropdown-btn">Actions</button>
+                            <div class="dropdown-content">
+                                <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}">View</a>
+                                <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}">Edit</a>
+                                <a href="#" th:onclick="'showModal(' + ${task.taskID} + '); return false;'">Add Hours</a>
+                                <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/delete/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}" class="delete-link">Delete</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(tasks)}">
@@ -130,6 +141,27 @@
         <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/new(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn">Add New Task</a>
     </section>
 
+    <!-- Add Hours Modal -->
+    <div class="modal-overlay" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Hours</h3>
+                <button type="button" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="add-hours-form" method="post" th:data-action-template="@{/projects/{pid}/subprojects/{sid}/tasks/TASK_ID/add-hours(pid=${project.projectID}, sid=${subProject.subProjectID})}">
+                    <div class="form-group">
+                        <label for="hours">Hours Spent:</label>
+                        <input type="number" id="hours" name="hours" min="0.1" step="0.1" value="1" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn">Add Hours</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 <div th:replace="fragments/footer :: footer"></div>
 

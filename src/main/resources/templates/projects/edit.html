@@ -8,39 +8,43 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<main>
+<main class="page-bg">
     <h1>Edit Project</h1>
-    <form th:action="@{/projects/update}" th:object="${project}" method="post" class="form-section">
-        <input type="hidden" th:field="*{projectID}" />
-        <label for="projectName">Project Name:</label>
-        <input type="text" id="projectName" th:field="*{projectName}" required />
-        <label for="projectDescription">Description:</label>
-        <textarea id="projectDescription" th:field="*{projectDescription}"></textarea>
-        <label for="projectStartDate">Start Date:</label>
-        <input type="date" id="projectStartDate" th:field="*{projectStartDate}" />
-        <label for="projectDeadline">Deadline:</label>
-        <input type="date" id="projectDeadline" th:field="*{projectDeadline}" />
-        <div class="info-box">
-            <label>Estimated Time (hours):</label>
-            <span th:text="${calculatedTimeEstimate}">0</span>
-            <p><em>Time estimate is automatically calculated from subprojects and tasks.</em></p>
-            <input type="hidden" th:field="*{projectTimeEstimate}" />
-        </div>
-        <label for="projectStatus">Status:</label>
-        <select id="projectStatus" th:field="*{projectStatus}">
-            <option th:value="'NOT_STARTED'" th:text="NOT_STARTED"></option>
-            <option th:value="'IN_PROGRESS'" th:text="IN_PROGRESS"></option>
-            <option th:value="'COMPLETED'" th:text="COMPLETED"></option>
-        </select>
-        <label for="projectPriority">Priority:</label>
-        <select id="projectPriority" th:field="*{projectPriority}">
-            <option th:value="'HIGH'" th:text="HIGH"></option>
-            <option th:value="'MEDIUM'" th:text="MEDIUM"></option>
-            <option th:value="'LOW'" th:text="LOW"></option>
-        </select>
-        <button type="submit" class="btn">Save Changes</button>
-        <a th:href="@{/projects/{id}(id=${project.projectID})}" class="btn cancel-link">Cancel</a>
-    </form>
+    <div class="form-wrapper">
+        <form th:action="@{/projects/update}" th:object="${project}" method="post" class="form-section">
+            <input type="hidden" th:field="*{projectID}" />
+            <label for="projectName">Project Name:</label>
+            <input type="text" id="projectName" th:field="*{projectName}" required />
+            <label for="projectDescription">Description:</label>
+            <textarea id="projectDescription" th:field="*{projectDescription}"></textarea>
+            <label for="projectStartDate">Start Date:</label>
+            <input type="date" id="projectStartDate" th:field="*{projectStartDate}" />
+            <label for="projectDeadline">Deadline:</label>
+            <input type="date" id="projectDeadline" th:field="*{projectDeadline}" />
+            <div class="info-box">
+                <label>Estimated Time (hours):</label>
+                <span th:text="${calculatedTimeEstimate}">0</span>
+                <p><em>Time estimate is automatically calculated from subprojects and tasks.</em></p>
+                <input type="hidden" th:field="*{projectTimeEstimate}" />
+            </div>
+            <label for="projectStatus">Status:</label>
+            <select id="projectStatus" th:field="*{projectStatus}">
+                <option value="NOT_STARTED">NOT_STARTED</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="COMPLETED">COMPLETED</option>
+            </select>
+            <label for="projectPriority">Priority:</label>
+            <select id="projectPriority" th:field="*{projectPriority}">
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW">LOW</option>
+            </select>
+            <div class="button-row">
+                <button type="submit" class="btn">Save Changes</button>
+                <a th:href="@{/projects/{id}(id=${project.projectID})}" class="btn cancel-link">Cancel</a>
+            </div>
+        </form>
+    </div>
 </main>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

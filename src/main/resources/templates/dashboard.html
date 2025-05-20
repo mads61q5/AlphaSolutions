@@ -5,17 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/actions.js}" defer></script>
+    <!-- Add Material Icons for better visuals -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 <main>
     <h1>Project Dashboard</h1>
     <section class="summary-section">
-        <h2>Summary</h2>
-        <div class="summary">
-            <p>Total Projects: <span th:text="${totalProjects}">0</span></p>
-            <p>Total Estimated Time (hours): <span th:text="${totalTimeEstimate}">0</span></p>
-            <p>Total Time Spent (hours): <span th:text="${totalTimeSpent}">0</span></p>
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="card-icon">
+                    <span class="material-icons">folder</span>
+                </div>
+                <div class="card-content">
+                    <h3>Total Projects</h3>
+                    <p class="card-value" th:text="${totalProjects}">0</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">
+                    <span class="material-icons">schedule</span>
+                </div>
+                <div class="card-content">
+                    <h3>Estimated Time</h3>
+                    <p class="card-value"><span th:text="${totalTimeEstimate}">0</span> hrs</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">
+                    <span class="material-icons">hourglass_bottom</span>
+                </div>
+                <div class="card-content">
+                    <h3>Time Spent</h3>
+                    <p class="card-value"><span th:text="${totalTimeSpent}">0</span> hrs</p>
+                </div>
+            </div>
         </div>
     </section>
     <section class="project-list-section">
@@ -45,7 +71,14 @@
                         <td th:text="${proj.projectTimeSpent}">0</td>
                         <td th:text="${proj.projectPriority}">Priority</td>
                         <td>
-                            <a th:href="@{/projects/{id}(id=${proj.projectID})}">View</a>
+                            <div class="dropdown">
+                                <button class="dropdown-btn">Actions</button>
+                                <div class="dropdown-content">
+                                    <a th:href="@{/projects/{id}(id=${proj.projectID})}">View</a>
+                                    <a th:href="@{/projects/edit/{id}(id=${proj.projectID})}">Edit</a>
+                                    <a th:href="@{/projects/delete/{id}(id=${proj.projectID})}" class="delete-link">Delete</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(projects)}">

@@ -1,6 +1,8 @@
 package org.example.alphasolutions.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.example.alphasolutions.model.Project;
 import org.example.alphasolutions.model.SubProject;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -235,32 +238,57 @@ public class TaskController {
     }
 
     @PostMapping("/{taskID}/add-hours")
-    public String addHoursToTask(@PathVariable int projectID, 
+    @ResponseBody
+    public Map<String, Object> addHoursToTask(@PathVariable int projectID, 
                                  @PathVariable int subProjectID, 
                                  @PathVariable int taskID, 
                                  @RequestParam("hours") int hours, 
                                  HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        
         if (!isLoggedIn(session)) {
-            return "redirect:/login";
+            response.put("success", false);
+            response.put("message", "Not logged in");
+            return response;
         }
-        Task task = taskService.getTaskByID(taskID);
-        if (task != null) {
-            task.setTaskTimeSpent(task.getTaskTimeSpent() + hours);
-            taskService.updateTask(task, taskID);
+        
+        try {
+            Task task = taskService.getTaskByID(taskID);
+            if (task != null) {
+                task.setTaskTimeSpent(task.getTaskTimeSpent() + hours);
+                taskService.updateTask(task, taskID);
 
-            SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
-            if (subProject != null) {
-                subProject.setSubProjectTimeSpent(subProject.getSubProjectTimeSpent() + hours);
-                subProjectService.updateSubProject(subProject, subProject.getSubProjectID());
-                
-                List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
-                subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
-                
-                Project project = projectService.getProjectByID(projectID);
-                List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
-                projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+                SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
+                if (subProject != null) {
+                    subProject.setSubProjectTimeSpent(subProject.getSubProjectTimeSpent() + hours);
+                    subProjectService.updateSubProject(subProject, subProject.getSubProjectID());
+                    
+                    List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+                    subProjectService.updateTimeWhenTaskChanges(subProject, tasks);
+                    
+                    Project project = projectService.getProjectByID(projectID);
+                    List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
+                    projectService.updateTimeWhenSubProjectChanges(project, subProjects);
+                    
+                    // Calculate total time spent for all tasks
+                    int totalTimeSpent = tasks.stream()
+                            .mapToInt(Task::getTaskTimeSpent)
+                            .sum();
+                    
+                    response.put("success", true);
+                    response.put("taskId", taskID);
+                    response.put("newTimeSpent", task.getTaskTimeSpent());
+                    response.put("totalTimeSpent", totalTimeSpent);
+                    return response;
+                }
             }
+            response.put("success", false);
+            response.put("message", "Task or subproject not found");
+            return response;
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Error updating hours: " + e.getMessage());
+            return response;
         }
-        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 }

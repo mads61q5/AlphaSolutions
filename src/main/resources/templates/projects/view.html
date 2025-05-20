@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="'Project: ' + ${project.projectName}">Project Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/actions.js}" defer></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -12,57 +13,62 @@
 
     <!-- Project Information Box -->
     <section class="project-card">
-        <header class="project-header">
-            <h2 th:text="${project.projectName}">Project Name</h2>
-            <span class="status-pill"
-                  th:text="${project.projectStatus}"
-                  th:attr="data-status=${project.projectStatus.toLowerCase().replace(' ', '_')}">Status</span>
-        </header>
+        <details>
+            <summary>
+                <header class="project-header">
+                    <h2 th:text="${project.projectName}">Project Name</h2>
+                    <span class="status-pill"
+                          th:text="${project.projectStatus}"
+                          th:attr="data-status=${project.projectStatus.toLowerCase().replace(' ', '_')}">Status</span>
+                </header>
+            </summary>
+            <div class="card-content">
+                <div class="info-grid">
+                    <p class="label">Description:</p>
+                    <p class="value" th:text="${project.projectDescription}">N/A</p>
 
-        <div class="info-grid">
-            <p class="label">Description:</p>
-            <p class="value" th:text="${project.projectDescription}">N/A</p>
+                    <p class="label">Start Date:</p>
+                    <p class="value" th:text="${project.projectStartDate}">YYYY-MM-DD</p>
 
-            <p class="label">Start Date:</p>
-            <p class="value" th:text="${project.projectStartDate}">YYYY-MM-DD</p>
+                    <p class="label">Deadline:</p>
+                    <p class="value" th:text="${project.projectDeadline}">YYYY-MM-DD</p>
 
-            <p class="label">Deadline:</p>
-            <p class="value" th:text="${project.projectDeadline}">YYYY-MM-DD</p>
+                    <p class="label">Estimated Time (hours):</p>
+                    <p class="value" th:text="${project.projectTimeEstimate}">0</p>
 
-            <p class="label">Estimated Time (hours):</p>
-            <p class="value" th:text="${project.projectTimeEstimate}">0</p>
+                    <p class="label">Time Spent (hours):</p>
+                    <p class="value" th:text="${project.projectTimeSpent}">0</p>
 
-            <p class="label">Time Spent (hours):</p>
-            <p class="value" th:text="${project.projectTimeSpent}">0</p>
-
-            <p class="label">Priority:</p>
-            <p class="value" th:text="${project.projectPriority}">Priority</p>
-        </div>
-
-        <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
-             th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
-            <div class="progress-meta">
-                <span>Total Estimated vs Spent:</span>
-                <span>
-                    <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
-                    <span th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</span>
-                </span>
-            </div>
-            <div class="bar">
-                <div class="fill"
-                     th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
+                    <p class="label">Priority:</p>
+                    <p class="value" th:text="${project.projectPriority}">Priority</p>
                 </div>
-            </div>
-             <p style="margin-top: 0.5rem;">
-               <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track</span>
-               <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
-            </p>
-        </div>
 
-        <footer class="card-footer">
-            <a th:href="@{/projects/edit/{id}(id=${project.projectID})}" class="btn btn-edit">Edit Project</a>
-            <a th:href="@{/projects/delete/{id}(id=${project.projectID})}" class="btn btn-delete delete-link">Delete Project</a>
-        </footer>
+                <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
+                     th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
+                    <div class="progress-meta">
+                        <span>Total Estimated vs Spent:</span>
+                        <span>
+                            <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
+                            <span th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</span>
+                        </span>
+                    </div>
+                    <div class="bar">
+                        <div class="fill"
+                             th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
+                        </div>
+                    </div>
+                     <p style="margin-top: 0.5rem;">
+                       <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track</span>
+                       <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
+                    </p>
+                </div>
+
+                <footer class="card-footer">
+                    <a th:href="@{/projects/edit/{id}(id=${project.projectID})}" class="btn btn-edit">Edit Project</a>
+                    <a th:href="@{/projects/delete/{id}(id=${project.projectID})}" class="btn btn-delete delete-link">Delete Project</a>
+                </footer>
+            </div>
+        </details>
     </section>
 
     <!-- Subprojects Section -->
@@ -83,7 +89,11 @@
                 </thead>
                 <tbody>
                     <tr th:each="sub : ${subProjects}">
-                        <td th:text="${sub.subProjectName}">Name</td>
+                        <td>
+                            <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" 
+                               th:text="${sub.subProjectName}" 
+                               style="text-decoration: none; color: var(--primary);">Name</a>
+                        </td>
                         <td>
                             <span class="status" th:text="${sub.subProjectStatus}"
                                   th:classappend="' status-' + ${sub.subProjectStatus}">Status</span>
@@ -93,9 +103,14 @@
                         <td th:text="${sub.subProjectTimeSpent}">0</td>
                         <td th:text="${sub.subProjectPriority}">Priority</td>
                         <td>
-                            <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn">View</a>
-                            <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn">Edit</a>
-                            <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="btn delete-link">Delete</a>
+                            <div class="dropdown">
+                                <button class="dropdown-btn">Actions</button>
+                                <div class="dropdown-content">
+                                    <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}">View</a>
+                                    <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}">Edit</a>
+                                    <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" class="delete-link">Delete</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(subProjects)}">
