@@ -8,76 +8,78 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<main class="form-container">
+<main class="page-bg">
     <h1>Edit Task: <span th:text="${taskUpdateRequest.taskName}">Task Name</span></h1>
-    <form th:action="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${taskUpdateRequest.taskID})}" th:object="${taskUpdateRequest}" method="post">
-        <input type="hidden" th:field="*{taskID}" />
+    <div class="form-wrapper">
+        <form th:action="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${taskUpdateRequest.taskID})}" th:object="${taskUpdateRequest}" method="post">
+            <input type="hidden" th:field="*{taskID}" />
 
-        <div>
-            <label for="taskName">Task Name:</label>
-            <input type="text" id="taskName" th:field="*{taskName}" required>
-            <p th:if="${#fields.hasErrors('taskName')}" th:errors="*{taskName}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" th:field="*{taskName}" required>
+                <p th:if="${#fields.hasErrors('taskName')}" th:errors="*{taskName}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="taskDescription">Description:</label>
-            <textarea id="taskDescription" th:field="*{taskDescription}" rows="4"></textarea>
-            <p th:if="${#fields.hasErrors('taskDescription')}" th:errors="*{taskDescription}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskDescription">Description:</label>
+                <textarea id="taskDescription" th:field="*{taskDescription}" rows="4"></textarea>
+                <p th:if="${#fields.hasErrors('taskDescription')}" th:errors="*{taskDescription}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="taskStatus">Status:</label>
-            <select id="taskStatus" th:field="*{taskStatus}" required>
-                <!-- Assuming statuses are passed in a model attribute named 'statuses' -->
-                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">Status</option>
-            </select>
-            <p th:if="${#fields.hasErrors('taskStatus')}" th:errors="*{taskStatus}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskStatus">Status:</label>
+                <select id="taskStatus" th:field="*{taskStatus}" required>
+                    <!-- Assuming statuses are passed in a model attribute named 'statuses' -->
+                    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">Status</option>
+                </select>
+                <p th:if="${#fields.hasErrors('taskStatus')}" th:errors="*{taskStatus}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="taskDeadline">Deadline:</label>
-            <input type="date" id="taskDeadline" th:field="*{taskDeadline}" required>
-            <p th:if="${#fields.hasErrors('taskDeadline')}" th:errors="*{taskDeadline}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskDeadline">Deadline:</label>
+                <input type="date" id="taskDeadline" th:field="*{taskDeadline}" required>
+                <p th:if="${#fields.hasErrors('taskDeadline')}" th:errors="*{taskDeadline}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="taskTimeEstimate">Estimated Time (hours):</label>
-            <input type="number" id="taskTimeEstimate" th:field="*{taskTimeEstimate}" min="0" step="0.1">
-            <p th:if="${#fields.hasErrors('taskTimeEstimate')}" th:errors="*{taskTimeEstimate}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskTimeEstimate">Estimated Time (hours):</label>
+                <input type="number" id="taskTimeEstimate" th:field="*{taskTimeEstimate}" min="0" step="0.1">
+                <p th:if="${#fields.hasErrors('taskTimeEstimate')}" th:errors="*{taskTimeEstimate}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="taskPriority">Priority:</label>
-            <select id="taskPriority" th:field="*{taskPriority}" required>
-                <!-- Assuming priorities are passed in a model attribute named 'priorities' -->
-                <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority}">Priority</option>
-            </select>
-            <p th:if="${#fields.hasErrors('taskPriority')}" th:errors="*{taskPriority}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="taskPriority">Priority:</label>
+                <select id="taskPriority" th:field="*{taskPriority}" required>
+                    <!-- Assuming priorities are passed in a model attribute named 'priorities' -->
+                    <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority}">Priority</option>
+                </select>
+                <p th:if="${#fields.hasErrors('taskPriority')}" th:errors="*{taskPriority}" class="error-message"></p>
+            </div>
 
-        <div>
-            <label for="userID">Assigned User:</label>
-            <p class="current-assignment" th:if="${assignedUser != null}" style="margin-bottom: 0.5rem;">
-                Currently assigned to: <strong th:text="${assignedUser.userName}">User Name</strong>
-            </p>
-            <p class="current-assignment" th:if="${assignedUser == null}" style="margin-bottom: 0.5rem;">
-                Currently: <strong>Unassigned</strong>
-            </p>
-            <select id="userID" th:field="*{userID}">
-                <option value="0">Unassigned</option>
-                <option th:each="user : ${users}" 
-                        th:value="${user.userID}" 
-                        th:text="${user.userName}"
-                        th:selected="${user.userID == taskUpdateRequest.userID}">User Name</option>
-            </select>
-            <p th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}" class="error-message"></p>
-        </div>
+            <div>
+                <label for="userID">Assigned User:</label>
+                <p class="current-assignment" th:if="${assignedUser != null}" style="margin-bottom: 0.5rem;">
+                    Currently assigned to: <strong th:text="${assignedUser.userName}">User Name</strong>
+                </p>
+                <p class="current-assignment" th:if="${assignedUser == null}" style="margin-bottom: 0.5rem;">
+                    Currently: <strong>Unassigned</strong>
+                </p>
+                <select id="userID" th:field="*{userID}">
+                    <option value="0">Unassigned</option>
+                    <option th:each="user : ${users}" 
+                            th:value="${user.userID}" 
+                            th:text="${user.userName}"
+                            th:selected="${user.userID == taskUpdateRequest.userID}">User Name</option>
+                </select>
+                <p th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}" class="error-message"></p>
+            </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${taskUpdateRequest.taskID})}" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
+            <div class="button-row">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${taskUpdateRequest.taskID})}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
 </main>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

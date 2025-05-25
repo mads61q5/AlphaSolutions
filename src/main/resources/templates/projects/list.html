@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/actions.js}" defer></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -36,8 +37,14 @@
                         <td th:text="${proj.projectTimeSpent}">0</td>
                         <td th:text="${proj.projectPriority}">Priority</td>
                         <td>
-                            <a th:href="@{/projects/{id}(id=${proj.projectID})}">View</a>
-                        
+                            <div class="dropdown">
+                                <button class="dropdown-btn">Actions</button>
+                                <div class="dropdown-content">
+                                    <a th:href="@{/projects/{id}(id=${proj.projectID})}">View</a>
+                                    <a th:href="@{/projects/edit/{id}(id=${proj.projectID})}">Edit</a>
+                                    <a th:href="@{/projects/delete/{id}(id=${proj.projectID})}" class="delete-link">Delete</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(projects)}">

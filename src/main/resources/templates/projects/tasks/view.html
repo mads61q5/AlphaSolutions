@@ -10,45 +10,50 @@
 <div th:replace="fragments/header :: header"></div>
 <main>
     <section class="project-card">
-        <header class="project-header">
-            <h2 th:text="${task.taskName}">Task Name</h2>
-            <span class="status-pill"
-                  th:text="${task.taskStatus}"
-                  th:attr="data-status=${task.taskStatus.toLowerCase().replace(' ', '_')}">Status</span>
-        </header>
+        <details>
+            <summary>
+                <header class="project-header">
+                    <h2 th:text="${task.taskName}">Task Name</h2>
+                    <span class="status-pill"
+                          th:text="${task.taskStatus}"
+                          th:attr="data-status=${task.taskStatus.toLowerCase().replace(' ', '_')}">Status</span>
+                </header>
+            </summary>
+            <div class="card-content">
+                <div class="info-grid">
+                    <p class="label">Description:</p>
+                    <p class="value" th:text="${task.taskDescription ?: 'N/A'}">Description of the task.</p>
 
-        <div class="info-grid">
-            <p class="label">Description:</p>
-            <p class="value" th:text="${task.taskDescription ?: 'N/A'}">Description of the task.</p>
+                    <p class="label">Deadline:</p>
+                    <p class="value" th:text="${task.taskDeadline != null ? task.taskDeadline.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : 'N/A'}">YYYY-MM-DD</p>
 
-            <p class="label">Deadline:</p>
-            <p class="value" th:text="${task.taskDeadline != null ? task.taskDeadline.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : 'N/A'}">YYYY-MM-DD</p>
+                    <p class="label">Estimated Time (hours):</p>
+                    <p class="value" th:text="${task.taskTimeEstimate}">0</p>
 
-            <p class="label">Estimated Time (hours):</p>
-            <p class="value" th:text="${task.taskTimeEstimate}">0</p>
+                    <p class="label">Time Spent (hours):</p>
+                    <p class="value" th:text="${task.taskTimeSpent}">0</p>
 
-            <p class="label">Time Spent (hours):</p>
-            <p class="value" th:text="${task.taskTimeSpent}">0</p>
+                    <p class="label">Priority:</p>
+                    <p class="value" th:text="${task.taskPriority}">Priority</p>
 
-            <p class="label">Priority:</p>
-            <p class="value" th:text="${task.taskPriority}">Priority</p>
+                    <p class="label">Assigned User:</p>
+                    <p class="value" th:if="${task.userID != 0 and assignedUser != null}" th:text="${assignedUser.userName}">User Name</p>
+                    <p class="value" th:if="${task.userID == 0}">Unassigned</p>
+                    
+                    <p class="label">Subproject:</p>
+                    <p class="value">
+                        <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" th:text="${subProject.subProjectName}">Subproject Name</a>
+                    </p>
+                </div>
 
-            <p class="label">Assigned User:</p>
-            <p class="value" th:if="${task.userID != 0 and assignedUser != null}" th:text="${assignedUser.userName}">User Name</p>
-            <p class="value" th:if="${task.userID == 0}">Unassigned</p>
-            
-            <p class="label">Subproject:</p>
-            <p class="value">
-                <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" th:text="${subProject.subProjectName}">Subproject Name</a>
-            </p>
-        </div>
-
-        <footer class="card-footer">
-            <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}" class="btn btn-edit">Edit Task</a>
-            <!-- Consider adding an inline Add Hours form here if needed, similar to the subproject's task list -->
-            <!-- For now, assuming hours are added from the subproject view -->
-            <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-secondary">Back to Subproject</a>
-        </footer>
+                <footer class="card-footer">
+                    <a th:href="@{/projects/{pid}/subprojects/{sid}/tasks/edit/{tid}(pid=${project.projectID}, sid=${subProject.subProjectID}, tid=${task.taskID})}" class="btn btn-edit">Edit Task</a>
+                    <!-- Consider adding an inline Add Hours form here if needed, similar to the subproject's task list -->
+                    <!-- For now, assuming hours are added from the subproject view -->
+                    <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-secondary">Back to Subproject</a>
+                </footer>
+            </div>
+        </details>
     </section>
 </main>
 <div th:replace="fragments/footer :: footer"></div>

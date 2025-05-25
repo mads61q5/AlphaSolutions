@@ -23,6 +23,9 @@
     <p class="error">
       <span th:if="${wrongCredentials}">Forkert brugernavn eller adgangskode.</span>
     </p>
+    <p style="text-align: center; margin-top: 15px;">
+        Har du ikke en bruger? <a th:href="@{/createUser}">Opret bruger her</a>
+    </p>
   </form>
 </div>
 <div th:replace="fragments/footer :: footer"></div>

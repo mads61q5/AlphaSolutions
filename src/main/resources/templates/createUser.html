@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret Bruger</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="login-container">
+
+    <form action="/createUser" method="post" class="login-form">
+        <h2>Opret Bruger</h2>
+
+        <label for="username">Brugernavn</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Adgangskode</label>
+        <input type="password" id="password" name="password" required>
+
+   
+
+        <button type="submit">Opret bruger</button>
+
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html> 
