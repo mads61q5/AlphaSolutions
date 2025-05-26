@@ -106,7 +106,6 @@ public class ProjectController {
             return "redirect:/login";
         }
         
-        Project currentProject = projectService.getProjectByID(project.getProjectID());
         
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(project.getProjectID());
         int calculatedTimeEstimate = timeCalculationService.calculateProjectTimeEstimateFromSubProjects(subProjects);

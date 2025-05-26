@@ -1,0 +1,66 @@
+package org.example.alphasolutions.controller;
+
+import java.time.LocalDate;
+
+import org.example.alphasolutions.model.User;
+import org.example.alphasolutions.service.UserService;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.transaction.annotation.Transactional;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@Transactional
+public class ProjectControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void testCreateProject() throws Exception {
+        User sessionUser = userService.getUserByName("admin_user");
+        assertNotNull(sessionUser, "Admin user for session should exist in test data.");
+
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("username", sessionUser.getUserName());
+
+        String projectName = "New Test Project";
+        String projectDescription = "A description for the new test project.";
+        String startDate = LocalDate.now().toString();
+        String deadline = LocalDate.now().plusMonths(1).toString();
+        int timeEstimate = 100;
+        int timeSpent = 0;
+        String status = "NOT_STARTED";
+        String priority = "HIGH";
+
+        mockMvc.perform(post("/projects")
+                .session(session)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("projectName", projectName)
+                .param("projectDescription", projectDescription)
+                .param("projectStartDate", startDate)
+                .param("projectDeadline", deadline)
+                .param("projectTimeEstimate", String.valueOf(timeEstimate))
+                .param("projectTimeSpent", String.valueOf(timeSpent))
+                .param("projectStatus", status)
+                .param("projectPriority", priority)
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("/projects/*"));
+    }
+
+} 

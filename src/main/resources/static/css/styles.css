@@ -595,7 +595,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding-right: 8rem; /* Make room for the click indicator */
+  /* padding-right: 8rem; */ /* Make room for the click indicator - Removed */
 }
 
 .project-card .card-content {
@@ -715,7 +715,7 @@
   } */
   
   .project-card .project-header {
-    padding-right: 1rem; /* Reset padding on mobile */
+    /* padding-right: 1rem; */ /* Reset padding on mobile - Removed */
   }
 }
 
