@@ -13,63 +13,59 @@
 
     <!-- Subproject Information Box -->
     <section class="project-card">
-        <details>
-            <summary>
-                <header class="project-header">
-                    <h2 th:text="${subProject.subProjectName}">Subproject Name</h2>
-                    <span class="status-pill"
-                          th:text="${subProject.subProjectStatus}"
-                          th:attr="data-status=${subProject.subProjectStatus.toLowerCase().replace(' ', '_')}">Status</span>
-                </header>
-            </summary>
-            <div class="card-content">
-                <div class="info-grid">
-                    <p class="label">Description:</p>
-                    <p class="value" th:text="${subProject.subProjectDescription}">N/A</p>
+        <header class="project-header">
+            <h2 th:text="${subProject.subProjectName}">Subproject Name</h2>
+            <span class="status-pill"
+                  th:text="${subProject.subProjectStatus}"
+                  th:attr="data-status=${subProject.subProjectStatus.toLowerCase().replace(' ', '_')}">Status</span>
+        </header>
+        <div class="card-content">
+            <div class="info-grid">
+                <p class="label">Description:</p>
+                <p class="value" th:text="${subProject.subProjectDescription}">N/A</p>
 
-                    <p class="label">Start Date:</p>
-                    <p class="value" th:text="${subProject.subProjectStartDate}">YYYY-MM-DD</p>
+                <p class="label">Start Date:</p>
+                <p class="value" th:text="${subProject.subProjectStartDate}">YYYY-MM-DD</p>
 
-                    <p class="label">Deadline:</p>
-                    <p class="value" th:text="${subProject.subProjectDeadline}">YYYY-MM-DD</p>
+                <p class="label">Deadline:</p>
+                <p class="value" th:text="${subProject.subProjectDeadline}">YYYY-MM-DD</p>
 
-                    <p class="label">Estimated Time (hours):</p>
-                    <p class="value" th:text="${subProject.subProjectTimeEstimate}">0</p>
+                <p class="label">Estimated Time (hours):</p>
+                <p class="value" th:text="${subProject.subProjectTimeEstimate}">0</p>
 
-                    <p class="label">Time Spent (hours):</p>
-                    <p class="value" id="subProjectInfoTimeSpentDisplay" th:text="${subProject.subProjectTimeSpent}">0</p>
+                <p class="label">Time Spent (hours):</p>
+                <p class="value" id="subProjectInfoTimeSpentDisplay" th:text="${subProject.subProjectTimeSpent}">0</p>
 
-                    <p class="label">Priority:</p>
-                    <p class="value" th:text="${subProject.subProjectPriority}">Priority</p>
-                </div>
-
-                <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
-                     th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
-                    <div class="progress-meta">
-                        <span>Total Task Time:</span>
-                         <span>
-                            <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
-                            <strong id="timeSummaryInBoxTotalTimeSpent" th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</strong>
-                        </span>
-                    </div>
-                    <div class="bar">
-                        <div class="fill"
-                             th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
-                        </div>
-                    </div>
-                    <p style="margin-top: 0.5rem;">
-                       <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track (subproject)</span>
-                       <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
-                    </p>
-                </div>
-
-                <footer class="card-footer">
-                    <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-edit">Edit Subproject</a>
-                    <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-delete delete-link">Delete Subproject</a>
-                    <a th:href="@{/projects/{pid}(pid=${project.projectID})}" class="btn btn-secondary">Back to Project</a>
-                </footer>
+                <p class="label">Priority:</p>
+                <p class="value" th:text="${subProject.subProjectPriority}">Priority</p>
             </div>
-        </details>
+
+            <div class="progress-wrap" th:classappend="${!timeSummary.onTrack ? 'behind' : ''}"
+                 th:title="${!timeSummary.onTrack ? 'Behind schedule' : 'On track'}">
+                <div class="progress-meta">
+                    <span>Total Task Time:</span>
+                     <span>
+                        <strong th:text="${timeSummary.totalTimeEstimate ?: 0} + 'h'">0h</strong> /
+                        <strong id="timeSummaryInBoxTotalTimeSpent" th:text="${timeSummary.totalTimeSpent ?: 0} + 'h'">0h</strong>
+                    </span>
+                </div>
+                <div class="bar">
+                    <div class="fill"
+                         th:style="'width: ' + (${timeSummary.totalTimeEstimate > 0 ? (timeSummary.totalTimeSpent * 100.0 / timeSummary.totalTimeEstimate) : 0}) + '%;'">
+                    </div>
+                </div>
+                <p style="margin-top: 0.5rem;">
+                   <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track (subproject)</span>
+                   <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
+                </p>
+            </div>
+
+            <footer class="card-footer">
+                <a th:href="@{/projects/{pid}/subprojects/edit/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-edit">Edit Subproject</a>
+                <a th:href="@{/projects/{pid}/subprojects/delete/{sid}(pid=${project.projectID}, sid=${subProject.subProjectID})}" class="btn btn-delete delete-link">Delete Subproject</a>
+                <a th:href="@{/projects/{pid}(pid=${project.projectID})}" class="btn btn-secondary">Back to Project</a>
+            </footer>
+        </div>
     </section>
 
     <!-- Tasks Section -->

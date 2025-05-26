@@ -574,7 +574,7 @@
 }
 
 /* Add click indicator */
-.project-card summary::after {
+/* .project-card summary::after {  // Removed
   content: "Click to expand";
   position: absolute;
   right: 2rem;
@@ -583,11 +583,11 @@
   font-size: 0.875rem;
   color: var(--neutral-color);
   opacity: 0.7;
-}
+} */
 
-.project-card details[open] summary::after {
+/* .project-card details[open] summary::after { // Removed
   content: "Click to collapse";
-}
+} */
 
 .project-card .project-header {
   display: flex;
@@ -710,9 +710,9 @@
   .status-pill {
     align-self: flex-start;
   }
-  .project-card summary::after {
-    display: none; /* Hide the click indicator on mobile */
-  }
+/*  .project-card summary::after { // Removed
+    display: none; 
+  } */
   
   .project-card .project-header {
     padding-right: 1rem; /* Reset padding on mobile */
@@ -959,3 +959,31 @@ tbody tr td a:hover {
         grid-template-columns: 1fr;
     }
 }
+
+/* Styles for the frontpage (index.html) */
+.frontpage-wrapper {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.frontpage-heading {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.frontpage-text {
+    font-size: 1.1rem;
+    color: var(--neutral-color);
+    margin-bottom: 2rem;
+}
+
+.frontpage-login-link {
+    text-decoration: none;
+}
+
+.frontpage-login-button {
+    padding: 0.65rem 1.25rem;
+    font-size: 1rem;
+}
+/* End of Styles for the frontpage (index.html) */
