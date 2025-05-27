@@ -968,3 +968,32 @@ tbody tr td a:hover {
     font-size: 1rem;
 }
 /* End of Styles for the frontpage (index.html) */
+
+/* Styles for 404 page */
+.error-page-body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+.error-page-body h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.error-page-body p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+.error-page-body a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.error-page-body a:hover {
+    text-decoration: underline;
+}

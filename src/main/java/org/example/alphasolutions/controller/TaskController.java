@@ -213,7 +213,6 @@ public class TaskController {
                     List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
                     projectService.updateTimeWhenSubProjectChanges(project, subProjects);
                     
-                    // Calculate total time spent for all tasks
                     int totalTimeSpent = tasks.stream()
                             .mapToInt(Task::getTaskTimeSpent)
                             .sum();

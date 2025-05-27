@@ -71,24 +71,29 @@ public class TimeCalculationService {
         LocalDate today = LocalDate.now();
         LocalDate deadline = project.getProjectDeadline();
         LocalDate startDate = project.getProjectStartDate();
+        int projectEstimate = project.getProjectTimeEstimate();
 
-        if (today.isAfter(deadline)) {
+        if ((deadline != null && today.isAfter(deadline)) ||
+            (projectEstimate > 0 && timeSpent > projectEstimate) ||
+            (projectEstimate == 0 && timeSpent > 0)) {
             return false;
         }
 
-        long totalDays = startDate.until(deadline).getDays();
-        long daysPassed = startDate.until(today).getDays();
-
-        if (daysPassed <= 0) {
+        if (startDate == null || deadline == null || 
+            startDate.isAfter(deadline) || 
+            startDate.until(deadline).getDays() <= 0 ||
+            today.isBefore(startDate) ||
+            projectEstimate == 0) {
             return true;
         }
 
-        double expectedProgress = (double) daysPassed / (double) totalDays;
-        double actualProgress = (double) timeSpent / (double) project.getProjectTimeEstimate();
+        long totalDays = startDate.until(deadline).getDays();
+        long daysPassed = Math.max(0, startDate.until(today).getDays());
+        double expectedProgress = Math.min(1.0, (double) daysPassed / totalDays);
+        double actualProgress = (double) timeSpent / projectEstimate;
 
         return actualProgress >= expectedProgress;
     }
-    
     //---------------calculate project total time spent from subprojects-----------
     public int calculateProjectTotalTimeSpentFromSubProjects(List<SubProject> subProjects) {
         int totalTimeSpent = 0;
