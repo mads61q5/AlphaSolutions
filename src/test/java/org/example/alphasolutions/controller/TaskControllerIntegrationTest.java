@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.example.alphasolutions.model.Task;
 import org.example.alphasolutions.model.User;
-import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.TaskService;
 import org.example.alphasolutions.service.UserService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,13 +36,10 @@ public class TaskControllerIntegrationTest {
     private TaskService taskService;
 
     @Autowired
-    private SubProjectService subProjectService;
-
-    @Autowired
     private UserService userService;
 
-    private final int testSubProjectId = 2;
     private final int testProjectId = 1;
+    private final int testSubProjectId = 2;
 
     @Test
     void testAddTaskToSubProject() throws Exception {
@@ -53,8 +49,8 @@ public class TaskControllerIntegrationTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("username", sessionUser.getUserName());
 
-        String taskName = "New UI Test Task";
-        String taskDescription = "Description for new UI test task.";
+        String taskName = "Integration Test Task 1";
+        String taskDescription = "beskrivelse af integration test task 1";
         String startDate = LocalDate.now().toString();
         String deadline = LocalDate.now().plusDays(10).toString();
 
@@ -64,8 +60,7 @@ public class TaskControllerIntegrationTest {
                 .param("taskName", taskName)
                 .param("taskDescription", taskDescription)
                 .param("taskStartDate", startDate)
-                .param("taskDeadline", deadline)
-                )
+                .param("taskDeadline", deadline))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/projects/" + testProjectId + "/subprojects/" + testSubProjectId));
 
@@ -82,4 +77,4 @@ public class TaskControllerIntegrationTest {
         assertEquals(taskDescription, createdTask.getTaskDescription());
         assertEquals(testSubProjectId, createdTask.getSubProjectID());
     }
-} 
+}

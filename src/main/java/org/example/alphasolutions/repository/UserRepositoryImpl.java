@@ -45,11 +45,10 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getUserPassword(),
                 user.getUserRole());
     }
-
     @Override
     public void update(User user) {
         String sql = "UPDATE users SET user_name = ?, user_password = ?, " +
-                "user_role = ?, is_active = ? WHERE user_id = ?";
+                "user_role = ? WHERE user_id = ?";
         jdbcTemplate.update(sql,
                 user.getUserName(),
                 user.getUserPassword(),

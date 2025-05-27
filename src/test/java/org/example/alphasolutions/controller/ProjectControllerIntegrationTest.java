@@ -38,14 +38,14 @@ public class ProjectControllerIntegrationTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("username", sessionUser.getUserName());
 
-        String projectName = "New Test Project";
-        String projectDescription = "A description for the new test project.";
+        String projectName = "Integration Test Projekt 1";
+        String projectDescription = "beskrivelse af projekt 1";
         String startDate = LocalDate.now().toString();
         String deadline = LocalDate.now().plusMonths(1).toString();
-        int timeEstimate = 100;
-        int timeSpent = 0;
         String status = "NOT_STARTED";
         String priority = "HIGH";
+        int timeEstimate = 100;
+        int timeSpent = 0;
 
         mockMvc.perform(post("/projects")
                 .session(session)
@@ -57,10 +57,8 @@ public class ProjectControllerIntegrationTest {
                 .param("projectTimeEstimate", String.valueOf(timeEstimate))
                 .param("projectTimeSpent", String.valueOf(timeSpent))
                 .param("projectStatus", status)
-                .param("projectPriority", priority)
-                )
+                .param("projectPriority", priority))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("/projects/*"));
+                .andExpect(redirectedUrlPattern("/projects/*"));  // should redirect to the newly created project's page
     }
-
-} 
+}

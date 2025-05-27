@@ -49,16 +49,16 @@ public class ProjectControllerTest {
     public void givenUserIsAuthenticated_whenGetProjects_thenReturnsProjectsListViewWithData() throws Exception {
         Project project1 = new Project();
         project1.setProjectID(1);
-        project1.setProjectName("Project Gamma");
+        project1.setProjectName("Projekt Alpha");
 
         Project project2 = new Project();
         project2.setProjectID(2);
-        project2.setProjectName("Project Delta");
+        project2.setProjectName("Projekt Solutions");
 
         List<Project> mockProjects = List.of(project1, project2);
         when(projectService.getAllProjects()).thenReturn(mockProjects);
 
-        mockMvc.perform(get("/projects").sessionAttr("username", "testuser"))
+        mockMvc.perform(get("/projects").sessionAttr("username", "ChristianVinther"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("projects/list"))
                 .andExpect(model().attribute("projects", mockProjects));
@@ -93,7 +93,7 @@ public class ProjectControllerTest {
         when(subProjectService.getSubProjectsByProject(projectId)).thenReturn(mockSubProjects);
         when(timeCalculationService.calculateProjectTimeSummary(mockProject, mockSubProjects)).thenReturn(mockTimeSummary);
 
-        mockMvc.perform(get("/projects/{id}", projectId).sessionAttr("username", "testuser"))
+        mockMvc.perform(get("/projects/{id}", projectId).sessionAttr("username", "ChristianVinther"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("projects/view"))
                 .andExpect(model().attribute("project", mockProject))

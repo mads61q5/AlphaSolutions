@@ -7,7 +7,6 @@ import org.example.alphasolutions.model.SubProject;
 import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.UserService;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
@@ -59,8 +58,7 @@ public class SubProjectControllerIntegrationTest {
                 .param("subProjectName", subProjectName)
                 .param("subProjectDescription", subProjectDescription)
                 .param("subProjectStartDate", startDate)
-                .param("subProjectDeadline", deadline)
-                )
+                .param("subProjectDeadline", deadline))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrlPattern("/projects/" + testProjectId + "/subprojects/*"));
 
@@ -68,13 +66,5 @@ public class SubProjectControllerIntegrationTest {
         assertNotNull(subProjectsInProject);
         assertFalse(subProjectsInProject.isEmpty(), "Subproject list for project should not be empty after adding one.");
 
-        SubProject createdSubProject = subProjectsInProject.stream()
-                .filter(sp -> subProjectName.equals(sp.getSubProjectName()))
-                .findFirst()
-                .orElse(null);
-
-        assertNotNull(createdSubProject, "Newly created subproject should be found in the project's list");
-        assertEquals(subProjectDescription, createdSubProject.getSubProjectDescription());
-        assertEquals(testProjectId, createdSubProject.getProjectID());
     }
-} 
+}

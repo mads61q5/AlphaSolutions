@@ -1,10 +1,10 @@
--- Add your CREATE TABLE statements here, mirroring your production schema. 
+-- Schema creation script for H2 (Test Database)
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
-    user_role VARCHAR(50)
+    user_role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE projects (
@@ -47,4 +47,4 @@ CREATE TABLE tasks (
     user_id INT,
     FOREIGN KEY (subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
-); 
+);

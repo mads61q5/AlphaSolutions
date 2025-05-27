@@ -41,6 +41,6 @@ public class DashboardControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("dashboard"))
                 .andExpect(model().attributeExists("projects"))
-                .andExpect(model().attribute("projects", hasSize(4)));
+                .andExpect(model().attribute("projects", hasSize(4))); 
     }
-} 
+}

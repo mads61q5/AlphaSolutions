@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-
 @Transactional
 public class UserControllerIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -31,15 +31,13 @@ public class UserControllerIntegrationTest {
     void testUserRegistration() throws Exception {
         mockMvc.perform(post("/createUser")
                 .param("username", "ChristianVinther")
-                .param("password", "CVD2341")
-                )
+                .param("password", "CVD2341"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
         User createdUser = userService.getUserByName("ChristianVinther");
         assertNotNull(createdUser, "User should be created and found in the database");
-        assertEquals("ChristianVinther", createdUser.getUserName()); 
-        assertEquals("Employee", createdUser.getUserRole());
-   
+        assertEquals("ChristianVinther", createdUser.getUserName());
+        assertEquals("Employee", createdUser.getUserRole());  
     }
 }

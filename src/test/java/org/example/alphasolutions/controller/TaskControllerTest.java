@@ -7,6 +7,7 @@ import org.example.alphasolutions.model.User;
 import org.example.alphasolutions.service.ProjectService;
 import org.example.alphasolutions.service.SubProjectService;
 import org.example.alphasolutions.service.TaskService;
+import org.example.alphasolutions.service.TimeCalculationService;
 import org.example.alphasolutions.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -40,6 +43,9 @@ public class TaskControllerTest {
 
     @MockBean
     private SubProjectService subProjectService;
+
+    @MockBean
+    private TimeCalculationService timeCalculationService;
 
     @MockBean
     private UserService userService;
