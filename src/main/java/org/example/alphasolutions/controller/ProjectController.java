@@ -96,7 +96,7 @@ public class ProjectController {
         project.setProjectTimeEstimate(calculatedTimeEstimate);
         
         model.addAttribute("project", project);
-        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); // Add for display only
+        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); 
         return "projects/edit";
     }
 //------------- update project (this should be a button which 'saves' the project edit)
@@ -106,7 +106,6 @@ public class ProjectController {
             return "redirect:/login";
         }
         
-        Project currentProject = projectService.getProjectByID(project.getProjectID());
         
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(project.getProjectID());
         int calculatedTimeEstimate = timeCalculationService.calculateProjectTimeEstimateFromSubProjects(subProjects);

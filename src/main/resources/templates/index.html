@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Front Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main class="page-bg">
+        <div class="form-wrapper frontpage-wrapper">
+            <p class="frontpage-text">
+                Log ind for at fortsætte
+            </p>
+            <a th:href="@{/login}" class="frontpage-login-link">
+                <button type="button" class="btn frontpage-login-button">Log ind</button>
+            </a>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html> 

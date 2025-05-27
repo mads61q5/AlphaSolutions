@@ -155,7 +155,6 @@ public class SubProjectController {
         }
         subProject.setProjectID(projectID);
         
-        SubProject currentSubProject = subProjectService.getSubProjectByID(subProject.getSubProjectID());
         List<Task> tasks = taskService.getTasksBySubProjectID(subProject.getSubProjectID());
         int calculatedTimeEstimate = timeCalculationService.calculateSubProjectTimeEstimateFromTasks(tasks);
         

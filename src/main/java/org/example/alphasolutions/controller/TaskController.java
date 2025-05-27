@@ -49,64 +49,7 @@ public class TaskController {
         return session.getAttribute("username") != null;
     }
 
-    //-------------get all tasks----------- (This method is no longer needed as tasks are shown on subproject view)
-    /*
-    @GetMapping
-    public String getAllTasks(@PathVariable int projectID, @PathVariable int subProjectID,
-                              @RequestParam(required = false) String status,
-                              Model model, HttpSession session) {
-        if (!isLoggedIn(session)) {
-            return "redirect:/login";
-        }
-
-        List<Task> tasks;
-        if (status != null && !status.isEmpty()) {
-            tasks = taskService.getTasksByStatusAndSubProjectID(subProjectID, status); // Corrected method name
-        } else {
-            tasks = taskService.getTasksBySubProjectID(subProjectID);
-        }
-
-        Project project = projectService.getProjectByID(projectID);
-        SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
-
-        int totalTimeEstimate = 0;
-        int totalTimeSpent = 0;
-        for (Task task : tasks) {
-            totalTimeEstimate += task.getTaskTimeEstimate();
-            totalTimeSpent += task.getTaskTimeSpent();
-        }
-
-        model.addAttribute("tasks", tasks);
-        model.addAttribute("project", project);
-        model.addAttribute("subProject", subProject);
-        model.addAttribute("totalTimeEstimate", totalTimeEstimate);
-        model.addAttribute("totalTimeSpent", totalTimeSpent);
-        model.addAttribute("statuses", List.of("NOT_STARTED", "IN_PROGRESS", "COMPLETE"));
-        model.addAttribute("currentStatus", status);
-        return "projects/tasks/list"; // This view will be deleted
-    }
-    */
-
-    //------------Task time summary-------------------------- (This method might be removed if not used elsewhere)
-    /*
-    @GetMapping("/time-summary")
-    public String getTaskTimeSummary(@PathVariable int projectID, @PathVariable int subProjectID,
-                                     Model model, HttpSession session) {
-        if (!isLoggedIn(session)) {
-            return "redirect:/login";
-        }
-        List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
-        Project project = projectService.getProjectByID(projectID);
-        SubProject subProject = subProjectService.getSubProjectByID(subProjectID);
-
-        TimeSummary timeSummary = timeCalculationService.calculateTasksTimeSummary(tasks, project);
-        model.addAttribute("project", project);
-        model.addAttribute("subProject", subProject);
-        model.addAttribute("timeSummary", timeSummary);
-
-        return "projects/tasks/time-summary"; // This view might also be deleted or functionality moved
-    }
-    */
+   
 
     //--------------create new task (fill out form)-----------------
     @GetMapping("/new")
@@ -234,7 +177,7 @@ public class TaskController {
         List<SubProject> subProjects = subProjectService.getSubProjectsByProject(projectID);
         projectService.updateTimeWhenSubProjectChanges(project, subProjects);
         
-        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID + "/tasks";
+        return "redirect:/projects/" + projectID + "/subprojects/" + subProjectID;
     }
 
     @PostMapping("/{taskID}/add-hours")
