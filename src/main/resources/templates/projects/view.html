@@ -55,8 +55,8 @@
                     </div>
                 </div>
                  <p style="margin-top: 0.5rem;">
-                   <span th:if="${timeSummary.onTrack}" class="status-pill" data-status="completed" style="color: white; background-color: var(--success);">On Track</span>
-                   <span th:if="${!timeSummary.onTrack}" class="status-pill" data-status="warning" style="color: white; background-color: var(--warning);">Behind Schedule</span>
+                   <span th:if="${timeSummary.onTrack}" class="status-on-track">On Track</span>
+                   <span th:if="${!timeSummary.onTrack}" class="status-behind">Behind Schedule</span>
                 </p>
             </div>
 
@@ -87,8 +87,7 @@
                     <tr th:each="sub : ${subProjects}">
                         <td>
                             <a th:href="@{/projects/{pid}/subprojects/{sid}(pid=${project.projectID}, sid=${sub.subProjectID})}" 
-                               th:text="${sub.subProjectName}" 
-                               style="text-decoration: none; color: var(--primary);">Name</a>
+                               th:text="${sub.subProjectName}">Name</a>
                         </td>
                         <td>
                             <span class="status" th:text="${sub.subProjectStatus}"
