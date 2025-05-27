@@ -34,7 +34,7 @@ public class TimeSummary {
         return totalTimeSpent;
     }
 
-    //---------task itme estiame
+    //---------task itme estimate
     public int getTaskTimeEstimate() {
 
         return taskTimeEstimate;
