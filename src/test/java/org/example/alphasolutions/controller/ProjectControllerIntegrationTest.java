@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:h2init.sql")
 @Transactional
 public class ProjectControllerIntegrationTest {
 
@@ -59,6 +61,6 @@ public class ProjectControllerIntegrationTest {
                 .param("projectStatus", status)
                 .param("projectPriority", priority))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("/projects/*"));  // should redirect to the newly created project's page
+                .andExpect(redirectedUrlPattern("/projects/*"));  
     }
 }

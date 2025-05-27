@@ -143,7 +143,7 @@ public class SubProjectController {
         
         model.addAttribute("project", project);
         model.addAttribute("subProject", subProject);
-        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); // Add for display only
+        model.addAttribute("calculatedTimeEstimate", calculatedTimeEstimate); 
         return "projects/subprojects/edit";
     }
 

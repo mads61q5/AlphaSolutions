@@ -23,7 +23,6 @@ class UserServiceTest {
 
     @Test 
     void login_WithCorrectCredentials_ReturnsTrue() {
-        // Arrange: prepare a dummy user and repository behavior
         String username = "testuser";
         String password = "secret";
         User dummy = new User();
@@ -31,7 +30,6 @@ class UserServiceTest {
         dummy.setUserPassword(password);
         when(userRepository.findByUserName(username)).thenReturn(dummy);
 
-        // Act & Assert: correct password yields true
         assertTrue(userService.login(username, password));
         verify(userRepository).findByUserName(username);
     }
@@ -40,11 +38,9 @@ class UserServiceTest {
     void login_WithWrongPasswordOrUnknownUser_ReturnsFalse() {
         String username = "testuser";
         String correctPwd = "secret", wrongPwd = "guess";
-        // Case 1: User exists but password mismatch
         User dummy = new User(); dummy.setUserName(username); dummy.setUserPassword(correctPwd);
         when(userRepository.findByUserName(username)).thenReturn(dummy);
-        assertFalse(userService.login(username, wrongPwd));  // wrong password
-        // Case 2: User does not exist
+        assertFalse(userService.login(username, wrongPwd));  
         when(userRepository.findByUserName("nouser")).thenReturn(null);
         assertFalse(userService.login("nouser", "pass"));
     }

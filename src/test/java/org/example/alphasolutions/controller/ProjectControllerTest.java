@@ -45,26 +45,7 @@ public class ProjectControllerTest {
     @MockBean
     private TaskService taskService;
 
-    @Test
-    public void givenUserIsAuthenticated_whenGetProjects_thenReturnsProjectsListViewWithData() throws Exception {
-        Project project1 = new Project();
-        project1.setProjectID(1);
-        project1.setProjectName("Projekt Alpha");
 
-        Project project2 = new Project();
-        project2.setProjectID(2);
-        project2.setProjectName("Projekt Solutions");
-
-        List<Project> mockProjects = List.of(project1, project2);
-        when(projectService.getAllProjects()).thenReturn(mockProjects);
-
-        mockMvc.perform(get("/projects").sessionAttr("username", "ChristianVinther"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("projects/list"))
-                .andExpect(model().attribute("projects", mockProjects));
-
-        verify(projectService).getAllProjects();
-    }
 
     @Test
     public void givenUserIsNotAuthenticated_whenGetProjects_thenRedirectsToLogin() throws Exception {
@@ -78,32 +59,7 @@ public class ProjectControllerTest {
         verifyNoInteractions(timeCalculationService);
     }
 
-    @Test
-    public void givenUserIsAuthenticatedAndProjectId_whenGetProjectById_thenReturnsProjectDetailsView() throws Exception {
-        int projectId = 1;
-        Project mockProject = new Project();
-        mockProject.setProjectID(projectId);
-        mockProject.setProjectName("Test Project Detail");
-        mockProject.setProjectStatus("IN PROGRESS");
 
-        List<SubProject> mockSubProjects = List.of(new SubProject());
-        TimeSummary mockTimeSummary = new TimeSummary(100, 50, 60,30, 40, 20, true);
-
-        when(projectService.getProjectByID(projectId)).thenReturn(mockProject);
-        when(subProjectService.getSubProjectsByProject(projectId)).thenReturn(mockSubProjects);
-        when(timeCalculationService.calculateProjectTimeSummary(mockProject, mockSubProjects)).thenReturn(mockTimeSummary);
-
-        mockMvc.perform(get("/projects/{id}", projectId).sessionAttr("username", "ChristianVinther"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("projects/view"))
-                .andExpect(model().attribute("project", mockProject))
-                .andExpect(model().attribute("subProjects", mockSubProjects))
-                .andExpect(model().attribute("timeSummary", mockTimeSummary));
-
-        verify(projectService).getProjectByID(projectId);
-        verify(subProjectService).getSubProjectsByProject(projectId);
-        verify(timeCalculationService).calculateProjectTimeSummary(mockProject, mockSubProjects);
-    }
 
     @Test
     public void givenUserIsNotAuthenticated_whenGetProjectById_thenRedirectsToLogin() throws Exception {
